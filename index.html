@@ -46,7 +46,7 @@ html,body{overscroll-behavior:none;-webkit-touch-callout:none;-webkit-tap-highli
     <button class="tb sm" data-k="KeyZ">◀БЧ</button>
     <button class="tb sm" data-k="KeyQ">БЧ▶</button>
     <button class="tb sm" data-k="KeyC">КАМ</button>
-    <button class="tb sm" data-k="KeyF">👁</button>
+    <button class="tb sm" data-k="KeyF">ПОЛЁТ</button>
     <button class="tb sm" data-k="KeyO">🔭</button>
     <button class="tb sm" data-k="Tab">🗺</button>
     <button class="tb sm" data-k="Space">⏯</button>
@@ -54,20 +54,30 @@ html,body{overscroll-behavior:none;-webkit-touch-callout:none;-webkit-tap-highli
     <button class="tb sm" data-a="menu">☰</button>
   </div>
   <div id="tpMore" style="display:none" class="absolute right-1.5 top-[74px] grid-cols-4 gap-1 p-1.5 rounded-xl bg-black/60 pointer-events-auto">
-    <button class="tb sm" data-k="KeyI" data-h="1">ВЕТ▲</button>
-    <button class="tb sm" data-k="KeyJ" data-h="1">ВЕТ◀</button>
-    <button class="tb sm" data-k="KeyK" data-h="1">ВЕТ▼</button>
-    <button class="tb sm" data-k="KeyL" data-h="1">ВЕТ▶</button>
+    <button class="tb sm" data-k="KeyI" data-h="1">БИН▲</button>
+    <button class="tb sm" data-k="KeyJ" data-h="1">БИН◀</button>
+    <button class="tb sm" data-k="KeyK" data-h="1">БИН▼</button>
+    <button class="tb sm" data-k="KeyL" data-h="1">БИН▶</button>
+    <button class="tb sm" data-k="Minus" data-h="1">ВЕТ−</button>
+    <button class="tb sm" data-k="Equal" data-h="1">ВЕТ+</button>
     <button class="tb sm" data-k="Digit0">ШТИЛЬ</button>
-    <button class="tb sm" data-k="KeyB">БУНК</button>
+    <button class="tb sm" data-k="KeyB">ПАРАШЮТ</button>
+    <button class="tb sm" data-k="Backquote">САМОЛЁТ</button>
+    <button class="tb sm" data-k="Backspace">АП-СТОП</button>
+    <button class="tb sm" data-k="Comma">ШАХТА−</button>
+    <button class="tb sm" data-k="Period">ШАХТА+</button>
+    <button class="tb sm" data-k="Home">ВРЕМ ×1</button>
+    <button class="tb sm" data-k="End">ВРЕМ MAX</button>
     <button class="tb sm" data-k="KeyN">ЖИТ▶</button>
     <button class="tb sm" data-k="KeyP">◀ЖИТ</button>
     <button class="tb sm" data-k="KeyG">ГОРОД</button>
     <button class="tb sm" data-k="KeyT">ЧАТ</button>
-    <button class="tb sm" data-k="Minus">ВРЕМ−</button>
-    <button class="tb sm" data-k="Equal">ВРЕМ+</button>
+    <button class="tb sm" data-k="ArrowLeft">ВРЕМ−</button>
+    <button class="tb sm" data-k="ArrowRight">ВРЕМ+</button>
     <button class="tb sm" data-k="KeyR">СБРОС</button>
-    <button class="tb sm" data-k="KeyH">ПОДСК</button>
+    <button class="tb sm" data-k="KeyY">КОСМОС</button>
+    <button class="tb sm" data-k="KeyM">РЕДАКТОР</button>
+    <button class="tb sm" data-k="KeyU">СПИСОК БЧ</button>
     <button class="tb sm" data-a="full">⛶</button>
   </div>
   <div class="absolute right-2 bottom-2 flex items-end gap-2 pointer-events-auto">
@@ -76,6 +86,47 @@ html,body{overscroll-behavior:none;-webkit-touch-callout:none;-webkit-tap-highli
       <button class="tb" data-k="KeyX" data-h="1">РЕВ</button>
     </div>
     <button class="tb big" data-k="ShiftLeft" data-h="1">ТЯГА</button>
+  </div>
+</div>
+
+<div id="tgtModal" style="display:none" class="fixed inset-0 z-30 items-center justify-center p-3 bg-black/70">
+  <div class="w-full max-w-md rounded-2xl border border-rose-500/60 bg-zinc-950/95 p-5 shadow-2xl">
+    <div class="text-[11px] tracking-[0.3em] text-rose-300/80">АВТОПИЛОТ · НАВЕДЕНИЕ</div>
+    <h2 class="text-xl font-black text-white mb-2">🎯 Подтвердите пуск по цели</h2>
+    <div id="tgtInfo" class="text-sm text-zinc-300 leading-relaxed mb-3"></div>
+    <div class="grid grid-cols-2 gap-2 mb-4 text-sm items-center">
+      <label class="text-zinc-400">Тип подрыва</label><select id="tgtBurst"></select>
+      <label class="text-zinc-400">Шахта (до пуска)</label><select id="tgtSilo"></select>
+    </div>
+    <div class="flex gap-2"><button id="tgtGo" class="mbtn main" style="text-align:center">🚀 Запустить</button><button id="tgtNo" class="mbtn" style="text-align:center">Отмена (Esc)</button></div>
+  </div>
+</div>
+
+<div id="editor" style="display:none" class="fixed inset-0 z-30 items-center justify-center p-2 sm:p-4 bg-black/85">
+  <div class="w-full max-w-5xl max-h-[96vh] overflow-y-auto rounded-2xl border border-fuchsia-500/50 bg-zinc-950/95 p-3 sm:p-5 shadow-2xl">
+    <div class="flex items-center justify-between gap-3 mb-3">
+      <div>
+        <div class="text-[11px] tracking-[0.3em] text-fuchsia-300/80">КАСТОМНАЯ БОМБА · БЕТА</div>
+        <h2 class="text-xl sm:text-2xl font-black text-white">🍄 Редактор гриба</h2>
+      </div>
+      <button id="edClose" class="mbtn" style="width:auto;padding:8px 16px">✕ Закрыть (Esc)</button>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <canvas id="edCv" width="560" height="400" class="w-full rounded-lg border border-zinc-700 bg-black"></canvas>
+        <div class="text-[11px] text-zinc-500 mt-1 leading-snug">2D-проекция, вид сбоку: так выбранная бомба будет взрываться в игре. Анимация идёт по кругу, горизонтальный масштаб увеличен. Выше 100 км начинается космос.</div>
+        <div id="edPre" class="flex flex-wrap gap-1.5 mt-2"></div>
+      </div>
+      <div>
+        <div id="edCtl" class="space-y-1.5 text-sm"></div>
+        <div class="mt-3 grid grid-cols-2 gap-2 items-center">
+          <input id="edName" maxlength="26" class="col-span-2 px-3 py-2 rounded-lg bg-zinc-900 border border-zinc-700 text-zinc-100" placeholder="Название бомбы">
+          <select id="edSlot" class="py-2"></select>
+          <button id="edSave" class="mbtn" style="padding:9px 12px">💾 Сохранить</button>
+          <button id="edUse" class="mbtn main col-span-2" style="padding:11px 12px">✔ Сохранить и выбрать для пуска</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -91,13 +142,16 @@ html,body{overscroll-behavior:none;-webkit-touch-callout:none;-webkit-tap-highli
         <h1 class="font-black text-5xl leading-none text-white">ПЕПЕЛ-9</h1>
         <span class="px-2.5 py-0.5 rounded-md bg-amber-500 text-zinc-950 font-mono font-black text-xs tracking-wider uppercase shadow">BETA v0.9</span>
       </div>
-      <div class="text-zinc-400 mt-2 mb-6 text-sm">Симулятор запуска баллистической ракеты и ядерного взрыва (бета-версия). Города, село, бункеры, 9 боеголовок, пост наблюдателя с биноклем и капсулы-жители. Устройство (ПК, планшет, телефон, ТВ) определяется автоматически.</div>
+      <div class="text-zinc-400 mt-2 mb-6 text-sm">Симулятор запуска баллистической ракеты и ядерного взрыва (бета-версия). Города, село, бункеры, 24 боеголовки (и свои из редактора гриба), пост наблюдателя с биноклем, космическая станция, 4 подземные шахты с автопилотом, режим самолёта и капсулы-жители. Устройство (ПК, планшет, телефон, ТВ) определяется автоматически.</div>
       <div class="space-y-2.5">
         <button id="bStart" class="mbtn main">▶ Начать</button>
         <button id="bNew" class="mbtn hidden">↻ Новая симуляция</button>
         <button id="bSet" class="mbtn">⚙ Настройки</button>
         <button id="bKeys" class="mbtn">⌨ Управление</button>
         <button id="bObs" class="mbtn">🔭 Режим наблюдателя (бинокль)</button>
+        <button id="bSpace" class="mbtn">🛰 Космос: станция (друг Зоркого — космонавт)</button>
+        <button id="bEdit" class="mbtn">🍄 Редактор гриба (кастомные бомбы)</button>
+        <button id="bPlane" class="mbtn">✈ Режим самолёта (сброс бомбы, парашют)</button>
         <button id="bFull" class="mbtn">⛶ Полный экран</button>
         <button id="bAbout" class="mbtn">★ Титры и автор</button>
       </div>
@@ -120,23 +174,30 @@ html,body{overscroll-behavior:none;-webkit-touch-callout:none;-webkit-tap-highli
         <div><kbd>Ctrl</kbd> <kbd>X</kbd> <kbd>↓</kbd> реверс</div>
         <div><kbd>W</kbd><kbd>S</kbd> наклон вперёд/назад</div>
         <div><kbd>A</kbd><kbd>D</kbd> наклон влево/вправо</div>
-        <div><kbd>I</kbd><kbd>J</kbd><kbd>K</kbd><kbd>L</kbd> ветер</div>
-        <div><kbd>0</kbd> штиль</div>
+        <div><kbd>I</kbd><kbd>J</kbd><kbd>K</kbd><kbd>L</kbd> поворот бинокля</div>
+        <div><kbd>-</kbd> / <kbd>+</kbd> сила ветра · <kbd>0</kbd> штиль</div>
         <div><kbd>Enter</kbd> детонация</div>
         <div><kbd>Пробел</kbd> пауза</div>
-        <div><kbd>←</kbd><kbd>→</kbd> или <kbd>-</kbd><kbd>+</kbd> время</div>
+        <div><kbd>←</kbd><kbd>→</kbd> замедление / ускорение времени</div>
         <div><kbd>R</kbd> перезапуск</div>
         <div><kbd>C</kbd> камера: ракета / жители / город</div>
         <div><kbd>N</kbd><kbd>P</kbd> следующий / прошлый житель</div>
-        <div><kbd>F</kbd> вид от первого лица</div>
-        <div><kbd>E</kbd> говорить / входить / нажимать</div>
+        <div><kbd>F</kbd> свободная камера: полёт с огромной скоростью (WASD, колесо — скорость)</div>
+        <div><kbd>E</kbd> поговорить с выбранным жителем</div>
         <div><kbd>1</kbd>…<kbd>9</kbd>, <kbd>Q</kbd>/<kbd>Z</kbd> или клик — выбор боеголовки (1–9)</div>
-        <div><kbd>B</kbd> войти в ближайший бункер / выйти</div>
+        <div><kbd>B</kbd> парашют у бомбы: включить / отключить</div>
+        <div><kbd>Ё</kbd> (<kbd>~</kbd>) режим самолёта: W/S тангаж, A/D крен, Shift газ, Ctrl/X тормоз, Enter — сбросить бомбу, повторно — подрыв в воздухе, C — камера</div>
+        <div><kbd>,</kbd> <kbd>.</kbd> выбрать подземную шахту 1–4 (до пуска)</div>
+        <div><kbd>Backspace</kbd> отключить автопилот ракеты</div>
+        <div><kbd>PgUp</kbd>/<kbd>PgDn</kbd> или <kbd>←</kbd>/<kbd>→</kbd> время до ×300 (<kbd>Home</kbd> ×1, <kbd>End</kbd> ×300)</div>
         <div><kbd>G</kbd> камера: следующий город / село</div>
-        <div><kbd>Tab</kbd> карта со спутника</div>
+        <div><kbd>Tab</kbd> карта: клик — цель, подтверждение, и автопилот сам ведёт ракету (<kbd>Shift</kbd>+клик — следить за жителем)</div>
         <div><kbd>T</kbd> показать/скрыть чат</div>
         <div><kbd>H</kbd> подсказки</div>
         <div><kbd>O</kbd> режим наблюдателя (бинокль с вышки)</div>
+        <div><kbd>Y</kbd> космос: станция с космонавтом (IJKL — вращать планету)</div>
+        <div><kbd>M</kbd> редактор гриба (свои бомбы, 2D-превью)</div>
+        <div><kbd>U</kbd> свернуть / развернуть список боеголовок</div>
         <div><kbd>V</kbd> автослежение в бинокле · колёсико — зум</div>
         <div>📱 Телефон/планшет: экранные кнопки, перетаскивание — камера, щипок — зум. ТВ: стрелки и ОК на пульте, геймпад.</div>
       </div>
@@ -186,10 +247,10 @@ function resize(){const iw=innerWidth,ih=innerHeight;W=iw/UIS;H=ih/UIS;cv.width=
 function setRS(v){if(RS===v&&cv.width===Math.round(innerWidth*v))return;RS=v;resize()}
 addEventListener('resize',()=>{if(S.dev===0)applyDevice();else resize()});resize();
 
-const DEF={volume:70,quality:1,yieldIdx:1,density:1,sky:0,talk:0,res:0,fov:70,sens:5,wind:6,shake:1,hints:1,lang:0,wx:0,eraFx:0,dev:0,ee:1};
+const DEF={volume:70,quality:1,yieldIdx:1,density:1,sky:0,talk:0,res:0,fov:70,sens:5,wind:6,shake:3,hints:1,lang:0,wx:0,eraFx:0,dev:0,ee:1,pinv:0};
 const S=Object.assign({},DEF);
-try{Object.assign(S,JSON.parse(localStorage.getItem('pepel9_v5')||'{}'))}catch(e){}
-function saveS(){try{localStorage.setItem('pepel9_v5',JSON.stringify(S))}catch(e){}}
+try{Object.assign(S,JSON.parse(localStorage.getItem('pepel9_v6')||'{}'))}catch(e){}
+function saveS(){try{localStorage.setItem('pepel9_v6',JSON.stringify(S))}catch(e){}}
 
 const SET_DEF=[
 ['volume','range','Громкость',0,100,5,v=>v+'%'],
@@ -206,8 +267,9 @@ const SET_DEF=[
 ['fov','range','Угол обзора',50,100,5,v=>v+'°'],
 ['sens','range','Чувствительность мыши',1,10,1,v=>v],
 ['wind','range','Начальный ветер, м/с (перезапуск)',0,30,1,v=>v],
-['shake','tog','Тряска камеры'],
-['hints','tog','Подсказки клавиш сверху']
+['shake','sel','Тряска камеры',['Выкл','Обычная','Сильная','ОГРОМНАЯ']],
+['hints','tog','Подсказки клавиш сверху'],
+['pinv','tog','Самолёт: инвертировать тангаж (W — вверх)']
 ];
 
 const YIELD=[0.7,1,1.5];
@@ -218,7 +280,10 @@ const SKY=[
 {top:[4,7,18],hz:[20,28,46],amb:0.3,gr:[18,24,20],sun:false}
 ];
 
-const PADH=5,RL=26,DRY=4200,FUEL0=6000,TMAX=170000;
+const PADH=0,RL=26,DRY=4200,FUEL0=6000,TMAX=170000;
+const SD=34,SH=6;
+const SIL=[[-75,-75],[75,-75],[-75,75],[75,75]].map((p,i)=>({id:i,x:p[0],z:p[1],door:0,la:{t:2,x:0,z:0,w:SH+0.5,d:2*SH+1,y0:0.28,y1:0.72,c:[96,102,112],win:0},lb:{t:2,x:0,z:0,w:SH+0.5,d:2*SH+1,y0:0.28,y1:0.72,c:[96,102,112],win:0}}));
+let silSel=0,flyOn=false,planeOn=false,tgtOpen=false,tgtPend=null;
 const OB={x:3600,z:-3900,y0:38,w:8,d:6,h:3.1,dead:false};
 OB.dist=hypot(OB.x,OB.z);OB.az=Math.round((atan2(OB.x,OB.z)*180/PI+360)%360);
 
@@ -329,7 +394,7 @@ lego:['У нас тут стартап: мы ракету только что о
 astana:['Байтерек выдержит. Он всё пережил.','Кумыс пьют до конца света, а потом ещё.','В юрте тепло, а снаружи — интересно.','Гости на пороге — бешбармак на столе. Всегда.'],
 village:['Куры не несутся — радио говорит, магнитные бури.','Корова сегодня не в настроении.','Опять трактор не заводится.','Самогон — не роскошь, а средство от радиации.','Бабушка сказала: ракета — к дождю.','Колодец ближе, чем бункер, — сходи за водой.','Участковый сказал: «Это не наше».','Огурцы в этом году — просто ракеты.']
 };
-const DANCE_Q=['Ура! Праздник!','Танцуем!','Это лучший апокалипсис!','Давайте ещё раз!','Кто заказывал диджея?','Ля-ля-ля!','Конфетти в ушах!','Шарики! Смотрите, шарики!','Қуаныш! (Радость!)','Это мне на день рождения?'];
+const DANCE_Q=['Ура! Праздник!','Танцуем!','Это лучший апокалипсис!','Давайте ещё раз!','Кто заказывал диджея?','Ля-ля-ля!','Конфетти в ушах!','Қуаныш! (Радость!)','Это мне на день рождения?'];
 const EAT_Q=['Вкуснота!','Со сметаной бы...','Ещё пельмешек!','Мама, я дома!','Лучшая гуманитарная помощь!','Горячие! Ай!','Уксус есть у кого-нибудь?','Это не бомба, это ужин!','Бешбармақ та осылай түссе ғой!','Налетай, пока не остыли!'];
 const DUCK_Q=['Кря! То есть ура!','Гигантская уточка! Не зря я ванну набирал!','Вот это гуманитарный кряк!','Ловите уточку, она резиновая!','Мой кот в шоке, а я в восторге!','Кря-кря! Лучшая бомбардировка в жизни!'];
 const EMP_Q=['Свет погас! А чайник?!','Где мой Wi-Fi?! Верните интернет!','Экран синий! Мой несохранённый отчёт!','Электричество кончилось, переходим на свечи!','Телефон кирпичом стал! Зато все живы!'];
@@ -385,10 +450,25 @@ bh:{rf:0.95,rise:0.35,shk:0.85,stem:0.8,pal:1,vap:1.4,lt:1.3,bld:1.3,kill:1,fl:1
 duck:{rf:0.85,rise:0.75,shk:0.55,stem:0.5,pal:3,vap:0,lt:0,bld:0,kill:0,fl:0.4,fd:1.6,fc:'255,250,190',quake:0.2,rc:'255,230,90'},
 nova:{rf:1.4,rise:1.15,shk:1.35,stem:1,pal:0,vap:1.5,lt:1.5,bld:1.5,kill:1,fl:1.4,fd:6.0,fc:'255,245,255',quake:1.8,rc:'255,195,250'}
 };
-WEAPONS.length=9;
+(function(){
+const dc=()=>({pow:1,hkm:12,cap:1,stem:1,pal:0,fog:0,shk:1,hurt:1,flash:1,quake:1,cool:1});
+WEAPONS.push(
+{n:'ВУЛКАН «ЙЕЛЛОУСТОУН»',sub:'супервулкан · пепел до стратосферы · лавовый дождь',s:1.5,ty:'volc'},
+{n:'ГРОМОВЕРЖЕЦ «ТОР»',sub:'грозовой шквал · сотни молний бьют по району',s:1.0,ty:'storm'},
+{n:'ПОПКОРН-БОМБА',sub:'кино под открытым небом · смешная · безобидная',s:0.8,ty:'pop'},
+{n:'ТУМАННАЯ «МОЛОКО»',sub:'окутывает город густым туманом · безобидная',s:1.0,ty:'cus',cfg:{pow:1,hkm:2,cap:1.2,stem:0.15,pal:2,fog:1,shk:0.2,hurt:0,flash:0.25,quake:0.15,cool:0.8}},
+{n:'КОСМИЧЕСКИЙ ГРИБ «ИКАР»',sub:'гриб поднимается до космоса · 130 км',s:1.3,ty:'cus',cfg:{pow:1.3,hkm:130,cap:1.6,stem:1.2,pal:0,fog:0,shk:1,hurt:1,flash:1.2,quake:1.4,cool:0.5}},
+{n:'СВОЯ БОМБА 1',sub:'настройте в редакторе гриба [M]',s:1,ty:'cus',cfg:dc(),cus:1},
+{n:'СВОЯ БОМБА 2',sub:'настройте в редакторе гриба [M]',s:1,ty:'cus',cfg:dc(),cus:1},
+{n:'СВОЯ БОМБА 3',sub:'настройте в редакторе гриба [M]',s:1,ty:'cus',cfg:dc(),cus:1}
+);
+WT.volc={rf:1.4,rise:1.5,shk:0.9,stem:1,pal:2,vap:0.6,lt:1,bld:1,kill:1,fl:0.5,fd:1.6,fc:'255,170,90',quake:2.0,rc:'210,130,80',tb:0.1,ta:0.62,tt:90,cool:0.6};
+WT.storm={rf:1.1,rise:0.5,shk:0.5,stem:0,pal:1,vap:0.7,lt:0.9,bld:0.3,kill:1,fl:0.9,fd:2.6,fc:'205,225,255',quake:1.0,rc:'170,200,255',cool:2};
+WT.pop={rf:0.8,rise:0.7,shk:0.4,stem:0.5,pal:2,vap:0,lt:0,bld:0,kill:0,fl:0.4,fd:1.6,fc:'255,248,215',quake:0.1,rc:'255,245,215',tb:0.55,ta:0.35,tt:60,react:'pop'};
+})();
 let wsel=0,pend=null,townSel=0,millA=0,fps=60,fpsAcc=0,fpsN=0,thin=1,lastTr=null,wepRects=[];
-let obsOn=false,OBSI=-1,HH=46,TOUCHY=false;
-const obs={yaw:0,pit:0.06,z:8,track:1},otg2={x:0,y:0,z:0,s:100},EE={on:false,t:0,peak:1,cap:0,fired:false};
+let obsOn=false,OBSI=-1,SPI=-1,spaceOn=false,HH=46,TOUCHY=false;
+const obs={yaw:0,yawT:0,pit:0.06,pitT:0.06,z:8,zT:8,track:1,vy:0,vp:0},otg2={x:0,y:0,z:0,s:100},EE={on:false,t:0,peak:1,cap:0,fired:false};
 const DEVN={pc:'ПК',tablet:'планшет',phone:'телефон',tv:'ТВ'};
 const OBS_Q={
 pre:['Бинокль протёр. Жду пуска.','Вижу стартовую площадку. Всё спокойно. Пока.','Доклад: ракета стоит, все стоят, я смотрю.','Отсюда весь город как на ладони. И все такие маленькие.','Чай остыл, но пост не брошу.'],
@@ -402,7 +482,7 @@ function applyRes(){
   thin=1;
 }
 function adaptRes(){thin=1}
-const TL=[0.1,0.25,0.5,1,2,3,5];
+const TL=[0.1,0.25,0.5,1,2,3,5,10,25,50,100,200,300];
 function setTL(i){tli=clamp(i,0,TL.length-1);timeScale=TL[tli]}
 
 const AU={};
@@ -439,7 +519,7 @@ function audioUpdate(){
   const act=!menuOpen&&!paused;
   const th=act&&R.alive?R.th:0,rv=act&&R.alive?R.rvr:0,ins=inBunkerView();
   AU.master.gain.setTargetAtTime(S.volume/100,t,0.1);
-  AU.muf.frequency.setTargetAtTime(ins?300:20000,t,0.25);
+  AU.muf.frequency.setTargetAtTime(ins?300:spaceOn?90:20000,t,0.25);
   AU.engG.gain.setTargetAtTime((0.55*th+0.3*rv)*(ins?0.7:1),t,0.08);
   AU.engLP.frequency.setTargetAtTime(110+360*th+100*rv,t,0.1);
   AU.crG.gain.setTargetAtTime(0.12*th,t,0.1);
@@ -623,11 +703,11 @@ function person(name,hue,x,z){
 function genWorld(){
   const rs=mulberry(20250),dn=S.density;
   const N=[10,14,18][dn],M=[8,11,14][dn];
-  const x0=290,z0=-300,pitch=96,bw=72;
+  const x0=1500,z0=-300,pitch=96,bw=72;
   const B=[],roads=[],trees=[],props=[],solids=[];
   const ci=floor(N/2),cj=floor(M/2);
   const bunkers=[
-    {id:0,name:'АЛЬФА «УЮТНЫЙ АТОМ»',short:'АЛЬФА',x:235,z:-62,r:24,cnt:0,gold:false},
+    {id:0,name:'АЛЬФА «УЮТНЫЙ АТОМ»',short:'АЛЬФА',x:x0-60,z:-62,r:24,cnt:0,gold:false},
     {id:1,name:'ОМЕГА-ЛЮКС',short:'ОМЕГА',x:x0+ci*pitch+36,z:z0+cj*pitch+36,r:28,cnt:0,gold:true}
   ];
   bunkers.forEach(b=>{
@@ -656,8 +736,8 @@ function genWorld(){
   }
   for(let i=-1;i<N;i++){const xa=x0+i*pitch+bw,xb=x0+(i+1)*pitch;roads.push({x0:xa,x1:xb,z0:z0-24,z1:z0+M*pitch,c:[56,58,62],v:true})}
   for(let j=-1;j<M;j++){const za=z0+j*pitch+bw,zb=z0+(j+1)*pitch;roads.push({x0:x0-24,x1:x0+N*pitch,z0:za,z1:zb,c:[56,58,62],v:false})}
-  roads.push({x0:20,x1:268,z0:-36,z1:-12,c:[56,58,62],v:false});
-  roads.push({x0:195,x1:290,z0:-112,z1:-36,c:[118,114,104],v:false,plaza:true});
+  roads.push({x0:105,x1:x0-24,z0:-36,z1:-12,c:[56,58,62],v:false});
+  roads.push({x0:x0-100,x1:x0-5,z0:-112,z1:-36,c:[118,114,104],v:false,plaza:true});
   roads.push({x0:x0+ci*pitch+2,x1:x0+ci*pitch+70,z0:z0+cj*pitch+2,z1:z0+cj*pitch+70,c:[72,100,58],v:false,plaza:true});
   const bbox={x0:x0-40,x1:x0+N*pitch+40,z0:z0-40,z1:z0+M*pitch+40};
   const parkB=bunkers[1];
@@ -668,12 +748,12 @@ function genWorld(){
   for(let i=0;i<260;i++){
     const x=-1800+rs()*(x0+N*pitch+1500+1800),z=-1800+rs()*(z0+M*pitch+1500+1800);
     if(x>bbox.x0&&x<bbox.x1&&z>bbox.z0&&z<bbox.z1)continue;
-    if(hypot(x,z)<70||hypot(x-235,z+62)<50)continue;
+    if(hypot(x,z)<190||hypot(x-(x0-60),z+62)<50)continue;
     trees.push({x,z,h:7+rs()*7,k:rs()});
   }
   const slab={t:2,x:0,z:0,w:36,d:36,y0:0,y1:PADH,c:[132,134,138],bias:30,solid:true};
   props.push(slab);
-  props.push({t:2,x:0,z:0,w:8,d:8,y0:PADH,y1:PADH+0.15,c:[40,40,44],bias:29});
+  
   for(let s=0;s<6;s++)props.push({t:2,x:-24,z:0,w:4.4,d:4.4,y0:s*7,y1:s*7+7,c:s%2?[230,230,232]:[210,60,50],solid:s===0});
   props.push({t:2,x:-13,z:0,w:22,d:0.9,y0:24,y1:25.2,c:[210,70,56],pre:true});
   for(const sx of[-30,30])for(const sz of[-30,30])props.push({t:2,x:sx,z:sz,w:0.8,d:0.8,y0:0,y1:34,c:[190,190,196]});
@@ -734,7 +814,7 @@ function genWorld(){
     const w=6+rs()*4,d=5+rs()*3,h=2.8+rs()*0.8,c=hcol[floor(rs()*5)];
     B.push({x,z,w,d,y0:0,y1:h,h,c,c0:c,st:0,ct:0,k:0.5+rs()*0.4,win:0,gable:1.8+rs()*0.9,rc:rcol[floor(rs()*3)]});
   }
-  for(let k=0;k<7;k++){const x=vx-160+rs()*320,z=vz+(rs()<0.5?1:-1)*(40+rs()*40);props.push({t:11,x,y:1.3,z,r:2.0,c:[214,184,84]})}
+  for(let k=0;k<7;k++){const x=vx-160+rs()*320,z=vz+(rs()<0.5?1:-1)*(40+rs()*40);props.push({t:2,x,z,w:3.8,d:3.8,y0:0,y1:2.8,c:[214,184,84]})}
   props.push({t:9,x:vx+12,z:vz+14,r:1.1,y0:0,y1:1.1,c:[130,128,124],solid:true});
   props.push({t:9,x:vx+12,z:vz+14,r:0.2,y0:1.1,y1:2.8,c:[96,66,40]});
   props.push({t:19,x:vx-90,z:vz+60,r:3.2,y0:0,y1:15,c:[196,176,146],solid:true,mill:true});
@@ -773,13 +853,23 @@ function genWorld(){
     towns.push({id:4,name:'НАБЛЮДАТЕЛЬНЫЙ ПОСТ',x:bx,z:bz,r:60});
   }
   for(let s=-1;s<=1;s+=2){
-    props.push({t:2,x:0,z:s*17,w:36,d:0.5,y0:PADH,y1:PADH+0.06,c:[226,190,40],bias:28});
-    props.push({t:2,x:s*17,z:0,w:0.5,d:36,y0:PADH,y1:PADH+0.06,c:[226,190,40],bias:28});
+    
+    
   }
   props.push({t:9,x:40,z:-22,r:3.2,y0:0,y1:7,c:[226,226,230],solid:true});
   props.push({t:9,x:47,z:-22,r:3.2,y0:0,y1:7,c:[226,226,230],solid:true});
   props.push({t:2,x:42,z:-34,w:2.6,d:9,y0:0.6,y1:3,c:[200,70,50],solid:true});
   props.push({t:2,x:42,z:-28.4,w:2.6,d:2.4,y0:0.6,y1:3.4,c:[60,80,120]});
+  for(const s of SIL){
+    props.push({t:2,x:s.x,z:s.z,w:34,d:34,y0:0,y1:0.25,c:[104,107,112],bias:60});
+    for(const q of [[0,-16.7,34,0.6],[0,16.7,34,0.6],[-16.7,0,0.6,34],[16.7,0,0.6,34]])props.push({t:2,x:s.x+q[0],z:s.z+q[1],w:q[2],d:q[3],y0:0.25,y1:0.31,c:[226,190,40],bias:59});
+    for(const sx of[-1,1])for(const sz of[-1,1])props.push({t:2,x:s.x+sx*(SH+0.9),z:s.z+sz*(SH+0.9),w:0.7,d:0.7,y0:0.25,y1:1.5,c:[255,120,60],em:true});
+    props.push({t:2,x:s.x,z:s.z,w:2*SH+1,d:2*SH+1,y0:0,y1:0.01,c:[0,0,0],solid:true,skip:true});
+    const kx=s.x<0?-25:25;
+    props.push({t:2,x:s.x+kx,z:s.z,w:6,d:5,y0:0,y1:3.2,c:[142,138,128],solid:true});
+    props.push({t:2,x:s.x+kx,z:s.z,w:6.4,d:5.4,y0:3.2,y1:3.5,c:[88,92,98]});
+    props.push({t:9,x:s.x+kx*1.25,z:s.z+9,r:0.5,y0:0,y1:7,c:[190,192,198]});
+  }
   const lamps=[],cars=[],patches=[];
   const carCols=[[200,40,40],[40,70,160],[220,220,224],[30,30,34],[210,170,40],[60,120,70],[150,150,155],[120,60,150]];
   for(let ri=0;ri<roads.length;ri++){
@@ -1601,20 +1691,23 @@ function nextDialog(){
 
 function resetSim(){
   obsOn=false;EE.on=false;EE.fired=false;EE.t=0;OB.dead=false;
+  spaceOn=false;PLN=null;BAL=null;EAT=null;
+  flyOn=false;planeOn=false;tgtOpen=false;tgtPend=null;resetAP();resetPlane();for(const s of SIL)s.door=0;
+  try{$('tgtModal').style.display='none'}catch(e){}
   T=0;D=null;pend=null;townSel=0;parts=[];subs=[];feed=[];dialog=null;sirenOn=false;shake=0;paused=false;mapOpen=false;
   const a=0.65;Wd.x=S.wind*cos(a);Wd.z=S.wind*sin(a);
-  R={x:0,y:PADH,z:0,vx:0,vy:0,vz:0,tx:0,tz:0,tvx:0,tvz:0,fuel:FUEL0,th:0,rvr:0,launched:false,alive:true,latch:false,ax:0,ay:1,az:0,trail:[],tt:0,grounded:true,maxAlt:0};
+  R={x:SIL[silSel].x,y:-(SD-2),z:SIL[silSel].z,vx:0,vy:0,vz:0,tx:0,tz:0,tvx:0,tvz:0,fuel:FUEL0,th:0,rvr:0,launched:false,alive:true,latch:false,ax:0,ay:1,az:0,trail:[],tt:0,grounded:true,maxAlt:0};
   genWorld();spawnCitizens();INT=[mkInterior(0),mkInterior(1),mkInterior(2)];
   GM.length=0;WX.t=0;applyWx();applyEraNames(0.4);
   setTL(3);fpOn=false;camMode=1;userCam=false;cv.classList.remove('fp');
   dist[0]=distT[0]=140;dist[1]=distT[1]=16;dist[2]=distT[2]=1100;
   sel=0;const h=citizens[0];orbit.yaw=atan2(-h.x,-h.z);orbit.pit=-0.2;
   tgt.x=h.x;tgt.y=1;tgt.z=h.z;
-  mapV={x:-100,z:550,s:min(innerWidth,innerHeight)/3400};
+  mapV={x:800,z:250,s:min(innerWidth,innerHeight)/4600};
   feedT=20;selQT=10;
   feedAdd('ШТАБ','Пусковая готова. Клавиши 1–9 — выбор боеголовки, Shift — запуск, Enter — детонация. Год: , . [ ]','#fbbf24');
   feedAdd('НАБЛЮДАТЕЛЬ','Бинокль наблюдателя — клавиша O. Его пост на вышке далеко за городом.','#67e8f9');
-  sub('Кликните по любому человечку, чтобы следить за ним. F — вид его глазами.',6);
+  sub('Кликните по любому человечку, чтобы следить за ним. F — свободный полёт камеры, Tab — карта и цель для автопилота.',6);
 }
 
 function randRoadPoint(tw){
@@ -1632,7 +1725,7 @@ function spawnCitizens(){
   };
   const dn=S.density;
   for(let i=0;i<10;i++){let x,z;do{const a=rnd()*TAU,d=rr(24,70);x=cos(a)*d;z=sin(a)*d}while(abs(x)<21&&abs(z)<21);add(x,z,0,i<3?KZ_PEOPLE:null)}
-  for(let i=0;i<9;i++){let x,z;do{x=235+rr(-50,50);z=-62+rr(-45,40)}while(hypot(x-235,z+62)<30);add(x,z,0)}
+  for(let i=0;i<9;i++){let x,z;const bax=WORLD.bunkers[0].x;do{x=bax+rr(-50,50);z=-62+rr(-45,40)}while(hypot(x-bax,z+62)<30);add(x,z,0)}
   const pb=WORLD.bunkers[1];
   for(let i=0;i<7;i++){const a=rnd()*TAU,d=pb.r+rr(8,24);add(pb.x+cos(a)*d,pb.z+sin(a)*d,0)}
   const total=[30,44,64][dn];
@@ -1647,6 +1740,12 @@ function spawnCitizens(){
     o.job='eng';o.age=51;o.trait='geek';o.mem=[];o.cd=RT+25;o.brave=false;
     o.hd=atan2(-OB.x,-OB.z);o.tx=o.x;o.tz=o.z;
     OBSI=o.id;citizens.push(o);
+  }
+  {
+    const q=person('Космонавт Звёздный',265,0,900000);
+    q.lang='ru';q.home=0;q.id=citizens.length;q.y=400000;q.st=13;q.safe=true;q.cosm=true;
+    q.job='eng';q.age=44;q.trait='philo';q.mem=[];q.cd=RT+30;q.tx=q.x;q.tz=q.z;
+    SPI=q.id;citizens.push(q);
   }
 }
 function spawnCitizensLegacy(){
@@ -1713,7 +1812,7 @@ function stepParts(dt){
       const pull=clamp(950/(dd+20),18,160);
       p.vx+=(dx/dd*pull-dz/dd*28)*dt;p.vy+=dy/dd*pull*dt;p.vz+=(dz/dd*pull+dx/dd*28)*dt;
     }
-    if(p.gv){p.vy-=p.gv*dt;if(p.y<=0.35){if(p.k===5&&p.vy<-2){p.vy=-p.vy*0.58}else{p.vx*=0.92;p.vz*=0.92}}}
+    if(p.gv){p.vy-=p.gv*dt;if(p.y<=0.35){if((p.k===5||p.k===7)&&p.vy<-2){p.vy=-p.vy*0.58}else{p.vx*=0.92;p.vz*=0.92}}}
     if(p.k===2)p.vx+=sin(p.a*7+p.hue)*3*dt;
     p.x+=p.vx*dt;p.y+=p.vy*dt;p.z+=p.vz*dt;
     if(p.y<0.3){p.y=0.3;if(p.vy<0)p.vy=0}
@@ -1721,27 +1820,30 @@ function stepParts(dt){
   }
 }
 
-function keyThrust(){return keys.ShiftLeft||keys.ShiftRight||keys.ArrowUp}
-function keyRev(){return keys.ControlLeft||keys.ControlRight||keys.KeyX||keys.ArrowDown}
+function keyThrust(){return !planeOn&&(keys.ShiftLeft||keys.ShiftRight||keys.ArrowUp)}
+function keyRev(){return !planeOn&&(keys.ControlLeft||keys.ControlRight||keys.KeyX||keys.ArrowDown)}
 
 function stepRocket(dt){
   if(!R.alive)return;
-  const thr=(keyThrust()||R.latch)&&R.fuel>0?1:0,rev=keyRev()&&R.fuel>0?1:0;
+  const apc=AP.on?stepAP(dt):null,sil=SIL[silSel];
+  if(!R.alive)return;
+  const thr=apc?(apc.thr&&R.fuel>0?1:0):((keyThrust()||R.latch)&&R.fuel>0?1:0),rev=apc?0:(keyRev()&&R.fuel>0?1:0);
   R.th+=(thr-R.th)*min(1,dt*3);R.rvr+=(rev-R.rvr)*min(1,dt*5);
   if(R.fuel<=0){R.th=0;R.rvr=0}
   let cf=(keys.Numpad8?1:0)-(keys.Numpad5?1:0),cr=(keys.Numpad6?1:0)-(keys.Numpad4?1:0);
-  if(!fpOn){cf+=(keys.KeyW?1:0)-(keys.KeyS?1:0);cr+=(keys.KeyD?1:0)-(keys.KeyA?1:0)}
+  if(!fpOn&&!flyOn&&!planeOn&&!apc){cf+=(keys.KeyW?1:0)-(keys.KeyS?1:0);cr+=(keys.KeyD?1:0)-(keys.KeyA?1:0)}
   cf=clamp(cf,-1,1);cr=clamp(cr,-1,1);
   const fyw=cam.yaw,fxv=sin(fyw),fzv=cos(fyw),rxv=cos(fyw),rzv=-sin(fyw);
   const wcx=rxv*cr+fxv*cf,wcz=rzv*cr+fzv*cf;
   if(R.grounded){R.tx=R.tz=R.tvx=R.tvz=0}
   else{
-    R.tvx+=(wcx*0.5-R.tvx)*min(1,dt*3);R.tvz+=(wcz*0.5-R.tvz)*min(1,dt*3);
+    if(apc){const ms=0.6*dt;R.tx+=clamp(apc.tx-R.tx,-ms,ms);R.tz+=clamp(apc.tz-R.tz,-ms,ms);R.tvx=0;R.tvz=0}else{R.tvx+=(wcx*0.5-R.tvx)*min(1,dt*3);R.tvz+=(wcz*0.5-R.tvz)*min(1,dt*3)}
     R.tx+=R.tvx*dt;R.tz+=R.tvz*dt;
     const m=hypot(R.tx,R.tz);if(m>1.5){R.tx*=1.5/m;R.tz*=1.5/m}
   }
   const m=hypot(R.tx,R.tz);
   if(m<1e-6){R.ax=0;R.ay=1;R.az=0}else{const s=sin(m)/m;R.ax=R.tx*s;R.az=R.tz*s;R.ay=cos(m)}
+  if(apc&&apc.vel){const sp0=hypot(R.vx,R.vy,R.vz);if(sp0>8){R.ax=R.vx/sp0;R.ay=R.vy/sp0;R.az=R.vz/sp0}}
   const mass=DRY+R.fuel,F=TMAX*(R.th-0.45*R.rvr);
   R.fuel=max(0,R.fuel-(R.th+0.5*R.rvr)*125*dt);
   windAt(R.y,wv);
@@ -1753,11 +1855,11 @@ function stepRocket(dt){
   let ax=R.ax*F/mass-R.ax*vax*kax-px*kpe;
   let ay=R.ay*F/mass-9.81-R.ay*vax*kax-py*kpe;
   let az=R.az*F/mass-R.az*vax*kax-pz*kpe;
-  const onPad=abs(R.x)<18&&abs(R.z)<18,gY=onPad?PADH:0;
-  if(R.grounded&&R.y<=gY+0.02&&ay<0){ax=0;ay=0;az=0;R.vx=R.vy=R.vz=0}
+  const gY=floorAt(R.x,R.y,R.z),holdD=R.grounded&&sil.door<0.98&&abs(R.x-sil.x)<2&&abs(R.z-sil.z)<2;
+  if(R.grounded&&R.y<=gY+0.02&&(ay<0||holdD)){ax=0;ay=0;az=0;R.vx=R.vy=R.vz=0}
   R.vx+=ax*dt;R.vy+=ay*dt;R.vz+=az*dt;
   R.x+=R.vx*dt;R.y+=R.vy*dt;R.z+=R.vz*dt;
-  if(R.y>PADH+0.6)R.grounded=false;
+  if(R.y>0.6)R.grounded=false;
   if(R.y>PADH+3&&!R.launched)R.launched=true;
   R.maxAlt=max(R.maxAlt,R.y-PADH);
   if(!OB.dead&&!EE.fired&&abs(R.x-OB.x)<28&&abs(R.z-OB.z)<28&&R.y>OB.y0-10&&R.y<OB.y0+16){triggerEE(R.x,R.y,R.z);return}
@@ -1767,13 +1869,14 @@ function stepRocket(dt){
     kkRant();
     if(camMode===1&&!userCam&&!fpOn){camMode=0}
   }
-  const gY2=(abs(R.x)<18&&abs(R.z)<18)?PADH:0;
+  const gY2=floorAt(R.x,R.y,R.z);
   if(R.y<=gY2){
     const sp=hypot(R.vx,R.vy,R.vz);
     if(R.launched&&sp>10){R.y=gY2;detonate();return}
     R.y=gY2;if(R.vy<0)R.vy=0;R.vx*=0.9;R.vz*=0.9;
   }
   const ux=R.ax,uy=R.ay,uz=R.az,sp=hypot(R.vx,R.vy,R.vz);
+  const thSave=R.th;if(R.grounded&&sil.door<=0.3&&R.y<=-4)R.th=0;
   if(R.th>0.05){
     const n=R.th*260*dt*QUAL[S.quality].dm*1.2;let c=floor(n+rnd());
     for(let i=0;i<c;i++){
@@ -1800,6 +1903,7 @@ function stepRocket(dt){
       addP(nx,ny,nz,R.vx*0.3+ux*v+rr(-5,5),R.vy*0.3+uy*v+rr(-5,5),R.vz*0.3+uz*v+rr(-5,5),1.3,4,rr(0.3,0.6),0.9,1.2,0,0.45,0,3.5);
     }
   }
+  R.th=thSave;
   R.tt+=dt;if(R.tt>0.3){R.tt=0;R.trail.push([R.x,R.z]);if(R.trail.length>500)R.trail.shift()}
 }
 
@@ -1808,7 +1912,7 @@ function shockT(d,s,shk){const Rm=5000*s*shk;return d<Rm*0.99?-8*Math.log(1-d/Rm
 const CI={cy:0,R:0,r:0,top:0,sr:0};
 function cloudInfo(t){
   const s=D.s,r0=210*s*D.rf;
-  CI.cy=D.bh+r0+4300*s*D.rise*(1-exp(-t/24));
+  CI.cy=D.bh+r0+4300*s*D.rise*(1-exp(-t/(D.rt||24)));
   CI.R=950*s*(0.55+0.45*D.rf)*(1-exp(-t/16))*(1-exp(-t/3));
   CI.r=r0+(400*s*max(1,D.rf*0.9)-r0)*(1-exp(-t/22));
   CI.top=max(20,CI.cy-CI.r*0.55);
@@ -1885,12 +1989,13 @@ function stepPend(dt){
 }
 function detonate(pos){
   if(D||(pend&&!pos))return;
-  const wi=pos&&pos.wi!==undefined?pos.wi:wsel,wp=WEAPONS[wi],ty=WT[wp.ty];
+  const wi=pos&&pos.wi!==undefined?pos.wi:wsel,wp=WEAPONS[wi],ty=wp.cfg?cfgToWT(wp.cfg,wp.s*YIELD[S.yieldIdx]):WT[wp.ty];
   let cx,cy,cz;
   if(pos){cx=pos.x;cy=pos.y;cz=pos.z}
   else{if(!R.alive)return;cx=R.x+R.ax*RL*0.5;cy=max(2,R.y+R.ay*RL*0.5);cz=R.z+R.az*RL*0.5}
   if(!(pos&&pos.ee)&&!OB.dead&&!EE.fired&&hypot(cx-OB.x,cz-OB.z)<170&&cy<OB.y0+80){triggerEE(cx,cy,cz);return}
-  if(!pos&&(wp.ty==='ast'||wp.ty==='ray'||wp.ty==='mirv')){
+  if(spaceOn&&!(pos&&pos.ee)&&spaceSpecial(wi,wp))return;
+  if((!pos||pos.fb)&&(wp.ty==='ast'||wp.ty==='ray'||wp.ty==='mirv')){
     R.alive=false;R.latch=false;
     const dur=wp.ty==='ast'?4.2:wp.ty==='ray'?3.2:2.4;
     pend={t:0,dur,ty:wp.ty,x:cx,y:2,z:cz,wi};
@@ -1905,7 +2010,7 @@ function detonate(pos){
   }
   const s=wp.s*YIELD[S.yieldIdx],Q=QUAL[S.quality],bh=max(0,cy-5);
   const gp=(wp.ty==='anti'||wp.ty==='emp'||wp.ty==='cryo'||wp.ty==='bh')?1:(wp.ty==='ray'||wp.ty==='cobalt')?2:0;
-  D={t:0,x:cx,z:cz,bh,s,dx:0,dz:0,cloud:[],rs:0,ruins:[],arr:[0,0,0],ty:wp.ty,rf:ty.rf,rise:ty.rise,shk:ty.shk,pal:ty.pal,cool:ty.cool||1,tb:ty.tb||0,ta:ty.ta||0,tt:ty.tt||30,fl:ty.fl,fd:ty.fd,fc:ty.fc,rc:ty.rc,kill:ty.kill,quake:ty.quake,vapR:1100*s*ty.vap,letR:4200*s*ty.lt,bldR:3400*s*ty.bld,stemF:clamp(1-bh/(1200*s),0,1)*ty.stem,gp,name:wp.n,nuc:(wp.ty==='nuke'||wp.ty==='thermo'||wp.ty==='anti'||wp.ty==='ast'||wp.ty==='mirv'||wp.ty==='nova'||wp.ty==='cobalt'),sev:clamp(0.3+s*0.5,0.3,1)};
+  D={t:0,x:cx,z:cz,bh,s,dx:0,dz:0,cloud:[],rs:0,ruins:[],arr:[0,0,0],ty:wp.ty,rf:ty.rf,rise:ty.rise,shk:ty.shk,pal:ty.pal,cool:ty.cool||1,tb:ty.tb||0,ta:ty.ta||0,tt:ty.tt||30,fl:ty.fl,fd:ty.fd,fc:ty.fc,rc:ty.rc,kill:ty.kill,quake:ty.quake,vapR:1100*s*ty.vap,letR:4200*s*ty.lt,bldR:3400*s*ty.bld,stemF:clamp(1-bh/(1200*s),0,1)*ty.stem,gp,name:wp.n,nuc:(wp.ty==='nuke'||wp.ty==='thermo'||wp.ty==='anti'||wp.ty==='ast'||wp.ty==='mirv'||wp.ty==='nova'||wp.ty==='cobalt'),sev:clamp(0.3+s*0.5,0.3,1),fog:ty.fog||0,stw:1,rt:24,atm:(ty.kill&&s>=1.2)?clamp((s-1)/1.6,0.25,1):0,hf:clamp(1-bh/(2600*s),0.05,1)};
   R.alive=false;R.latch=false;sirenOn=false;
   for(const b of WORLD.bunkers)D.arr[b.id]=shockT(hypot(b.x-cx,b.z-cz),s,D.shk);
   const nf=floor(Q.fire*(wp.ty==='ray'?0.35:wp.ty==='tall'?0.7:wp.ty==='emp'?0.45:1)),ns=D.stemF>0.05?floor(Q.stem*(wp.ty==='ray'?1.6:1)):0;
@@ -1927,15 +2032,17 @@ function detonate(pos){
       if(wp.ty==='emp'){
         h.st=10;h.tm=0.5;h.q=pick(EMP_Q);h.qtr=null;h.qd=4.5;
       }else{
-        h.st=(wp.ty==='conf'||wp.ty==='duck')?11:12;
+        const rc=ty.react||((wp.ty==='conf'||wp.ty==='duck')?'dance':'eat');
+        h.st=rc==='dance'?11:rc==='fog'?1:12;
         h.tm=rr(9,15);
-        h.q=pick(wp.ty==='conf'?DANCE_Q:wp.ty==='duck'?DUCK_Q:EAT_Q);
+        h.q=pick(rc==='dance'?(wp.ty==='duck'?DUCK_Q:DANCE_Q):rc==='fog'?FOG_Q:rc==='pop'?POP_Q:EAT_Q);
         h.qtr=null;h.qd=4;
       }
     }
   }
-  if(D.kill)for(const b of WORLD.B){if(b.st===0&&hypot(b.x-cx,b.z-cz)<350*s*ty.bld)startCollapse(b)}
+  if(D.kill)for(const b of WORLD.B){if(b.st===0&&hypot(b.x-cx,b.z-cz,bh)<350*s*ty.bld*D.hf){startCollapse(b);b.chk=1}}
   if(camMode===0)distT[0]=max(distT[0],3800*s);
+  detExtra(wp,ty,cx,cy,cz,s,Q);
   if(wp.ty==='tall'){debris(floor(240*Q.dm),60,170,5*s*3,0.15,9,cx,cz,1);debris(floor(90*Q.dm),50,130,4*s*3,0.9,5,cx,cz,0)}
   if(wp.ty==='ast'||wp.ty==='nova'){debris(floor(260*Q.dm),120,320,9*s,0.9,30,cx,cz,0);debris(floor(200*Q.dm),80,220,10*s,0.18,30,cx,cz,1)}
   if(wp.ty==='thermo')debris(floor(120*Q.dm),40,120,4*s*3,0.9,6,cx,cz,0);
@@ -1994,6 +2101,7 @@ function detonate(pos){
     const dd=hypot(cam.x-cx,cam.y-cy,cam.z-cz);
     if(wp.ty==='duck')quackSound();
     else if(wp.ty==='emp')empSound();
+    else if(wp.cfg&&fun&&ty.fog>0.3)sweep(420,90,3,'sine',0.14);
     else if(fun)party(wp.ty==='conf');
     else{
       boom(min(dd/700,4),(inBunkerView()?0.9:1.3)*({nuke:1.1,tall:0.8,thermo:1.1,anti:1.4,ast:1.6,ray:1.1,mirv:1.3,cobalt:1.2,cryo:1.0,bh:1.3,nova:1.7}[wp.ty]||1),({tall:2400,anti:3200,ast:1100,cryo:2800,bh:400,nova:1800})[wp.ty]);
@@ -2001,12 +2109,12 @@ function detonate(pos){
     }
   }
   sub(BOOMTXT[wp.ty],3.2);
-  const msg=wp.ty==='conf'?'Все довольны. Самая добрая детонация в истории.':wp.ty==='pel'?'Население накормлено. Повара требуют премии.':wp.ty==='duck'?'Гигантская резиновая уточка приземлилась. Город крякает от восторга.':wp.ty==='emp'?'Электромагнитный импульс погасил все экраны и окна, но здания и жители целы.':wp.n+': все, кто был снаружи, имеют право на минуту молчания.';
+  const msg=(wp.cfg&&fun)?(ty.fog>0.3?'Город окутан густым туманом. Видимость — три метра, настроение — загадочное.':'Безобидный взрыв: никто не пострадал.'):wp.ty==='conf'?'Все довольны. Самая добрая детонация в истории.':wp.ty==='pel'?'Население накормлено. Повара требуют премии.':wp.ty==='duck'?'Гигантская резиновая уточка приземлилась. Город крякает от восторга.':wp.ty==='emp'?'Электромагнитный импульс погасил все экраны и окна, но здания и жители целы.':wp.n+': все, кто был снаружи, имеют право на минуту молчания.';
   feedAdd('ШТАБ',msg,fun?'#f9a8d4':'#fb7185');
   if((D.kill||wp.ty==='emp')&&rnd()<0.65)kkRant();
 }
-function startCollapse(b){
-  b.st=1;b.ct=0;b.win=0;b.c=[72,62,56];
+function startCollapse(b,f){
+  b.st=1;b.ct=0;b.cf=f||0.92;b.win=0;b.c=[72,62,56];
   for(let i=0;i<6;i++)addP(b.x+rr(-b.w/2,b.w/2),rr(2,min(40,b.h)),b.z+rr(-b.d/2,b.d/2),rr(-5,5),rr(2,8),rr(-5,5),8,8,rr(5,9),0.5,0.1,1,0.5,0,0.6);
 }
 function startRun(h){
@@ -2055,7 +2163,7 @@ function stepCitizens(dt){
       if(RT>h.cd&&rnd()<dt*0.25){
         let kq='pre';
         if(D)kq='boom';else if(R.alive&&R.launched)kq=hypot(R.x-OB.x,R.z-OB.z)<1800?'near':'fly';
-        h.q=pick(OBS_Q[kq]);h.qtr=null;h.qd=5;h.cd=RT+rr(18,40)/talkMul();
+        h.q=pick((h.cosm?SP_Q:OBS_Q)[kq]);h.qtr=null;h.qd=5;h.cd=RT+rr(18,40)/talkMul();
       }
       continue;
     }
@@ -2159,17 +2267,24 @@ function stepDet(dt){
   const c=cloudInfo(t);windAt(c.cy,wv);D.dx+=wv.x*dt*0.85;D.dz+=wv.z*dt*0.85;
   const s=D.s,Q=QUAL[S.quality];
   if(D.kill){
-    const R2=Rs*Rs,L2=D.letR*D.letR*1.1;
+    const R2=Rs*Rs,L2=D.letR*D.letR*1.1*D.hf*D.hf;
     for(let i=0;i<WORLD.cars.length;i++){const cr=WORLD.cars[i];if(cr.dead)continue;const dx=cr.x-D.x,dz=cr.z-D.z,d2=dx*dx+dz*dz;if(d2<=R2&&d2<L2){cr.dead=true;cr.b.c=[36,31,29];cr.c2.c=[22,20,20];cr.c2.y1=cr.c2.y0+0.25}}
     for(let i=0;i<WORLD.lamps.length;i++){const lp=WORLD.lamps[i];if(lp.dead)continue;const dx=lp.x-D.x,dz=lp.z-D.z,d2=dx*dx+dz*dz;if(d2<=R2&&d2<L2)lp.dead=true}
   }
   if(D.kill){
     for(const b of WORLD.B){
       if(b.st===0){
-        const d=hypot(b.x-D.x,b.z-D.z,D.bh*0.4);
-        if(Rs>=d){if(d<D.bldR*b.k)startCollapse(b);else{b.st=3;b.win=0}}
+        const dg=hypot(b.x-D.x,b.z-D.z);
+        if(Rs>=dg&&!b.chk){
+          const xr=hypot(dg,D.bh)/(D.bldR*b.k);
+          b.chk=1;
+          if(xr<0.4)startCollapse(b,0.93);
+          else if(xr<0.66)startCollapse(b,0.78-0.5*(xr-0.4)/0.26);
+          else if(xr<1){b.st=3;b.win=0}
+          else if(xr<1.3)b.win=0;
+        }
       }else if(b.st===1){
-        b.ct+=dt/2.4;b.y1=b.h*(1-0.92*sstep(b.ct));
+        b.ct+=dt/2.4;b.y1=b.h*(1-(b.cf||0.92)*sstep(b.ct));
         if(b.ct>=1){b.st=2;D.ruins.push(b)}
       }
     }
@@ -2177,7 +2292,7 @@ function stepDet(dt){
       const h=citizens[i];
       if(h.hit||deadish(h)||h.bn>=0)continue;
       const d=hypot(h.x-D.x,h.z-D.z);
-      if(Rs>=d){h.hit=true;if(d<D.letR*(0.8+0.4*((h.id*37)%10)/10))killCitizen(h,'blast',D)}
+      if(Rs>=d){h.hit=true;if(hypot(d,D.bh)<D.letR*(0.8+0.4*((h.id*37)%10)/10)*(0.55+0.45*D.hf))killCitizen(h,'blast',D)}
     }
     for(const tr of WORLD.trees){
       if(tr.dead)continue;
@@ -2199,6 +2314,7 @@ function stepDet(dt){
       }
     }
   }
+  stepExtra(dt,t,s,Q,c);
   if(D.ty==='emp'&&t<18){
     for(const b of WORLD.B){if(b.win&&hypot(b.x-D.x,b.z-D.z)<=Rs)b.win=0}
   }
@@ -2235,7 +2351,7 @@ function stepDet(dt){
 
 function stepPhys(dt){
   T+=dt;
-  stepRocket(dt);stepPend(dt);stepParts(dt);stepDet(dt);
+  stepSilos(dt);stepRocket(dt);stepPend(dt);stepParts(dt);stepDet(dt);stepPlane(dt);stepBomb(dt);
 }
 function stepAI(dt){
   stepCitizens(dt);stepInt(dt);stepWx(dt);
@@ -2244,7 +2360,7 @@ function stepAI(dt){
 function activeCit(h){return h&&(h.st===0||h.st===1||h.st===2||h.st===7||h.st===8||h.st===9||h.st===10||h.st===11||h.st===12||h.st===13)}
 function nextCit(dir,onlyAct){
   const n=citizens.length;let idx=sel;
-  for(let k=0;k<n;k++){idx=(idx+dir+n)%n;const c=citizens[idx];if(activeCit(c)||(!onlyAct&&!fpOn&&c.st===5))break}
+  for(let k=0;k<n;k++){idx=(idx+dir+n)%n;const c=citizens[idx];if((activeCit(c)&&!c.cosm)||(!onlyAct&&!fpOn&&c.st===5))break}
   if(idx===sel)return;
   const wasFp=fpOn;
   if(wasFp)releaseCit(citizens[sel]);
@@ -2253,8 +2369,10 @@ function nextCit(dir,onlyAct){
 }
 function releaseCit(h){if(h&&h.bn>=0)exitBunker(h);if(h)h.st=activeCit(h)||h.st===1?1:h.st}
 function possess(){
+  return;
   const h=citizens[sel];if(!h)return;
   if(h.obs){enterObs();return}
+  if(h.cosm){enterSpace();return}
   if(h.st===3){sub('Этот житель уже в бункере. Выберите другого (N).',3);fpOn=false;return}
   fpOn=true;fp.yaw=h.hd;fp.pit=0;
   if(h.partner){if(h.partner.partner===h)h.partner.partner=null;h.partner=null}
@@ -2262,7 +2380,8 @@ function possess(){
   try{if(cv.requestPointerLock){const p=cv.requestPointerLock();if(p&&p.catch)p.catch(()=>{})}}catch(e){}
   cv.classList.add('fp');
 }
-function toggleFP(){
+function toggleFPOld(){
+  if(spaceOn){exitSpace();return}
   if(obsOn){exitObs();return}
   if(fpOn){
     const h=citizens[sel];if(h&&h.bn>=0)exitBunker(h);
@@ -2307,7 +2426,8 @@ function findInteract(){
 }
 function doInteract(){
   if(dialog){nextDialog();return}
-  const h=citizens[sel];const it=findInteract();if(!it)return;
+  const h=citizens[sel];const it=findInteract();
+  if(!it){if(!fpOn&&camMode===1&&!obsOn&&!spaceOn&&!flyOn&&!planeOn&&h&&activeCit(h)&&!h.obs&&!h.cosm){startDialog(h.name,citScript(h))}return}
   if(it.type==='cit'){const c=it.ref;c.hd=atan2(h.x-c.x,h.z-c.z);c.st=1;c.tm=8;if(c.partner){if(c.partner.partner===c)c.partner.partner=null;c.partner=null}startDialog(c.name,citScript(c))}
   else if(it.type==='door')enterBunker(h,it.ref.id);
   else if(it.type==='exit')exitBunker(h);
@@ -2333,7 +2453,7 @@ function orbitTarget(o){
   const h=citizens[sel];
   if(camMode===0){
     if(D){const c=cloudInfo(D.t);o.x=D.x+D.dx;o.y=c.cy*0.55;o.z=D.z+D.dz}
-    else{o.x=R.x;o.y=R.y+RL*0.5;o.z=R.z}
+    else{o.x=R.x;o.y=max(8,R.y+RL*0.5);o.z=R.z}
   }else if(camMode===1){
     if(h&&h.bn>=0){const b=WORLD.bunkers[h.bn];o.x=b.x;o.y=3;o.z=b.z}
     else if(h&&h.st===3){const b=WORLD.bunkers[h.bk];o.x=b.x;o.y=3;o.z=b.z}
@@ -2356,11 +2476,11 @@ function updateCamera(rdt){
   shake+=(sh-shake)*min(1,rdt*8);
   if(obsOn){
     updateObs(rdt);
-    const j=shake*0.003;
+    const j=shake*0.003*(SHK_M[S.shake]||0)/pow(max(1,obs.z),0.6);
     setCam(OB.x,OB.y0+1.75,OB.z,obs.yaw+(rnd()-0.5)*j,obs.pit+(rnd()-0.5)*j);
     return;
   }
-  if(fpOn&&h){
+  if(flyOn){updateFly(rdt)}else if(planeOn){updatePlaneCam(rdt)}else if(fpOn&&h){
     const eye=(h.bn>=0?1.62:1.62+h.y)+sin(h.ph)*0.03;
     setCam(h.x,eye,h.z,fp.yaw,fp.pit);
   }else{
@@ -2374,9 +2494,13 @@ function updateCamera(rdt){
     let cy=tgt.y-fy*dd;if(cy<0.7)cy=0.7;
     setCam(tgt.x-fx*dd,cy,tgt.z-fz*dd,orbit.yaw,orbit.pit);
   }
+  shkPx=0;
   if(shake>0.01){
-    const a=shake*(fpOn?0.05:dist[camMode]*0.004);
-    cam.x+=(rnd()-0.5)*a;cam.y+=(rnd()-0.5)*a;cam.z+=(rnd()-0.5)*a;
+    const sk=shake*(SHK_M[S.shake]||0),a=sk*(fpOn?0.05:dist[camMode]*0.004);
+    if(sk>0.01){
+      setCam(cam.x+(rnd()-0.5)*a,max(0.4,cam.y+(rnd()-0.5)*a),cam.z+(rnd()-0.5)*a,cam.yaw+(rnd()-0.5)*sk*0.012,cam.pit+(rnd()-0.5)*sk*0.009);
+      shkPx=min(34,sk*4.2);
+    }
   }
 }
 
@@ -2477,7 +2601,7 @@ function drawTree(t,z){
   g.beginPath();g.moveTo(bx,by);g.lineTo(bx,by-(by-ty)*0.45);g.stroke();
   const gc=[40+t.k*30,96+t.k*34,44+t.k*16];
   const h1=by-(by-ty)*0.25;
-  if(t.k>0.55){
+  if(false){
     const cy2=by-(by-ty)*0.68,rx=wf*1.3,ry=(by-ty)*0.34;
     g.fillStyle=col([34+t.k*40,92+t.k*40,38+t.k*18],lightK*0.82,fog);g.beginPath();g.ellipse(bx,cy2,rx,ry,0,0,TAU);g.fill();
     g.fillStyle=col([58+t.k*40,122+t.k*40,56+t.k*18],lightK*1.05,fog);g.beginPath();g.ellipse(bx-rx*0.2,cy2-ry*0.25,rx*0.65,ry*0.6,0,0,TAU);g.fill();
@@ -2632,7 +2756,7 @@ function drawBunker(b,z){
   }
 }
 
-function drawRocket(){
+function drawRocketOld(){
   const u=[R.ax,R.ay,R.az];
   let hx=0,hy=1,hz=0;if(abs(R.ay)>0.98){hx=1;hy=0}
   let ax=u[1]*hz-u[2]*hy,ay=u[2]*hx-u[0]*hz,az=u[0]*hy-u[1]*hx;const l=hypot(ax,ay,az);ax/=l;ay/=l;az/=l;
@@ -2682,6 +2806,8 @@ function drawSkyGround(sk){
   const ak=ashK();
   if(ak.dark>0.003){top=mixc(top,[4,3,6],ak.dark*0.94);hz=mixc(hz,[36,13,9],ak.dark*0.86)}
   if(ak.gray>0.003){top=mixc(top,[92,92,96],ak.gray*0.86);hz=mixc(hz,[134,130,126],ak.gray*0.86)}
+  const am0=atmK();
+  if(am0>0.01){top=mixc(top,[70,16,96],am0*0.72);hz=mixc(hz,[255,70,110],am0*0.38)}
   if(D&&D.t<25){
     const tint=D.ty==='cobalt'?[90,235,120]:D.ty==='cryo'?[160,230,255]:D.ty==='bh'?[140,80,255]:[255,150,70];
     hz=mixc(hz,tint,clamp(1-D.t/25,0,1)*0.24);
@@ -2724,6 +2850,8 @@ function drawBeam(){
       fillQuad(D.x+bx*c2,0,D.z+bz*c2,D.x-bx*c2,0,D.z-bz*c2,D.x-bx*c2,16000,D.z-bz*c2,D.x+bx*c2,16000,D.z+bz*c2,'rgba(235,255,245,0.9)');
       g.globalCompositeOperation='source-over';
     }
+  }else if(D.ty==='storm'&&D.t<14){
+    stormBolts();
   }else if(D.ty==='emp'&&D.t<3.5){
     const al=clamp(1-D.t/3.5,0,1);
     g.save();g.globalCompositeOperation='lighter';g.strokeStyle='rgba(130,220,255,'+(al*0.85)+')';g.lineWidth=2.5;g.beginPath();
@@ -2765,13 +2893,13 @@ function drawDecals(){
   }
   g.stroke();g.restore();
   if(D){
-    const rad=(D.kill?1400:D.ty==='emp'?900:0)*D.s*sstep(D.t/2);
+    const rad=(D.kill?1400:D.ty==='emp'?900:0)*D.s*sstep(D.t/2)*(D.kill?D.hf:1);
     if(rad>1){
       const v=[];for(let i=0;i<28;i++){const a=i/28*TAU;v.push(D.x+cos(a)*rad,0.07,D.z+sin(a)*rad)}
       fillPoly(v,D.ty==='cryo'?'rgba(200,240,255,0.58)':D.ty==='cobalt'?'rgba(20,55,28,0.55)':D.ty==='emp'?'rgba(20,45,80,0.32)':'rgba(12,10,8,0.5)');
     }
     if(D.kill){
-      const v2=[];for(let i=0;i<20;i++){const a=i/20*TAU;v2.push(D.x+cos(a)*80*D.s,0.08,D.z+sin(a)*80*D.s)}
+      const v2=[];for(let i=0;i<20;i++){const a=i/20*TAU;v2.push(D.x+cos(a)*80*D.s*D.hf,0.08,D.z+sin(a)*80*D.s*D.hf)}
       fillPoly(v2,D.ty==='cryo'?'rgba(140,220,255,0.85)':D.ty==='bh'?'rgba(15,5,30,0.92)':'rgba(5,4,3,0.8)');
     }
     const rs=D.rs;
@@ -2814,6 +2942,7 @@ function drawWindStreaks(rdt){
 }
 function drawShadow(){
   if(!R.alive)return;
+  if(R.y<3)return;
   const sx=0.64,sz=0.79;
   const bx=R.x-R.y*sx,bz=R.z-R.y*sz,ny=R.y+R.ay*RL,nx=R.x+R.ax*RL-ny*sx,nz=R.z+R.az*RL-ny*sz;
   const dx=nx-bx,dz=nz-bz,l=hypot(dx,dz)||1,px=-dz/l*1.5,pz=dx/l*1.5;
@@ -2833,6 +2962,7 @@ function gatherSprite(x,y,z,size,idx,al,add,ty){
   const it=addItem(tc[2],ty,null);it.sx=sx;it.sy=sy;it.sr=min(sr,800);it.al=al;it.idx=idx;it.add=add;
 }
 function gatherShape(p){
+  if(p.k===3||p.k===6)return;
   toCam(p.x,p.y,p.z,tc);if(tc[2]<NEAR*3)return;
   const k=FOCAL/tc[2],sr=p.s*k;if(sr<0.8)return;
   const sx=CX+tc[0]*k,sy=CY-tc[1]*k;
@@ -2861,6 +2991,11 @@ function drawShape(it){
     g.fillStyle='hsla('+(p.hue*15)+',90%,75%,0.18)';
     g.beginPath();g.arc(x,y,r,0,TAU);g.fill();g.stroke();
     g.fillStyle='rgba(255,255,255,0.75)';g.beginPath();g.arc(x-r*0.32,y-r*0.32,r*0.2,0,TAU);g.fill();
+  }else if(p.k===7){
+    g.fillStyle='#fff4c9';g.beginPath();
+    for(const q of [[0,0,0.62],[-0.5,0.22,0.5],[0.52,0.18,0.48],[0.05,-0.42,0.45]]){g.moveTo(x+(q[0]+q[2])*r,y+q[1]*r);g.arc(x+q[0]*r,y+q[1]*r,q[2]*r,0,TAU)}
+    g.fill();
+    g.fillStyle='#f3c04a';g.beginPath();g.arc(x+r*0.2,y+r*0.1,r*0.16,0,TAU);g.moveTo(x-r*0.23,y-r*0.1);g.arc(x-r*0.35,y-r*0.1,r*0.12,0,TAU);g.fill();
   }
 }
 function drawTownLabel(t,z){
@@ -2909,10 +3044,10 @@ function gatherSpriteLegacy(x,y,z,size,idx,al,add,dust){
 
 function renderOutdoor(rdt){
   const sk=SKY[S.sky];
-  drawSkyGround(sk);drawGroundDetail();drawDecals();drawShadow();if(!obsOn)drawWindStreaks(rdt);
+  drawSkyGround(sk);drawAtmo();drawGroundDetail();drawDecals();drawTargetMark();drawShadow();if(!obsOn)drawWindStreaks(rdt);
   list.length=0;ni=0;citScreen.length=0;
   for(const p of WORLD.props){
-    if(p.pre&&R.launched)continue;
+    if(p.skip||(p.pre&&R.launched))continue;
     const z=zdep(p.x,p.t===11?p.y:(p.y0+p.y1)/2,p.z);if(z<-60||z>9000)continue;
     addItem(z+(p.bias||0),p.mill?19:p.t,p);
   }
@@ -2930,6 +3065,14 @@ function renderOutdoor(rdt){
     addItem(z,5,t);
   }
   for(const b of WORLD.bunkers){addItem(zdep(b.x,4,b.z)+8,6,b)}
+  for(let i=0;i<4;i++){
+    const s=SIL[i],zs=zdep(s.x,0,s.z);if(zs<-40||zs>4500)continue;
+    if(s.door>0.015)addItem(zs+50,25,s);
+    silLeaves(s);
+    addItem(zdep(s.la.x,0.5,s.la.z),2,s.la);addItem(zdep(s.lb.x,0.5,s.lb.z),2,s.lb);
+  }
+  if(PL.alive){const zp=zdep(PL.x,PL.y,PL.z);if(zp>-40)addItem(zp,26,PL)}
+  if(BM){const zb=zdep(BM.x,BM.y,BM.z);if(zb>-20)addItem(zb,27,BM)}
   for(const tw of WORLD.towns){const z=zdep(tw.x,60,tw.z);if(z>150&&z<9000)addItem(z,17,tw)}
   {
     const LA=WORLD.lamps,CA=WORLD.cars;
@@ -2945,11 +3088,12 @@ function renderOutdoor(rdt){
   if(R.alive){
     addItem(zdep(R.x+R.ax*RL*0.5,R.y+R.ay*RL*0.5,R.z+R.az*RL*0.5),4,null);
     if(R.th>0.05){
-      addItem(zdep(R.x,R.y,R.z)-2,8,{x:R.x-R.ax*3,y:R.y-R.ay*3,z:R.z-R.az*3,r:6+R.th*16,al:0.6*R.th,idx:58});
+      if(R.y>-4||SIL[silSel].door>0.3)addItem(zdep(R.x,R.y,R.z)-2,8,{x:R.x-R.ax*3,y:R.y-R.ay*3,z:R.z-R.az*3,r:6+R.th*16,al:0.6*R.th,idx:58,cl:(R.y<4?siloAt(R.x,R.z):null)});
     }
   }
   for(let i=0;i<parts.length;i+=thin){
     const p=parts[i];
+    if(p.k===8){gatherSprite(p.x,p.y,p.z,p.s,floor(clamp(p.tp,0,1)*7),p.al*pow(1-p.a/p.l,1.3)*min(1,p.a*4),false,24);continue}
     if(p.k>=2){gatherShape(p);continue}
     const f=p.a/p.l,al=p.al*pow(1-f,1.3)*min(1,p.a*4);
     if(p.k===1)gatherSprite(p.x,p.y,p.z,p.s,floor(clamp(p.tp,0,1)*7),al,false,1);
@@ -2988,7 +3132,7 @@ function renderOutdoor(rdt){
         const u=c.u,y=u*ci.top,ang=c.th+t*0.25*(1.2-u),rad=ci.sr*(0.55+0.63*u*u)*c.rho,sh=pow(u,1.6);
         const x=ox-D.dx*(1-sh)+rad*cos(ang)+c.j1*8,z=oz-D.dz*(1-sh)+rad*sin(ang)+c.j2*8;
         const tp=0.12+0.5*exp(-t/16)*(0.3+0.7*u);
-        emitCloud(x,y,z,ci.sr*(0.6+0.5*c.s)*(0.7+0.5*u),tp,c,fade,false);
+        emitCloud(x,y,z,ci.sr*(0.6+0.5*c.s)*(0.7+0.5*u)*D.stw,tp,c,fade,false);
       }
     }
     if(t<2.8)addItem(zdep(D.x,D.bh+30,D.z),8,{x:D.x,y:D.bh+40*D.s,z:D.z,r:D.s*(300+t*160),al:clamp(1-t/2.8,0,1)*min(1,D.fl+0.3),idx:63,pal:D.gp});
@@ -3003,9 +3147,9 @@ function renderOutdoor(rdt){
   let add=false;
   for(let i=0;i<list.length;i++){
     const it=list[i],t=it.t;
-    if(t<=1||t===14||t===16||t===18){
+    if(t<=1||t===14||t===16||t===18||t===24){
       if(it.add!==add){g.globalCompositeOperation=it.add?'lighter':'source-over';add=it.add}
-      const spr=t===0?PAL:t===1?DPAL:t===14?PAL2:t===18?PALG:HPAL;
+      const spr=t===0?PAL:t===1?DPAL:t===14?PAL2:t===18?PALG:t===24?PALF:HPAL;
       g.globalAlpha=it.al;g.drawImage(spr[it.idx],it.sx-it.sr,it.sy-it.sr,it.sr*2,it.sr*2);continue;
     }
     if(add){g.globalCompositeOperation='source-over';add=false}
@@ -3016,7 +3160,7 @@ function renderOutdoor(rdt){
       case 4:drawRocket();break;
       case 5:drawTree(it.o,it.z);break;
       case 6:drawBunker(it.o,it.z);break;
-      case 8:drawGlow(it.o);break;
+      case 8:if(it.o.cl){if(openClip(it.o.cl)){g.save();g.clip();drawGlow(it.o);g.restore()}}else drawGlow(it.o);break;
       case 9:drawCyl(it.o,it.z);break;
       case 12:drawBuilding(it.o,it.z);break;
       case 11:drawBall(it.o,it.z);break;
@@ -3024,6 +3168,9 @@ function renderOutdoor(rdt){
       case 17:drawTownLabel(it.o,it.z);break;
       case 19:drawMill(it.o,it.z);break;
       case 21:drawGlass(it.o,it.z);break;
+      case 25:drawSiloPit(it.o);break;
+      case 26:drawPlane(it.o,it.z);break;
+      case 27:drawBomb(it.o,it.z);break;
       case 22:drawLamp(it.o,it.z);break;
       case 23:drawBox(it.o.b,it.z);drawBox(it.o.c2,it.z);break;
       case 20:{
@@ -3128,12 +3275,12 @@ function actText(h){
   switch(h.st){case 0:return 'идёт по делам';case 1:return fpOn?'это вы':'стоит, думает о вечном';case 2:return 'БЕЖИТ В БУНКЕР!';case 3:return 'в бункере';case 4:return 'летит (не по своей воле)';case 5:return 'больше не ходит';case 6:return 'испарился';case 7:return YR>=2011?'делает селфи с ракетой':'любуется ракетой';case 8:return 'болтает с '+(h.partner?h.partner.name:'кем-то');case 9:return 'идёт поболтать';case 10:return 'паникует без плана';case 11:return 'танцует от счастья';case 12:return 'ест пельмени (бесплатно)';case 13:return 'наблюдает в бинокль'}
   return '';
 }
-function selectWeapon(idx){
+function selectWeaponOld(idx){
   wsel=(idx+WEAPONS.length)%WEAPONS.length;
   blip(620,0.04);
   sub('Боеголовка #'+(wsel+1)+': '+WEAPONS[wsel].n+' — '+WEAPONS[wsel].sub,3);
 }
-function drawWeapons(){
+function drawWeaponsOld(){
   const x0=10,y0=HH+8,rh=19,cw=190,rows=9;
   wepRects.length=0;if(TOUCHY){drawWeaponsTouch();return}
   g.textAlign='left';
@@ -3159,6 +3306,7 @@ function drawWeapons(){
   g.fillText('ПЕПЕЛ-9 BETA · by Legomocin · github.com/Legomocinlol · сделано с помощью Arena',W-10,H-8);
 }
 function drawHUD(){
+  drawModeHUD();
   drawExtras();
   drawWeapons();
   const fs=W<900?10:12;
@@ -3174,7 +3322,7 @@ function drawHUD(){
   drawSegs([['РЕЖИМ',mode,mc],['БЧ',WEAPONS[wsel].n,'#fb7185'],['ВЫСОТА',alt.toFixed(0)+' м'],['СКОРОСТЬ',sp.toFixed(0)+' м/с'],['ТОПЛИВО',(R.fuel/FUEL0*100).toFixed(0)+'%',R.fuel<900?'#f87171':'#e5e7eb'],['ВЕТЕР',ws.toFixed(1)+' м/с '+wd.toFixed(0)+'°','#7dd3fc'],['ПОГОДА',WXN[WX.k],'#c4b5fd'],['ВРЕМЯ','×'+timeScale,timeScale!==1?'#fbbf24':'#e5e7eb']].filter((s,i)=>DEV!=='phone'||i===0||i===2||i===3||i===4),17,fs);
   if(HH>30){
     g.font=(fs-1)+'px ui-monospace,monospace';g.fillStyle='#9ca3af';g.textAlign='center';
-    const t=fpOn?'WASD ходьба · мышь взгляд · E действие · B бункер · F выйти · 1-9 / Q,Z оружие · Shift тяга · Enter взрыв · Tab карта':'Shift/↑ тяга · Ctrl/X/↓ реверс · WASD наклон · IJKL ветер · 1-9 / Q,Z ОРУЖИЕ · Enter взрыв · Пробел пауза · ←/→ время · R сброс · C/G камера · F 1-е лицо · O бинокль · N/P жители · Tab карта';
+    const t=obsOn?'IJKL поворот бинокля · колёсико зум · V автослежение · O выйти · -/+ ветер (0 штиль) · 1-9 БЧ · Shift тяга · Enter взрыв':fpOn?'WASD ходьба · мышь взгляд · E действие · B бункер · F выйти · -/+ ветер (0 штиль) · 1-9 / Q,Z БЧ · Shift тяга · Enter взрыв':'Shift/↑ тяга · Ctrl/X/↓ реверс · WASD наклон · -/+ ветер (0 штиль) · 1-9 БЧ · Enter взрыв · Пробел пауза · ←/→ время · O бинокль (IJKL) · Y космос · M редактор · U список БЧ · F полёт камеры · Ё самолёт · Tab карта и цель';
     g.fillText(t,W/2,38);
   }
   if(S.eraFx){
@@ -3203,7 +3351,7 @@ function drawHUD(){
     g.fillStyle='#fde68a';g.fillText(sk.t,W/2,y+20);g.globalAlpha=1;
   }
   const h=citizens[sel];
-  if((camMode===1||fpOn)&&h&&!dialog&&!obsOn){
+  if((camMode===1||fpOn)&&h&&!dialog&&!obsOn&&!spaceOn&&!flyOn&&!planeOn){
     const bw=min(520,TOUCHY?max(200,W-440):W-24),bx=W/2-bw/2,by=H-86;
     g.fillStyle='rgba(8,10,12,0.72)';g.beginPath();g.roundRect(bx,by,bw,70,10);g.fill();
     g.strokeStyle='hsl('+h.hue+',62%,55%)';g.lineWidth=2;g.stroke();
@@ -3213,7 +3361,7 @@ function drawHUD(){
     g.font='12px ui-sans-serif,system-ui,sans-serif';g.fillStyle='#d4d4d8';
     prof(h);g.fillText(JOBN[h.job]+', '+yrsW(h.age)+' · '+TRN[h.trait]+' — '+(h.bn>=0?'в бункере «'+WORLD.bunkers[h.bn].short+'»':actText(h)),bx+46,by+42);
     g.fillStyle='#71717a';g.font='11px ui-monospace,monospace';
-    g.fillText(fpOn?'[F] выйти · [E] действие · [N/P] другой':'[N/P] другой · [клик] выбрать · [F] смотреть его глазами · [C] камера',bx+46,by+60);
+    g.fillText(fpOn?'[F] выйти · [E] действие · [N/P] другой':'[N/P] другой · [клик] выбрать · [E] поговорить · [F] свободный полёт камеры · [C] камера',bx+46,by+60);
   }
   if(chatOn&&feed.length&&!TOUCHY){
     g.font='12px ui-sans-serif,system-ui,sans-serif';g.textAlign='left';
@@ -3263,7 +3411,7 @@ function mapXY(x,z){return [CX+(x-mapV.x)*mapV.s,CY-(z-mapV.z)*mapV.s]}
 function drawMap(){
   const s=mapV.s;
   g.fillStyle='#0a110d';g.fillRect(0,0,W,H);
-  const t0=mapXY(-3000,3000);g.drawImage(MAPTEX,t0[0],t0[1],6000*s,6000*s);
+  const t0=mapXY(-4500,4500);g.drawImage(MAPTEX,t0[0],t0[1],9000*s,9000*s);
   g.fillStyle='rgba(0,0,0,0.25)';g.fillRect(0,0,W,H);
   const step=s>0.25?100:s>0.1?250:500;g.strokeStyle='rgba(120,255,170,0.09)';g.lineWidth=1;g.beginPath();
   const gx0=floor((mapV.x-CX/s)/step)*step,gx1=mapV.x+CX/s,gz0=floor((mapV.z-CY/s)/step)*step,gz1=mapV.z+CY/s;
@@ -3289,7 +3437,19 @@ function drawMap(){
     g.fillStyle=OB.dead?'#ef4444':'#67e8f9';g.fillRect(p[0]-5,p[1]-5,10,10);g.strokeStyle='#fff';g.lineWidth=1;g.strokeRect(p[0]-5,p[1]-5,10,10);
   }
   const pa=mapXY(-18,18);g.fillStyle='rgba(180,180,190,0.8)';g.fillRect(pa[0],pa[1],36*s,36*s);g.strokeStyle='#ef4444';g.lineWidth=2;g.strokeRect(pa[0],pa[1],36*s,36*s);
-  g.font='bold 11px ui-monospace,monospace';g.textAlign='center';g.fillStyle='#fca5a5';g.fillText('ПУСКОВАЯ',pa[0]+18*s,pa[1]-5);
+  g.font='bold 11px ui-monospace,monospace';g.textAlign='center';g.fillStyle='#fca5a5';g.fillText('БАЗА · 4 ШАХТЫ',pa[0]+18*s,pa[1]-5);
+  for(const q of SIL){
+    const p=mapXY(q.x,q.z),h2=max(4,SH*s);
+    g.fillStyle=q.id===silSel?'rgba(251,191,36,0.95)':'rgba(130,130,140,0.9)';g.fillRect(p[0]-h2,p[1]-h2,2*h2,2*h2);
+    g.strokeStyle='#ef4444';g.lineWidth=1.5;g.strokeRect(p[0]-h2,p[1]-h2,2*h2,2*h2);
+    g.fillStyle='#111';g.font='bold 10px ui-monospace,monospace';g.fillText(String(q.id+1),p[0],p[1]+3.5);
+  }
+  if(AP.on||tgtPend){
+    const tp=AP.on?[AP.gx,AP.gz]:[tgtPend.x,tgtPend.z],tq=mapXY(tp[0],tp[1]),sq=mapXY(SIL[silSel].x,SIL[silSel].z);
+    g.setLineDash([7,6]);g.strokeStyle='rgba(255,90,80,0.8)';g.lineWidth=1.5;g.beginPath();g.moveTo(sq[0],sq[1]);g.lineTo(tq[0],tq[1]);g.stroke();g.setLineDash([]);
+    g.strokeStyle='#ff4d4d';g.lineWidth=2.5;g.beginPath();g.arc(tq[0],tq[1],13,0,TAU);g.moveTo(tq[0]-20,tq[1]);g.lineTo(tq[0]+20,tq[1]);g.moveTo(tq[0],tq[1]-20);g.lineTo(tq[0],tq[1]+20);g.stroke();
+    g.fillStyle='#fecaca';g.font='bold 11px ui-monospace,monospace';g.fillText('ЦЕЛЬ',tq[0],tq[1]-24);
+  }
   for(const b of WORLD.bunkers){
     const p=mapXY(b.x,b.z);
     g.fillStyle='rgba(60,90,50,0.9)';g.beginPath();g.arc(p[0],p[1],b.r*s,0,TAU);g.fill();
@@ -3322,9 +3482,10 @@ function drawMap(){
       g.fillStyle='rgba(255,255,255,0.2)';g.beginPath();g.moveTo(p[0],p[1]);g.arc(p[0],p[1],36,fp.yaw-PI/2-0.6,fp.yaw-PI/2+0.6);g.closePath();g.fill();
     }
   }
+  if(MAPMINI)return;
   g.fillStyle='rgba(0,0,0,0.65)';g.fillRect(0,0,W,40);
   g.textAlign='left';g.font='bold 14px ui-monospace,monospace';g.fillStyle='#86efac';g.fillText('СПУТНИК «ОКО-ЛЕГОМОЦИН» · вид сверху · Tab — закрыть',14,25);
-  g.textAlign='right';g.font='12px ui-monospace,monospace';g.fillStyle='#a1a1aa';g.fillText('ЛКМ-перетаскивание: сдвиг · колёсико: масштаб · клик по капсуле: следить',W-14,25);
+  g.textAlign='right';g.font='12px ui-monospace,monospace';g.fillStyle='#a1a1aa';g.fillText('ЛКМ-перетаскивание: сдвиг · колесо: масштаб · клик — цель для автопилота · Shift+клик — следить',W-14,25);
   g.fillStyle='rgba(0,0,0,0.6)';g.fillRect(12,H-56,230,44);
   g.textAlign='left';g.font='11px ui-monospace,monospace';g.fillStyle='#d4d4d8';
   g.fillText('▮ капсулы-жители  ▮ жёлтые бегут',22,H-38);g.fillText('○ бункеры  ■ высотки  ▲ ракета',22,H-22);
@@ -3335,7 +3496,7 @@ function drawMap(){
 
 const keys={};
 let expectUnlock=false,lastMenuToggle=0,pointerLocked=false;
-const GAMEKEYS=new Set(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Space','Tab','ControlLeft','ControlRight','ShiftLeft','ShiftRight','Enter']);
+const GAMEKEYS=new Set(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Space','Tab','ControlLeft','ControlRight','ShiftLeft','ShiftRight','Enter','Backspace','PageUp','PageDown','Home','End','Backquote']);
 
 function openMenu(){
   if(menuOpen)return;menuOpen=true;$('menu').style.display='flex';showPanel('pMain');if(DEV==='tv')setTimeout(()=>$('bStart').focus(),30);
@@ -3358,32 +3519,46 @@ function showPanel(id){['pMain','pSet','pKeys','pAbout'].forEach(p=>$(p).classLi
 
 addEventListener('keydown',e=>{
   const c=e.code;
-  if(c==='Escape'||e.keyCode===10009||e.keyCode===461||c==='BrowserBack'||c==='XF86Back'){e.preventDefault();if(mapOpen){mapOpen=false;return}toggleMenu();return}
+  if(c==='Escape'||e.keyCode===10009||e.keyCode===461||c==='BrowserBack'||c==='XF86Back'){e.preventDefault();if(tgtOpen){cancelTarget();return}if(edOpen){closeEditor();return}if(mapOpen){mapOpen=false;return}toggleMenu();return}
+  if(edOpen)return;
+  if(tgtOpen){if(c==='Enter'){e.preventDefault();confirmTarget()}return}
   if(menuOpen){menuKeyNav(e);return}
   if(menuOpen)return;
   if(GAMEKEYS.has(c)||c.startsWith('Numpad'))e.preventDefault();
-  if(c==='KeyR'&&e.ctrlKey)e.preventDefault();
+  if(e.ctrlKey&&(c==='KeyR'||c==='KeyD'||c==='KeyA'||c==='KeyS'||c==='KeyP'))e.preventDefault();
   audioInit();
   if(e.repeat){keys[c]=true;return}
   keys[c]=true;
   switch(c){
     case 'Space':paused=!paused;if(AU.c){if(paused)AU.c.suspend();else AU.c.resume()}break;
-    case 'Enter':detonate();break;
+    case 'Enter':if(planeOn)planeEnter();else detonate();break;
     case 'KeyR':resetSim();break;
-    case 'Digit0':Wd.x=0;Wd.z=0;break;
-    case 'ArrowLeft':case 'Minus':case 'NumpadSubtract':setTL(tli-1);break;
-    case 'ArrowRight':case 'Equal':case 'NumpadAdd':setTL(tli+1);break;
+    case 'Digit0':case 'Numpad0':Wd.x=0;Wd.z=0;sub('Ветер: полный штиль (0 м/с)',1.6);break;
+    case 'ArrowLeft':setTL(tli-1);break;
+    case 'ArrowRight':setTL(tli+1);break;
     case 'Tab':mapOpen=!mapOpen;break;
-    case 'KeyC':if(!fpOn){camMode=(camMode+1)%3;userCam=true;sub(['Камера: ракета / гриб','Камера: жители','Камера: город'][camMode],2)}break;
+    case 'KeyC':if(planeOn){PL.cam=(PL.cam+1)%3;sub(['Камера: самолёт','Камера: бомба','Камера: взрыв'][PL.cam],1.6);break}if(!fpOn&&!flyOn){camMode=(camMode+1)%3;userCam=true;sub(['Камера: ракета / гриб','Камера: жители','Камера: город'][camMode],2)}break;
     case 'KeyF':toggleFP();break;
     case 'KeyN':nextCit(1);break;
     case 'KeyP':nextCit(-1);break;
     case 'KeyE':doInteract();break;
     case 'KeyT':chatOn=!chatOn;break;
     case 'KeyO':if(obsOn)exitObs();else enterObs();break;
-    case 'KeyV':if(obsOn){obs.track=obs.track?0:1;sub(obs.track?'Автослежение включено':'Ручное наведение',1.5)}break;
+    case 'KeyU':wlOpen=!wlOpen;break;
+    case 'KeyM':openEditor();break;
+    case 'KeyY':if(spaceOn)exitSpace();else enterSpace();break;
+    case 'Backquote':if(planeOn)exitPlane();else enterPlane();break;
+    case 'Comma':setSilo(silSel-1);break;
+    case 'Period':setSilo(silSel+1);break;
+    case 'Backspace':abortAP();break;
+    case 'PageUp':setTL(tli+1);break;
+    case 'PageDown':setTL(tli-1);break;
+    case 'Home':setTL(3);break;
+    case 'End':setTL(TL.length-1);break;
+    case 'KeyV':if(spaceOn){SPC.track=SPC.track?0:1;if(!SPC.track){SPC.lonT=SPC.lon;SPC.latT=SPC.lat;SPC.zT=SPC.z}sub(SPC.track?'Слежение за районом пуска':'Ручное вращение планеты',1.5);break}
+      if(obsOn){if(obs.track){obs.track=0;obs.yawT=obs.yaw;obs.pitT=obs.pit;obs.zT=obs.z;sub('Ручное наведение (плавное, IJKL)',1.5)}else{obs.track=1;sub('Автослежение включено',1.5)}}break;
     case 'KeyH':S.hints=S.hints?0:1;saveS();break;
-    case 'KeyB':{
+    case 'KeyB':{toggleChute();break;
       if(!fpOn){if(!activeCit(citizens[sel]))nextCit(1,true);possess()}
       const h=citizens[sel];
       if(fpOn&&activeCit(h)){
@@ -3400,7 +3575,7 @@ addEventListener('keydown',e=>{
     case 'KeyZ':selectWeapon(wsel-1);break;
     case 'Digit1':case 'Digit2':case 'Digit3':case 'Digit4':case 'Digit5':case 'Digit6':case 'Digit7':case 'Digit8':case 'Digit9':{
       const d=+c.slice(5)-1;
-      const target=((e.altKey||wsel===d)&&d+9<WEAPONS.length)?d+9:d;
+      let target=d;for(let m=d;m<WEAPONS.length;m+=9){if(m===wsel){target=(m+9<WEAPONS.length)?m+9:d;break}}
       selectWeapon(target);break;
     }
   }
@@ -3418,6 +3593,7 @@ addEventListener('mouseup',e=>{
   if(!dragging)return;dragging=false;
   if(moved<6&&!menuOpen){
     if(mapOpen){
+      if(!e.shiftKey){const mp=mapToWorld(e.clientX,e.clientY);askTarget(mp[0],mp[1]);return}
       let best=-1,bd=14;
       for(let i=0;i<citizens.length;i++){const h=citizens[i];if(h.st===3||h.st===6||h.bn>=0)continue;const p=mapXY(h.x,h.z),d=hypot(p[0]-e.clientX,p[1]-e.clientY);if(d<bd){bd=d;best=i}}
       if(best>=0){sel=best;camMode=1;userCam=true;mapOpen=false}
@@ -3426,7 +3602,7 @@ addEventListener('mouseup',e=>{
         const r=wepRects[i];
         if(e.clientX>=r.x&&e.clientX<=r.x+r.w&&e.clientY>=r.y&&e.clientY<=r.y+r.h){selectWeapon(r.i);return}
       }
-      if(!fpOn){
+      if(!fpOn&&!spaceOn){
         let best=-1,bd=1e9;
         for(const c of citScreen){const d=hypot(c.x-e.clientX,c.y-e.clientY);if(d<c.r+6&&d<bd){bd=d;best=c.i}}
         if(best>=0){sel=best;camMode=1;userCam=true;sub('Следим за: '+citizens[sel].name,2)}
@@ -3442,7 +3618,7 @@ addEventListener('mousemove',e=>{
   moved+=abs(dx)+abs(dy);
   const sens=0.0014*S.sens;
   if(mapOpen){if(dragging){mapV.x-=dx/mapV.s;mapV.z+=dy/mapV.s}return}
-  if(obsOn){if(dragging)lookDelta(dx,dy,false);return}
+  if(obsOn||spaceOn||flyOn||planeOn){if(dragging)lookDelta(dx,dy,false);return}
   if(fpOn){fp.yaw+=dx*sens;fp.pit=clamp(fp.pit-dy*sens,-1.4,1.4)}
   else if(dragging){orbit.yaw+=dx*sens;orbit.pit=clamp(orbit.pit-dy*sens,-1.5,0.9)}
 });
@@ -3450,8 +3626,11 @@ cv.addEventListener('wheel',e=>{
   e.preventDefault();if(menuOpen)return;
   if(mapOpen){mapV.s=clamp(mapV.s*exp(-e.deltaY*0.0012),0.05,6);return}
   if(fpOn)return;
-  if(obsOn){obs.track=0;obs.z=clamp(obs.z*exp(-e.deltaY*0.0015),1.5,40);return}
-  const lim=[[20,20000],[3,200],[100,4000]][camMode];
+  if(flyOn){fly.spd=clamp(fly.spd*exp(-e.deltaY*0.0015),15,20000);return}
+  if(planeOn){PCAM.d=clamp(PCAM.d*exp(e.deltaY*0.0015),25,400);return}
+  if(spaceOn){SPC.track=0;SPC.zT=clamp(SPC.zT*exp(-e.deltaY*0.0015),0.6,6);return}
+  if(obsOn){obs.track=0;obs.zT=clamp(obs.zT*exp(-e.deltaY*0.0015),1.5,40);return}
+  const lim=[[20,90000],[3,200],[100,4000]][camMode];
   distT[camMode]=clamp(distT[camMode]*exp(e.deltaY*0.0012),lim[0],lim[1]);
 },{passive:false});
 addEventListener('contextmenu',e=>e.preventDefault());
@@ -3572,7 +3751,11 @@ function drawWeaponsTouch(){
   g.fillStyle=fps<12?'#f87171':'#9ca3af';g.fillText('FPS '+fps.toFixed(fps<10?1:0)+' · '+DEVN[DEV],x+6,y+40);
 }
 function drawExtras(){
-  if(!obsOn&&!OB.dead&&pr(OB.x,OB.y0+2,OB.z)){
+  if(PLN&&PLN.t>4.2&&!spaceOn){
+    g.save();g.textAlign='center';g.fillStyle='rgba(60,0,0,0.78)';g.fillRect(CX-230,HH+54,460,52);g.strokeStyle='#ef4444';g.lineWidth=2;g.strokeRect(CX-230,HH+54,460,52);
+    g.font='bold 20px ui-monospace,monospace';g.fillStyle='#fecaca';g.fillText('ЗЕМЛЯ УНИЧТОЖЕНА АНТИМАТЕРИЕЙ',CX,HH+78);g.font='12px ui-monospace,monospace';g.fillStyle='#fca5a5';g.fillText('Это уже архив. Возврат к реальности — клавиша R',CX,HH+96);g.restore();
+  }
+  if(!obsOn&&!spaceOn&&!OB.dead&&pr(OB.x,OB.y0+2,OB.z)){
     const dd=hypot(cam.x-OB.x,cam.y-OB.y0,cam.z-OB.z),x=clamp(PS.x,24,W-24),y=clamp(PS.y,HH+14,H-34);
     g.save();g.globalAlpha=0.85;g.strokeStyle='#67e8f9';g.lineWidth=2;
     g.beginPath();g.moveTo(x,y-9);g.lineTo(x+9,y);g.lineTo(x,y+9);g.lineTo(x-9,y);g.closePath();g.stroke();
@@ -3613,7 +3796,7 @@ function drawBinoOverlay(){
   g.stroke();g.beginPath();g.arc(CX,CY,14,0,TAU);g.stroke();
   const az=((obs.yaw*180/PI)%360+360)%360,rd=R.alive?hypot(R.x-OB.x,R.y-OB.y0,R.z-OB.z):0;
   g.textAlign='center';g.font='bold 12px ui-monospace,monospace';g.fillStyle='#4ade80';
-  g.fillText('БИНОКЛЬ 12×42 · ЗУМ ×'+obs.z.toFixed(1)+' · АЗИМУТ '+az.toFixed(0)+'° · ВОЗВЫШ. '+(obs.pit*180/PI).toFixed(0)+'° · '+(obs.track?'АВТОСЛЕЖЕНИЕ':'РУЧНОЕ [V]')+' · [O] выход',CX,H-46);
+  g.fillText('БИНОКЛЬ 12×42 · ЗУМ ×'+obs.z.toFixed(1)+' · АЗИМУТ '+az.toFixed(0)+'° · ВОЗВЫШ. '+(obs.pit*180/PI).toFixed(0)+'° · [IJKL] наведение · '+(obs.track?'АВТО [V]':'РУЧНОЕ [V]')+' · [O] выход',CX,H-46);
   g.fillStyle='#a7f3d0';
   g.fillText('ПУСК-ПЛОЩАДКА: '+(OB.dist/1000).toFixed(2)+' км'+(R.alive&&R.launched?' · РАКЕТА: высота '+max(0,R.y-PADH).toFixed(0)+' м, до поста '+(rd/1000).toFixed(2)+' км':D?' · ВЗРЫВ T+'+D.t.toFixed(0)+'с':''),CX,H-64);
   if(R.alive&&R.launched&&rd<1200){g.fillStyle='rgba(255,70,70,'+(0.6+0.4*sin(T*14))+')';g.font='bold 18px ui-monospace,monospace';g.fillText('!!! ОБЪЕКТ ПРИБЛИЖАЕТСЯ К ПОСТУ !!!',CX,HH+30)}
@@ -3625,27 +3808,29 @@ function obsTarget(o){
   if(D){const c=cloudInfo(D.t);o.x=D.x+D.dx;o.y=max(60,c.cy*0.6);o.z=D.z+D.dz;o.s=max(300,(c.R+c.r)*2.4+200)}
   else if(pend){o.x=pend.x;o.y=500;o.z=pend.z;o.s=1500}
   else if(R.alive&&R.launched){o.x=R.x;o.y=R.y+RL*0.5;o.z=R.z;o.s=170}
-  else{o.x=0;o.y=26;o.z=0;o.s=110}
+  else{const s0=SIL[silSel];o.x=s0.x;o.y=8;o.z=s0.z;o.s=130}
 }
 function updateObs(rdt){
   if(obs.track){
     obsTarget(otg2);
     const ey=OB.y0+1.75,dx=otg2.x-OB.x,dy=otg2.y-ey,dz=otg2.z-OB.z,hd=hypot(dx,dz),ds=hypot(hd,dy);
-    const ty=atan2(dx,dz),tp=atan2(dy,hd);
-    let da=ty-obs.yaw;while(da>PI)da-=TAU;while(da<-PI)da+=TAU;
-    const k=1-exp(-rdt*4);obs.yaw+=da*k;obs.pit+=(tp-obs.pit)*k;
+    obs.yawT=atan2(dx,dz);obs.pitT=atan2(dy,hd);
     const fb=(W/2)/Math.tan(S.fov*PI/360);
-    obs.z+=(clamp(H*0.42*ds/(otg2.s*fb),2,40)-obs.z)*(1-exp(-rdt*1.6));
+    obs.zT=clamp(H*0.42*ds/(otg2.s*fb),2,40);
   }
-  obs.pit=clamp(obs.pit,-0.2,1.5);
+  let da=obs.yawT-obs.yaw;while(da>PI)da-=TAU;while(da<-PI)da+=TAU;
+  const k=1-exp(-rdt*(obs.track?4:2.2));
+  obs.yaw+=da*k;
+  obs.pit+=(clamp(obs.pitT,-0.2,1.5)-obs.pit)*k;
+  obs.z+=(obs.zT-obs.z)*(1-exp(-rdt*(obs.track?1.6:3.5)));
 }
 function enterObs(){
   const o=citizens[OBSI];
   if(OB.dead||!o||o.st===6){sub('Наблюдательный пост уничтожен. R — перезапуск.',3.5);return}
   if(fpOn)toggleFP();
-  obsOn=true;mapOpen=false;dialog=null;sel=OBSI;
-  obs.yaw=atan2(-OB.x,-OB.z);obs.pit=0.06;obs.track=1;obs.z=8;
-  sub('Бинокль: колесо/щипок — зум, перетаскивание — вручную, V — автослежение, O — выход',5);
+  spaceOn=false;flyOn=false;planeOn=false;obsOn=true;mapOpen=false;dialog=null;sel=OBSI;
+  obs.yaw=obs.yawT=atan2(-OB.x,-OB.z);obs.pit=obs.pitT=0.06;obs.z=obs.zT=8;obs.track=1;
+  sub('Бинокль: IJKL или мышь — поворот, колесо/щипок — зум, V — автослежение, O — выход',5);
 }
 function exitObs(){obsOn=false;camMode=1;userCam=true}
 
@@ -3678,27 +3863,34 @@ function triggerEE(cx,cy,cz){
 function lookDelta(dx,dy,touch){
   const sens=0.0014*S.sens*(touch?1.7:1);
   if(mapOpen){mapV.x-=dx/mapV.s;mapV.z+=dy/mapV.s;return}
-  if(obsOn){obs.track=0;const k=sens/pow(obs.z,0.75);obs.yaw+=dx*k;obs.pit=clamp(obs.pit-dy*k,-0.2,1.5);return}
+  if(flyOn){fly.yaw+=dx*sens;fly.pit=clamp(fly.pit-dy*sens,-1.5,1.5);return}
+  if(planeOn){PCAM.yo+=dx*sens;PCAM.po=clamp(PCAM.po-dy*sens,-0.5,1.2);PCAM.drag=1;return}
+  if(spaceOn){SPC.track=0;const k=sens*1.2/pow(SPC.zT,0.6);SPC.lonT-=dx*k;SPC.latT=clamp(SPC.latT+dy*k,-1.3,1.3);return}
+  if(obsOn){obs.track=0;const k=sens/pow(obs.zT,0.75);obs.yawT+=dx*k;obs.pitT=clamp(obs.pitT-dy*k,-0.2,1.5);return}
   if(fpOn){fp.yaw+=dx*sens;fp.pit=clamp(fp.pit-dy*sens,-1.4,1.4)}
   else{orbit.yaw+=dx*sens;orbit.pit=clamp(orbit.pit-dy*sens,-1.5,0.9)}
 }
 function zoomBy(f){
   if(mapOpen){mapV.s=clamp(mapV.s/f,0.05,6);return}
-  if(obsOn){obs.track=0;obs.z=clamp(obs.z/f,1.5,40);return}
+  if(flyOn){fly.spd=clamp(fly.spd/f,15,20000);return}
+  if(planeOn){PCAM.d=clamp(PCAM.d*f,25,400);return}
+  if(spaceOn){SPC.track=0;SPC.zT=clamp(SPC.zT/f,0.6,6);return}
+  if(obsOn){obs.track=0;obs.zT=clamp(obs.zT/f,1.5,40);return}
   if(fpOn)return;
-  const lim=[[20,20000],[3,200],[100,4000]][camMode];
+  const lim=[[20,90000],[3,200],[100,4000]][camMode];
   distT[camMode]=clamp(distT[camMode]*f,lim[0],lim[1]);
 }
 function handleTap(x,y){
   if(dialog){nextDialog();return}
   if(mapOpen){
+    {const mp=mapToWorld(x,y);askTarget(mp[0],mp[1]);return}
     let best=-1,bd=24;
     for(let i=0;i<citizens.length;i++){const h=citizens[i];if(h.st===3||h.st===6||h.bn>=0)continue;const p=mapXY(h.x,h.z),d=hypot(p[0]-x,p[1]-y);if(d<bd){bd=d;best=i}}
     if(best>=0){sel=best;camMode=1;userCam=true;mapOpen=false}
     return;
   }
   for(let i=0;i<wepRects.length;i++){const r=wepRects[i];if(x>=r.x&&x<=r.x+r.w&&y>=r.y&&y<=r.y+r.h){selectWeapon(r.i);return}}
-  if(!fpOn&&!obsOn){
+  if(!fpOn&&!obsOn&&!spaceOn){
     let best=-1,bd=1e9;
     for(const c of citScreen){const d=hypot(c.x-x,c.y-y);if(d<c.r+10&&d<bd){bd=d;best=c.i}}
     if(best>=0){sel=best;camMode=1;userCam=true;sub('Следим за: '+citizens[sel].name,2)}
@@ -3807,7 +3999,1169 @@ $('bObs').onclick=()=>{closeMenu();enterObs()};
 $('bFull').onclick=goFull;
 wireTouch();
 
+/* ===== v7: редактор гриба, кастомные бомбы, свёрнутый список, туман ===== */
+const PALF=[];for(let i=0;i<8;i++){const k=i/7;PALF.push(mkSpr([146+98*k,152+94*k,160+90*k]))}
+const FOG_Q=['Ничего не вижу! Кто выключил город?','Туман такой, что я потерял собственные ноги.','Это туман или мы уже на облаке?','Ау! Есть кто живой? Я тут... кажется, слева.','Красиво. Но я только что обнял столб.','Туман — это когда соседа слышно, а видно только его тапки.'];
+const POP_Q=['Попкорн с неба! Кто заказывал кино?','Солёный, сладкий — мне всё равно, я под зонтом из ведёрка.','Хрум-хрум! Это лучший апокалипсис.','Теперь только комедии, пожалуйста!','Горячий! Ай! Но вкусно.','Масла бы побольше.'];
+const SP_Q={
+pre:['Привет, Зоркий! Отсюда твоя вышка — точка на точке. Зато вся планета видна.','Земля такая маленькая. И все на ней такие маленькие.','Станция дрожит... или это я от восторга.','Мне тут пельмени не присылали? Нет? Эх...','Передайте Зоркому: бинокль — это хорошо, а иллюминатор — лучше.'],
+fly:['Ого, пуск! Отсюда ракета — как спичка.','Зоркий, ты видел?! Я с орбиты вижу огонёк!','Земляне опять запускают. Отсюда красиво, оттуда — страшно.'],
+boom:['Вспышка на Земле! Иллюминатор потемнел сам.','Отсюда гриб — как крошечная плесень на планете.','Записываю в бортжурнал: «Земля бунтует, но красиво».'],
+near:['Ого, что-то летит к вышке Зоркого! Зоркий, пригнись!','Это что, ракета в сторону поста? Сейчас позвоню другу...']
+};
+OBS_Q.pre.push('Мой друг-космонавт на орбите тоже всё видит. Помахать ему рукой? Он не заметит, но приятно.','Звёздный на станции? Передайте ему привет — у него вид получше моего.');
+Object.assign(BOOMTXT,{volc:'ИЗВЕРЖЕНИЕ! Небо стало пеплом.',storm:'ГРОМ И МОЛНИИ! Небеса разверзлись.',pop:'ПОП-ПОП-ПОП! Попкорн с неба.',cus:'КАСТОМНАЯ ДЕТОНАЦИЯ!'});
+let wlOpen=false,edOpen=false,edCfg=null,edEls={},shkPx=0;
+const SHK_M=[0,1,2.2,4.6];
+const PALFC=['255,252,238','205,225,255','232,232,232','255,225,248','190,255,200'];
+const PALRC=['255,215,160','170,200,255','200,190,170','255,150,230','110,255,150'];
+const CUS_IDX=WEAPONS.map((w,i)=>w.cus?i:-1).filter(i=>i>=0);
+
+function cfgToWT(c,s){
+  const hurt=c.hurt,kill=hurt>0.02?1:0,hk=c.hkm;
+  const o={rf:c.cap*(1+min(2.2,hk/60)),rise:hk*1000/(4300*max(0.2,s)),shk:max(0.05,c.shk),stem:c.stem,pal:c.pal,vap:hurt,lt:hurt,bld:hurt,kill,fl:c.flash,fd:1+c.flash*1.8,fc:PALFC[c.pal],quake:c.quake,rc:PALRC[c.pal],cool:c.cool,tb:0.32,ta:0.45,tt:70,fog:c.fog,hkm:hk,rt:hk>60?22:24,stw:max(0.7,c.stem)*(1+min(3,hk/35)),nuc:hurt>0.5&&c.pal!==2,sev:clamp(0.3+s*0.5,0.3,1)};
+  o.react=kill?'':(c.fog>0.4?'fog':c.pal===3?'dance':'eat');
+  return o;
+}
+function selectWeapon(idx){
+  if(idx===-100){wlOpen=!wlOpen;blip(480,0.03);return}
+  wsel=(idx+WEAPONS.length)%WEAPONS.length;wlOpen=false;
+  blip(620,0.04);sub('Боеголовка #'+(wsel+1)+': '+WEAPONS[wsel].n+' — '+WEAPONS[wsel].sub,3);
+}
+function drawWeapons(){
+  wepRects.length=0;
+  const x0=8,y0=HH+6,n=WEAPONS.length,w=WEAPONS[wsel],bw=min(TOUCHY?W-212:410,W-16),bh=46;
+  g.textAlign='left';
+  g.fillStyle='rgba(0,0,0,0.6)';g.fillRect(x0,y0,bw,bh);
+  g.fillStyle=wlOpen?'#f59e0b':'#fbbf24';g.fillRect(x0,y0,3,bh);
+  g.font='bold 11.5px ui-monospace,monospace';g.fillStyle='#fde68a';
+  const nm=(wlOpen?'▾ ':'▸ ')+'БЧ '+(wsel+1)+'/'+n+' · '+w.n;
+  g.fillText(nm.length>48?nm.slice(0,47)+'…':nm,x0+9,y0+15);
+  g.font='10px ui-monospace,monospace';g.fillStyle='#d1d5db';
+  g.fillText(w.sub.length>64?w.sub.slice(0,62)+'…':w.sub,x0+9,y0+28);
+  g.font='9.5px ui-monospace,monospace';g.fillStyle=fps<12?'#f87171':'#7c8794';
+  g.fillText('[U] список · [Q/Z] смена · FPS '+fps.toFixed(fps<10?1:0)+' · '+DEVN[DEV]+(spaceOn?' · ОРБИТА':''),x0+9,y0+40);
+  wepRects.push({i:-100,x:x0,y:y0,w:bw,h:bh});
+  if(wlOpen){
+    const cols=3,rh=TOUCHY?24:19,cw=min(208,(W-22)/cols),rows=Math.ceil(n/cols),ly=y0+bh+4;
+    g.fillStyle='rgba(0,0,0,0.8)';g.fillRect(x0-2,ly-2,cols*(cw+3)+1,rows*rh+4);
+    for(let i=0;i<n;i++){
+      const c=(i/rows)|0,r=i%rows,x=x0+c*(cw+3),y=ly+r*rh,on=i===wsel,ww=WEAPONS[i];
+      wepRects.push({i,x,y,w:cw,h:rh-2});
+      g.fillStyle=on?'rgba(245,158,11,0.95)':'rgba(255,255,255,0.07)';g.fillRect(x,y,cw,rh-2);
+      g.font='bold 10px ui-monospace,monospace';
+      g.fillStyle=on?'#111':'#9ca3af';g.fillText(String(i+1),x+4,y+rh-7);
+      g.fillStyle=on?'#111':ww.cfg?'#f0abfc':'#e5e7eb';
+      const t2=(ww.cus?'★ ':'')+ww.n;g.fillText(t2.length>26?t2.slice(0,25)+'…':t2,x+22,y+rh-7);
+    }
+  }
+  g.textAlign='right';g.fillStyle='rgba(255,255,255,0.48)';g.font='10px ui-monospace,monospace';
+  g.fillText('ПЕПЕЛ-9 BETA · by Legomocin · github.com/Legomocinlol · сделано с помощью Arena',W-10,H-8);
+}
+
+function spawnFog(cx,cz,s,fog,Q){
+  const n=floor((160+420*fog)*Q.dm+20),Rf=3300*(0.5+0.5*fog)*sqrt(max(0.3,s));
+  for(let i=0;i<n;i++){
+    const a=rnd()*TAU,d=sqrt(rnd())*Rf,sz=rr(170,430)*(0.7+0.3*fog);
+    addP(cx+cos(a)*d,rr(4,40),cz+sin(a)*d,rr(-1.5,1.5),0,rr(-1.5,1.5),sz,5,rr(75,135),0.9,0,8,0.5+0.3*fog,0,0.25);
+  }
+}
+function detExtra(wp,ty,cx,cy,cz,s,Q){
+  if(wp.cfg){
+    D.nuc=!!ty.nuc;D.sev=ty.sev;D.rt=ty.rt;D.stw=ty.stw;
+    if(camMode===0)distT[0]=max(distT[0],min(70000,4200*s*(1+ty.hkm/28)));
+    if(ty.fog>0)spawnFog(cx,cz,s,ty.fog,Q);
+    if(ty.hkm>=100)D.atm=max(D.atm,0.9);
+    if(ty.hkm>=100)feedAdd('ШТАБ','Гриб пересёк линию Кармана (100 км). Станция на связи: «Вижу, привет!»','#a5b4fc');
+    if(ty.kill&&ty.hkm>=40)debris(floor(120*Q.dm),50,150,6*s,0.85,12,cx,cz,0);
+  }
+  if(wp.ty==='volc'){debris(floor(300*Q.dm),60,210,6*s*2.4,0.95,13,cx,cz,0);debris(floor(160*Q.dm),50,130,8*s*2,0.2,16,cx,cz,1)}
+  if(wp.ty==='pop'){
+    for(let i=0;i<floor(420*Q.dm);i++){const a=rnd()*TAU,el=rr(0.25,1.35),v=rr(25,95)*s,p=addP(cx,cy+6,cz,cos(a)*cos(el)*v,sin(el)*v*1.15,sin(a)*cos(el)*v,5*s*rr(0.8,1.3),0,rr(18,30),1,0,7,1,0,0.1);if(p)p.gv=12}
+  }
+  if(S.shake&&navigator.vibrate){try{navigator.vibrate(D.kill?[260,70,380,60,200]:[90])}catch(e){}}
+}
+function stepExtra(dt,t,s,Q,c){
+  const cx=D.x+D.dx,cz=D.z+D.dz;
+  if(D.ty==='volc'&&t<40){
+    const n=floor(40*Q.dm*dt+rnd());
+    for(let i=0;i<n;i++){const a=rnd()*TAU,d=rr(0,2200)*s;addP(cx+cos(a)*d,rr(300,1600),cz+sin(a)*d,rr(-20,20),-rr(40,110),rr(-20,20),11,0,rr(8,14),0.95,0.14,0,0.85,0,0.01)}
+  }
+  if(D.ty==='pop'&&t<14){
+    const n=floor(50*Q.dm*dt+rnd());
+    for(let i=0;i<n;i++){const a=rnd()*TAU,d=rr(0,900)*s,p=addP(cx+cos(a)*d,rr(250,520),cz+sin(a)*d,rr(-3,3),-rr(0,10),rr(-3,3),5*s*rr(0.8,1.3),0,rr(22,30),1,0,7,1,0,0.05);if(p)p.gv=9}
+  }
+}
+function fogLevel(){if(!D||!D.fog)return 0;const t=D.t;return D.fog*sstep(t/10)*(1-sstep((t-110)/110))}
+function drawFogLayer(){
+  atmOverlay();
+  const f=fogLevel();if(f<0.01)return;
+  const c=mixc(HZ,[236,239,243],0.62),cs=(c[0]|0)+','+(c[1]|0)+','+(c[2]|0);
+  g.fillStyle='rgba('+cs+','+(0.5*f).toFixed(3)+')';g.fillRect(0,0,W,H);
+  const hy=CY+FOCAL*Math.tan(cam.pit);
+  if(hy>-H&&hy<H*1.6){
+    const gr=g.createLinearGradient(0,hy-H*0.25,0,hy+H*0.45);
+    gr.addColorStop(0,'rgba('+cs+',0)');gr.addColorStop(0.5,'rgba('+cs+','+(0.5*f).toFixed(3)+')');gr.addColorStop(1,'rgba('+cs+','+(0.3*f).toFixed(3)+')');
+    g.fillStyle=gr;g.fillRect(0,0,W,H);
+  }
+}
+function stormBolts(){
+  const fl=floor(T*9),r=mulberry(fl*7919+13),n=5+floor(D.s*3);
+  g.save();g.globalCompositeOperation='lighter';
+  for(let b=0;b<n;b++){
+    const a=r()*TAU,d=r()*2400*D.s;let px=D.x+cos(a)*d,pz=D.z+sin(a)*d,py=1500;
+    g.strokeStyle='rgba(190,215,255,0.9)';g.lineWidth=2.4;g.beginPath();
+    for(let s=0;s<9;s++){const nx=px+(r()-0.5)*110,nz=pz+(r()-0.5)*110,ny=max(0,py-170);segTo(px,py,pz,nx,ny,nz);px=nx;pz=nz;py=ny}
+    g.stroke();
+  }
+  g.restore();
+}
+function aimInput(bp,by,rdt){
+  if(!paused)tickFx(rdt);
+  if((bp||by)&&!obsOn&&!spaceOn&&!flyOn&&!planeOn)enterObs();
+  const sx=spaceOn,o=sx?SPC:obs;
+  if((bp||by)&&o.track){o.track=0;if(sx){SPC.lonT=SPC.lon;SPC.latT=SPC.lat;SPC.zT=SPC.z}else{obs.yawT=obs.yaw;obs.pitT=obs.pit;obs.zT=obs.z}}
+  if(!obsOn&&!sx)return;
+  const tv=(sx?0.42:0.34)/pow(sx?SPC.zT:obs.zT,0.5),k=1-exp(-rdt*2.6);
+  o.vy+=(by*tv-o.vy)*k;o.vp+=(bp*tv-o.vp)*k;
+  if(abs(o.vy)>1e-5||abs(o.vp)>1e-5){
+    if(sx){SPC.lonT+=o.vy*rdt;SPC.latT=clamp(SPC.latT+o.vp*rdt,-1.3,1.3)}
+    else{obs.yawT+=o.vy*rdt;obs.pitT=clamp(obs.pitT+o.vp*rdt,-0.2,1.5)}
+  }
+}
+
+/* --- редактор гриба --- */
+const ED_BASE={pow:1,hkm:12,cap:1,stem:1,pal:0,fog:0,shk:1,hurt:1,flash:1,quake:1,cool:1};
+const ED_DEF=[
+['pow','Мощность',0.2,3,0.05,v=>'×'+v.toFixed(2)],
+['hkm','Высота подъёма гриба',1,160,1,v=>v+' км'+(v>=100?' · КОСМОС':'')],
+['cap','Ширина шляпки',0.3,2.5,0.05,v=>'×'+v.toFixed(2)],
+['stem','Толщина ножки',0,1.6,0.05,v=>v<0.05?'нет':'×'+v.toFixed(2)],
+['fog','Туман над городом',0,1,0.05,v=>Math.round(v*100)+'%'],
+['shk','Ударная волна',0,2,0.05,v=>'×'+v.toFixed(2)],
+['hurt','Разрушительность (0 — безобидная)',0,2,0.05,v=>v<0.03?'безобидная':'×'+v.toFixed(2)],
+['flash','Яркость вспышки',0,1.5,0.05,v=>Math.round(v*100)+'%'],
+['quake','Тряска земли',0,3,0.05,v=>'×'+v.toFixed(2)],
+['cool','Скорость остывания',0.3,3,0.05,v=>'×'+v.toFixed(2)]
+];
+const ED_PAL=['Огонь','Плазма (синяя)','Дым и пыль','Радуга','Токсин (зелёный)'];
+const ED_PRE=[
+['🌫 Туманная',{pow:1,hkm:2,cap:1.2,stem:0.15,pal:2,fog:1,shk:0.2,hurt:0,flash:0.25,quake:0.15,cool:0.8}],
+['🚀 Гриб до космоса',{pow:1.3,hkm:130,cap:1.6,stem:1.2,pal:0,fog:0,shk:1,hurt:1,flash:1.2,quake:1.4,cool:0.5}],
+['🍄 Классика',{}],
+['🌈 Радужный (безобидный)',{pow:1,hkm:10,cap:1.3,stem:0.8,pal:3,fog:0,shk:0.4,hurt:0,flash:0.5,quake:0.2,cool:1}],
+['☣ Токсичная пустошь',{pow:1.2,hkm:18,cap:1.1,stem:1,pal:4,fog:0.35,shk:0.9,hurt:1.2,flash:0.8,quake:0.8,cool:0.7}],
+['🔹 Плазма',{pow:1.4,hkm:30,cap:1.2,stem:0.5,pal:1,fog:0,shk:1.2,hurt:1.3,flash:1.3,quake:1,cool:1.5}],
+['🐣 Мини-гриб',{pow:0.3,hkm:3,cap:0.8,stem:0.8,pal:0,fog:0,shk:0.5,hurt:0.6,flash:0.5,quake:0.3,cool:1.2}]
+];
+function edSub(c){return 'до '+c.hkm+' км · '+(c.hurt>0.02?'разрушающая ×'+c.hurt.toFixed(1):'безобидная')+(c.fog>0.2?' · туман':'')+' · ×'+c.pow.toFixed(1)}
+function loadCustom(){
+  try{
+    const a=JSON.parse(localStorage.getItem('pepel9_cus')||'[]');
+    for(let i=0;i<min(a.length,CUS_IDX.length);i++){
+      const d=a[i];if(!d||!d.cfg)continue;
+      const w=WEAPONS[CUS_IDX[i]];w.cfg=Object.assign({},ED_BASE,d.cfg);w.n=String(d.name||w.n).slice(0,26);w.s=w.cfg.pow;w.sub=edSub(w.cfg);
+    }
+  }catch(e){}
+  for(const i of CUS_IDX){const w=WEAPONS[i];if(w.sub.indexOf('редакторе')>=0)w.sub=edSub(w.cfg)+' · [M] редактор'}
+}
+function edBuild(){
+  const box=$('edCtl');box.innerHTML='';edEls={};
+  for(const d of ED_DEF){
+    const row=document.createElement('div');row.className='grid gap-x-3 items-center';row.style.gridTemplateColumns='1fr auto';
+    const lab=document.createElement('label');lab.className='text-zinc-300 text-[13px]';lab.textContent=d[1];
+    const val=document.createElement('span');val.className='text-amber-400 font-bold text-[13px]';
+    const inp=document.createElement('input');inp.type='range';inp.min=d[2];inp.max=d[3];inp.step=d[4];inp.className='w-full';inp.style.gridColumn='1 / span 2';
+    inp.oninput=()=>{edCfg[d[0]]=+inp.value;val.textContent=d[5](+inp.value)};
+    row.appendChild(lab);row.appendChild(val);row.appendChild(inp);box.appendChild(row);edEls[d[0]]={inp,val,f:d[5]};
+  }
+  const pr2=document.createElement('div');pr2.className='grid gap-x-3 items-center';pr2.style.gridTemplateColumns='1fr auto';
+  const pl=document.createElement('label');pl.className='text-zinc-300 text-[13px]';pl.textContent='Цвет и тип облака';
+  const ps=document.createElement('select');ps.id='edPal';
+  ED_PAL.forEach((n,i)=>{const o=document.createElement('option');o.value=i;o.textContent=n;ps.appendChild(o)});
+  ps.onchange=()=>{edCfg.pal=+ps.value};
+  pr2.appendChild(pl);pr2.appendChild(ps);box.appendChild(pr2);
+  const pre=$('edPre');pre.innerHTML='';
+  for(const p of ED_PRE){
+    const b=document.createElement('button');b.className='mbtn';b.style.cssText='width:auto;padding:5px 10px;font-size:12px';b.textContent=p[0];
+    b.onclick=()=>{edCfg=Object.assign({},ED_BASE,p[1]);edSync()};pre.appendChild(b);
+  }
+  const sl=$('edSlot');sl.innerHTML='';
+  CUS_IDX.forEach((idx,i)=>{const o=document.createElement('option');o.value=i;o.textContent='Слот '+(i+1)+' → СВОЯ БОМБА '+(i+1);sl.appendChild(o)});
+}
+function edSync(){
+  for(const d of ED_DEF){const e=edEls[d[0]];e.inp.value=edCfg[d[0]];e.val.textContent=e.f(edCfg[d[0]])}
+  $('edPal').value=edCfg.pal;
+}
+function edLoadSlot(i){const w=WEAPONS[CUS_IDX[i]];edCfg=Object.assign({},ED_BASE,w.cfg);$('edName').value=w.n;$('edSlot').value=i;edSync()}
+function edSave(use){
+  const i=+$('edSlot').value,idx=CUS_IDX[i],w=WEAPONS[idx];
+  w.cfg=Object.assign({},edCfg);
+  w.n=($('edName').value.trim()||('СВОЯ БОМБА '+(i+1))).toUpperCase().slice(0,26);
+  w.s=w.cfg.pow;w.sub=edSub(w.cfg);
+  try{localStorage.setItem('pepel9_cus',JSON.stringify(CUS_IDX.map(j=>({name:WEAPONS[j].n,cfg:WEAPONS[j].cfg}))))}catch(e){}
+  if(use){wsel=idx;closeEditor();sub('Бомба «'+w.n+'» выбрана. Shift — пуск, Enter — взрыв.',4.5)}
+  else sub('Сохранено в слот '+(i+1),1.8);
+}
+function openEditor(){
+  if(edOpen)return;
+  edOpen=true;$('editor').style.display='flex';
+  for(const k in keys)keys[k]=false;
+  if(pointerLocked){expectUnlock=true;try{document.exitPointerLock()}catch(e){}}
+  let si=CUS_IDX.indexOf(wsel);if(si<0)si=0;
+  edLoadSlot(si);
+  requestAnimationFrame(edTick);
+}
+function closeEditor(){edOpen=false;$('editor').style.display='none'}
+function edRGB(p,tp){
+  if(p===0)return palCol(clamp(tp,0,1));
+  if(p===1)return [30+200*tp,40+190*tp,120+135*tp];
+  if(p===2)return [70+90*tp,68+85*tp,66+80*tp];
+  if(p===3)return hsl2rgb((performance.now()*0.05)%360);
+  return [20+90*tp,120+130*tp,50+110*tp];
+}
+function edDraw(c,t){
+  const cvE=$('edCv');if(!cvE)return;
+  const x=cvE.getContext('2d'),w=cvE.width,h=cvE.height,gy=h-62;
+  const o=cfgToWT(c,c.pow),hk=c.hkm,hmax=max(14,hk*1.18),ky=(gy-28)/hmax,kx=40,cx0=w*0.5;
+  const space=hmax>70;
+  const sg=x.createLinearGradient(0,0,0,gy);
+  if(space){sg.addColorStop(0,'#010208');sg.addColorStop(0.5,'#0d2556');sg.addColorStop(1,'#a8c6e8')}else{sg.addColorStop(0,'#20508f');sg.addColorStop(1,'#b3cbe2')}
+  x.fillStyle=sg;x.fillRect(0,0,w,gy);
+  if(space){x.fillStyle='rgba(255,255,255,0.85)';for(let i=0;i<60;i++)x.fillRect((i*97.3)%w,(i*53.7)%(gy*0.5),1.4,1.4)}
+  const step=hmax>90?25:hmax>35?10:hmax>16?5:2;
+  x.font='10px ui-monospace,monospace';x.textAlign='left';x.lineWidth=1;
+  for(let a=step;a<=hmax;a+=step){const yy=gy-a*ky;x.strokeStyle='rgba(255,255,255,0.15)';x.beginPath();x.moveTo(0,yy);x.lineTo(w,yy);x.stroke();x.fillStyle='rgba(255,255,255,0.65)';x.fillText(a+' км',4,yy-3)}
+  if(hmax>100){const yk=gy-100*ky;x.setLineDash([6,5]);x.strokeStyle='rgba(255,215,90,0.9)';x.beginPath();x.moveTo(0,yk);x.lineTo(w,yk);x.stroke();x.setLineDash([]);x.fillStyle='#fde047';x.textAlign='right';x.fillText('граница космоса · 100 км',w-6,yk-4);x.textAlign='left'}
+  x.fillStyle='#2d4a2c';x.fillRect(0,gy,w,h-gy);
+  x.fillStyle='#1c2430';
+  for(let i=0;i<26;i++){const bh=10+((i*37)%5)*7+((i*13)%3)*5;x.fillRect(i*(w/26)+1,gy-bh*0.6,w/26-3,bh*0.6+2)}
+  const s=c.pow,rf=o.rf;
+  const rsKm=5*s*c.shk*(1-exp(-t/8)),rpx=rsKm*kx;
+  if(c.hurt>0.02){const rz=1.4*s*c.hurt*sstep(t/2)*kx;x.fillStyle='rgba(12,9,6,0.55)';x.beginPath();x.ellipse(cx0,gy+4,rz,7,0,0,TAU);x.fill()}
+  if(rpx>3){const al=clamp(1-t/60,0.08,0.9);x.strokeStyle='rgba(255,220,170,'+al+')';x.lineWidth=2.5;x.beginPath();x.ellipse(cx0,gy+3,rpx,8+rpx*0.03,0,0,TAU);x.stroke()}
+  const tp=exp(-t*c.cool/55),col2=edRGB(c.pal,tp),cs=col2.map(v=>v|0).join(',');
+  const r0=0.21*s*rf,rIn=0.4*s*max(1,rf*0.9),rr2=r0+(rIn-r0)*(1-exp(-t/22)),Rc=0.95*s*(0.55+0.45*rf)*(1-exp(-t/16))*(1-exp(-t/3));
+  const cyKm=r0+hk*(1-exp(-t/o.rt)),capY=gy-cyKm*ky,capRx=max(10,(Rc+rr2)*kx),capRy=max(8,rr2*kx*0.6);
+  if(c.stem>0.04){
+    const sw=max(3,(0.07+0.14*(1-exp(-t/30)))*s*min(1,rf+0.3)*o.stw*kx);
+    const st=x.createLinearGradient(0,gy,0,capY);st.addColorStop(0,'rgba(70,64,60,0.92)');st.addColorStop(1,'rgba('+cs+',0.85)');
+    x.fillStyle=st;x.beginPath();x.moveTo(cx0-sw*1.5,gy);x.lineTo(cx0-sw*0.75,capY+capRy*0.4);x.lineTo(cx0+sw*0.75,capY+capRy*0.4);x.lineTo(cx0+sw*1.5,gy);x.closePath();x.fill();
+  }
+  if(t<6&&c.flash>0.05){const fr=(0.1+0.09*t)*s*kx*(1+c.flash*0.4),fy=gy-fr*0.4,fg=x.createRadialGradient(cx0,fy,2,cx0,fy,fr);fg.addColorStop(0,'rgba(255,250,225,'+(0.95*(1-t/6))+')');fg.addColorStop(1,'rgba(255,170,60,0)');x.fillStyle=fg;x.beginPath();x.arc(cx0,fy,fr,0,TAU);x.fill()}
+  const cg=x.createRadialGradient(cx0,capY,2,cx0,capY,capRx);cg.addColorStop(0,'rgba('+cs+',0.98)');cg.addColorStop(0.7,'rgba('+cs+',0.72)');cg.addColorStop(1,'rgba('+cs+',0)');
+  x.save();x.translate(cx0,capY);x.scale(1,capRy/capRx);x.translate(-cx0,-capY);x.fillStyle=cg;x.beginPath();x.arc(cx0,capY,capRx,0,TAU);x.fill();x.restore();
+  x.strokeStyle='rgba(255,255,255,0.33)';x.lineWidth=2;
+  for(let k=0;k<3;k++){x.beginPath();x.ellipse(cx0,capY,capRx*(0.5+0.14*k),capRy*(0.45+0.16*k),0,PI*0.1+t*0.2,PI*1.4+t*0.2);x.stroke()}
+  const fa=c.fog*sstep(t/10)*(1-sstep((t-62)/14));
+  if(fa>0.01){const fg2=x.createLinearGradient(0,gy-110,0,gy);fg2.addColorStop(0,'rgba(236,240,246,0)');fg2.addColorStop(1,'rgba(236,240,246,'+(0.88*fa)+')');x.fillStyle=fg2;x.fillRect(0,gy-110,w,112);x.fillStyle='rgba(236,240,246,'+(0.18*fa)+')';x.fillRect(0,0,w,gy)}
+  const fl=1.4*c.flash*(1-t/(1.6+c.flash*2));
+  if(fl>0.02&&t<4){x.fillStyle='rgba(255,252,240,'+clamp(fl,0,0.9)+')';x.fillRect(0,0,w,h)}
+  x.fillStyle='#e5e7eb';x.font='bold 12px ui-monospace,monospace';x.textAlign='left';
+  x.fillText('T+ '+t.toFixed(0)+' с · высота гриба '+cyKm.toFixed(1)+' км · ударная волна '+rsKm.toFixed(1)+' км',8,h-40);
+  x.fillStyle='#a7f3d0';
+  x.fillText((c.hurt>0.02?'разрушает город (испарение ≈ '+(1.1*s*c.hurt).toFixed(1)+' км)':'безобидная: город цел')+(c.fog>0.2?' · туман '+Math.round(c.fog*100)+'%':''),8,h-22);
+  if(cyKm>=100){x.fillStyle='#fde047';x.font='bold 15px ui-monospace,monospace';x.textAlign='center';x.fillText('ГРИБ ВЫШЕЛ В КОСМОС!',cx0,22);x.textAlign='left'}
+  x.fillStyle='rgba(255,255,255,0.5)';x.font='10px ui-monospace,monospace';x.textAlign='right';x.fillText('горизонтально: 1 км = '+kx+' px',w-6,h-6);x.textAlign='left';
+}
+function edTick(){if(!edOpen)return;edDraw(edCfg,((performance.now()%12500)/12500)*80);requestAnimationFrame(edTick)}
+$('edClose').onclick=closeEditor;
+$('edSave').onclick=()=>edSave(false);
+$('edUse').onclick=()=>edSave(true);
+$('edSlot').onchange=()=>edLoadSlot(+$('edSlot').value);
+$('bEdit').onclick=openEditor;
+$('bSpace').onclick=()=>{closeMenu();enterSpace()};
+loadCustom();edBuild();
+
 let lastT=performance.now();
+/* ===== v7: космос ===== */
+const SITE={lon:0.45,lat:0.78},SN=[0.55,0.32,0.77];
+const SX2=cos(SITE.lat)*sin(SITE.lon),SY2=sin(SITE.lat),SZ2=cos(SITE.lat)*cos(SITE.lon);
+const SPC={lon:-0.1,lonT:-0.1,lat:0.55,latT:0.55,z:1,zT:1,track:1,vy:0,vp:0};
+let PLN=null,BAL=null,EAT=null,ETEX=null,ELT=null,GCV=null,GCX=null,GIMG=null,G32=null,MAPMINI=false;
+const gLast={a:9,b:9,t:0},GN=240,TW=384,TH=192,EXAG=110,SSTARS=[];
+(function(){const r=mulberry(77);for(let i=0;i<520;i++)SSTARS.push(r(),r(),0.5+r()*1.3,r())})();
+
+function hash3(x,y,z){let h=Math.imul(x,374761393)^Math.imul(y,668265263)^Math.imul(z,2147483629);h=Math.imul(h^(h>>>13),1274126177);return((h^(h>>>16))>>>0)/4294967296}
+function vnoise(x,y,z){
+  const xi=floor(x),yi=floor(y),zi=floor(z),xf=x-xi,yf=y-yi,zf=z-zi,u=xf*xf*(3-2*xf),v=yf*yf*(3-2*yf),w=zf*zf*(3-2*zf);
+  const a=lerp(lerp(hash3(xi,yi,zi),hash3(xi+1,yi,zi),u),lerp(hash3(xi,yi+1,zi),hash3(xi+1,yi+1,zi),u),v);
+  const b=lerp(lerp(hash3(xi,yi,zi+1),hash3(xi+1,yi,zi+1),u),lerp(hash3(xi,yi+1,zi+1),hash3(xi+1,yi+1,zi+1),u),v);
+  return lerp(a,b,w);
+}
+function fbm3(x,y,z,o){let s=0,a=0.5,f=1;for(let i=0;i<o;i++){s+=a*vnoise(x*f,y*f,z*f);f*=2;a*=0.5}return s}
+function genEarth(){
+  ETEX=new Uint32Array(TW*TH);ELT=new Uint8Array(TW*TH);
+  for(let ty=0;ty<TH;ty++){
+    const lat=(0.5-(ty+0.5)/TH)*PI,cl=cos(lat),sl=sin(lat);
+    for(let tx=0;tx<TW;tx++){
+      const lon=(tx+0.5)/TW*TAU-PI,x=cl*sin(lon),y=sl,z=cl*cos(lon);
+      let h=fbm3(x*2.1+9,y*2.1+3,z*2.1+5,5);
+      const dl=Math.acos(clamp(x*SX2+y*SY2+z*SZ2,-1,1));
+      h+=0.28*exp(-dl*dl/0.07);
+      let r,gg,b;
+      if(h>0.5){
+        const m=fbm3(x*6+20,y*6,z*6,3);
+        if(h>0.7){r=150+60*m;gg=145+60*m;b=140+60*m}
+        else if(m>0.55&&abs(lat)<0.7){r=176;gg=150;b=96}
+        else{r=48+50*m+(h-0.5)*80;gg=96+60*m;b=44+30*m}
+        if(fbm3(x*14+3,y*14,z*14+7,2)>0.62)ELT[ty*TW+tx]=255;
+      }else{const d=(0.5-h)*2;r=8+16*(1-d);gg=34+50*(1-d);b=92+90*(1-d*0.6)}
+      if(abs(lat)>1.22+0.15*fbm3(x*5,y*5,z*5,2)){r=235;gg=240;b=246}
+      const cl2=fbm3(x*3.2+40,y*3.2+11,z*3.2,3);
+      if(cl2>0.54){const k=clamp((cl2-0.54)*3.2,0,0.88);r+=(246-r)*k;gg+=(248-gg)*k;b+=(252-b)*k}
+      ETEX[ty*TW+tx]=(255<<24)|((b|0)<<16)|((gg|0)<<8)|(r|0);
+    }
+  }
+  GCV=document.createElement('canvas');GCV.width=GCV.height=GN;GCX=GCV.getContext('2d');
+  GIMG=GCX.createImageData(GN,GN);G32=new Uint32Array(GIMG.data.buffer);
+}
+function renderGlobe(lon0,lat0){
+  const cl=cos(lat0),sl=sin(lat0),N=GN,inv=2/N;let i=0;
+  for(let py=0;py<N;py++){
+    const y=1-(py+0.5)*inv;
+    for(let px=0;px<N;px++,i++){
+      const x=(px+0.5)*inv-1,r2=x*x+y*y;
+      if(r2>=1){G32[i]=0;continue}
+      const z=sqrt(1-r2),wy=y*cl+z*sl,wz=-y*sl+z*cl;
+      let lon=(atan2(x,wz)+lon0+PI)/TAU;lon-=floor(lon);
+      const la=wy>1?1:wy<-1?-1:wy;
+      let ty=((0.5-Math.asin(la)/PI)*TH)|0;if(ty<0)ty=0;else if(ty>=TH)ty=TH-1;
+      const idx=ty*TW+((lon*TW)|0),tex=ETEX[idx];
+      let r=tex&255,gg=(tex>>8)&255,b=(tex>>16)&255;
+      const l=x*SN[0]+y*SN[1]+z*SN[2];
+      let f=l>0?0.2+0.95*l:0.2+0.3*l;if(f<0.1)f=0.1;
+      r*=f;gg*=f;b*=f;
+      if(l<0.14&&ELT[idx]){const k=(0.14-l)*6;r+=235*k;gg+=190*k;b+=80*k}
+      const rim=1-z,rm=rim*rim*rim*0.75;r+=90*rm;gg+=150*rm;b+=255*rm;
+      G32[i]=(255<<24)|((b>255?255:b|0)<<16)|((gg>255?255:gg|0)<<8)|(r>255?255:r|0);
+    }
+  }
+  GCX.putImageData(GIMG,0,0);
+}
+function sitePos(ER,EX,EY,lon0,lat0){
+  const cl=cos(lat0),sl=sin(lat0),dl=SITE.lon-lon0,cls=cos(SITE.lat);
+  const wx=cls*sin(dl),wy=sin(SITE.lat),wz=cls*cos(dl);
+  const y=wy*cl-wz*sl,z=wy*sl+wz*cl;
+  return {x:EX+wx*ER,y:EY-y*ER,z,nx:wx,ny:-y};
+}
+function sGlow(x,y,r,rgb,a){
+  const gr=g.createRadialGradient(x,y,0,x,y,r);
+  gr.addColorStop(0,'rgba('+rgb+','+a+')');gr.addColorStop(0.4,'rgba('+rgb+','+(a*0.45)+')');gr.addColorStop(1,'rgba('+rgb+',0)');
+  g.fillStyle=gr;g.beginPath();g.arc(x,y,r,0,TAU);g.fill();
+}
+function cosSay(t){const o=citizens[SPI];if(o){o.q=t;o.qd=6.5;o.cd=RT+25}}
+function enterSpace(){
+  if(obsOn)exitObs();
+  if(fpOn)toggleFP();
+  flyOn=false;planeOn=false;spaceOn=true;mapOpen=false;dialog=null;
+  if(!ETEX){sub('Станция выходит на орбиту... строим планету',2);genEarth()}
+  SPC.track=1;SPC.zT=1;SPC.vy=SPC.vp=0;
+  sub('Космическая станция «Заря-9». IJKL — вращать, колесо — зум, V — слежение, Y — вниз',5.5);
+  cosSay('Привет! Вижу всю Землю. А Зоркий где? А, вон та крошечная вышка...');
+}
+function exitSpace(){spaceOn=false;camMode=1;userCam=true}
+function spaceSpecial(wi,wp){
+  if(wi===0){
+    R.alive=false;R.latch=false;sirenOn=false;BAL={t:0};
+    sub('ЦАРЬ-БОМБА превратилась в ШАРИК. В космосе так можно.',4.5);
+    feedAdd('КОСМОНАВТ','Это что — воздушный шарик?! Ну... хоть никто не пострадал. Красивый.','#fca5a5');
+    cosSay('Шарик! Царь-бомба — это шарик! Всё, я спокоен.');
+    return true;
+  }
+  if(wp.ty==='pel'){
+    R.alive=false;R.latch=false;sirenOn=false;
+    const l=[];for(let i=0;i<30;i++)l.push({d:i*0.13+rnd()*0.12,a:rnd()*TAU,done:false});
+    EAT={t:0,n:0,pulse:0,fin:false,list:l};
+    sub('Пельмени летят на орбиту — космонавт съест всё сам!',4.5);
+    cosSay('Пельмени?! С Земли?! Ням-ням-ням!');
+    return true;
+  }
+  if(wp.ty==='anti'&&!PLN){
+    const cr=[],sh=[],b=[];
+    for(let i=0;i<11;i++){const j=[];for(let k=0;k<8;k++)j.push((rnd()-0.5)*0.55);cr.push({a:rnd()*TAU,j})}
+    for(let i=0;i<14;i++)b.push(rnd()*TAU);
+    b.sort((p,q)=>p-q);
+    for(let i=0;i<14;i++)sh.push({a0:b[i],a1:i<13?b[i+1]:b[0]+TAU,v:0.6+rnd()*0.9,r:(rnd()-0.5)*2});
+    PLN={t:0,cr,sh};
+    sub('АНТИМАТЕРИЯ ЗАПУЩЕНА. ЭТО КОНЕЦ ПЛАНЕТЫ.',5);
+  }
+  return false;
+}
+function tickFx(rdt){
+  if(BAL)BAL.t+=rdt;
+  if(EAT){EAT.t+=rdt;EAT.pulse=max(0,EAT.pulse-rdt)}
+  if(PLN){
+    const p0=PLN.t;PLN.t+=rdt;
+    if(p0<1.2&&PLN.t>=1.2)cosSay('ЗЕМЛЯ ТРЕЩИТ! Зоркий, держись!!! (это не по плану!)');
+    if(p0<4.2&&PLN.t>=4.2){
+      cosSay('...Ну. Я хотя бы на станции.');
+      feedAdd('СИСТЕМА','ЗЕМЛЯ УНИЧТОЖЕНА антиматерией. Выжил один космонавт.','#fb7185');
+      sub('ЗЕМЛЯ УНИЧТОЖЕНА',5);
+    }
+  }
+}
+function updateSpace(rdt){
+  if(SPC.track){SPC.lonT=SITE.lon;SPC.latT=SITE.lat*0.85}
+  let da=SPC.lonT-SPC.lon;while(da>PI)da-=TAU;while(da<-PI)da+=TAU;
+  const k=1-exp(-rdt*(SPC.track?2.5:2.2));
+  SPC.lon+=da*k;SPC.lat+=(clamp(SPC.latT,-1.3,1.3)-SPC.lat)*k;
+  SPC.zT=clamp(SPC.zT,0.6,6);
+  SPC.z+=(SPC.zT-SPC.z)*(1-exp(-rdt*3));
+}
+function cosmoXY(){const u=max(0.55,min(W,H)/700);return{u,x:W-125*u,y:H-48*u}}
+function spaceBlast(pt,ER,kmPx,fz,ux,uy,lat){
+  const t=D.t,ci=cloudInfo(t),ang=atan2(uy,ux)+PI/2,ak=ashK();
+  g.globalCompositeOperation='lighter';
+  const fa=clamp(1-t/(D.fd*1.4),0,1)*min(1.3,D.fl);
+  if(fa>0.01)sGlow(pt.x,pt.y,ER*(0.05+0.05*D.s)*(1+t*0.8)+8,D.fc,fa);
+  g.globalCompositeOperation='source-over';
+  if(D.kill){
+    const rs=1.4*D.s*kmPx*sstep(t/3);
+    g.save();g.translate(pt.x,pt.y);g.rotate(ang);g.scale(1,fz);
+    g.fillStyle=D.ty==='cryo'?'rgba(200,235,255,0.5)':D.ty==='cobalt'?'rgba(20,70,30,0.5)':'rgba(20,14,10,0.5)';
+    g.beginPath();g.arc(0,0,rs,0,TAU);g.fill();g.restore();
+  }
+  if(D.fog>0){
+    const fl=fogLevel(),rf=3.6*sqrt(D.s)*(0.5+0.5*D.fog)*kmPx*sstep(t/12);
+    if(fl>0.01&&rf>2){g.save();g.translate(pt.x,pt.y);g.rotate(ang);g.scale(1,fz);sGlow(0,0,rf,'236,240,246',0.8*fl);g.restore()}
+  }
+  if(D.nuc&&(ak.gray>0.02||ak.dark>0.02)){
+    const ra=(2.2+t*0.05)*kmPx*1.5;
+    g.save();g.translate(pt.x,pt.y);g.rotate(ang);g.scale(1,fz);sGlow(0,0,ra,'80,76,72',min(0.7,0.5*ak.gray+0.25*ak.dark));g.restore();
+  }
+  const rr=D.rs/1000*kmPx;
+  if(rr>2&&rr<ER*1.4){
+    g.save();g.translate(pt.x,pt.y);g.rotate(ang);
+    g.strokeStyle='rgba('+D.rc+','+clamp(1-t/45,0.1,0.9)+')';g.lineWidth=2.5;
+    g.beginPath();g.ellipse(0,0,rr,max(1,rr*fz),0,0,TAU);g.stroke();g.restore();
+  }
+  const tp=exp(-t*D.cool/55),col2=D.pal===3?hsl2rgb((performance.now()*0.06)%360):edRGB(D.pal,tp);
+  const lift=ci.cy/1000*kmPx*0.5,cxp=pt.x+ux*lift*lat,cyp=pt.y+uy*lift*lat,zoom=1+ci.cy/1000/160;
+  const cr=(ci.R+ci.r)/1000*kmPx*zoom,fade=clamp((260-t)/40,0,1),cs=col2.map(v=>v|0).join(',');
+  if(ci.cy>400){g.strokeStyle='rgba('+cs+',0.45)';g.lineWidth=max(2,cr*0.2);g.beginPath();g.moveTo(pt.x,pt.y);g.lineTo(cxp,cyp);g.stroke()}
+  if(cr>1.5&&!(D.fog>0&&!D.kill))sGlow(cxp,cyp,cr*1.15,cs,0.85*fade);
+  if(ci.cy>=100000&&fade>0.2){g.fillStyle='#fde047';g.font='bold 12px ui-monospace,monospace';g.textAlign='center';g.fillText('ГРИБ В КОСМОСЕ · '+(ci.cy/1000).toFixed(0)+' км',cxp,cyp-cr-8)}
+}
+function drawSpaceFx(pt,ER,EX,EY){
+  const kmPx=ER/6371*EXAG;
+  g.font='bold 11px ui-monospace,monospace';g.textAlign='center';
+  if(pt.z<0.04){g.fillStyle='rgba(255,255,255,0.65)';g.fillText('район пуска — за горизонтом (V — слежение)',CX,H-70);return}
+  const fz=max(0.1,pt.z),nl=hypot(pt.nx,pt.ny)||1,ux=pt.nx/nl,uy=pt.ny/nl,lat=sqrt(max(0,1-fz*fz));
+  g.strokeStyle='rgba(255,230,120,0.95)';g.lineWidth=1.6;g.beginPath();g.arc(pt.x,pt.y,6+2*sin(performance.now()*0.006),0,TAU);g.stroke();
+  g.fillStyle='rgba(255,236,150,0.95)';g.fillText('▼ РАЙОН «ПЕПЕЛ-9»',pt.x,pt.y-12);
+  if(R.alive&&R.launched){
+    const alt=max(0,R.y-PADH)/1000,L=max(3,alt*kmPx),ex=pt.x+ux*L*lat,ey=pt.y+uy*L*lat;
+    g.globalCompositeOperation='lighter';
+    g.strokeStyle='rgba(255,180,90,0.85)';g.lineWidth=2.5;g.beginPath();g.moveTo(pt.x,pt.y);g.lineTo(ex,ey);g.stroke();
+    sGlow(ex,ey,8+alt*2.2,'255,200,120',0.9);
+    g.globalCompositeOperation='source-over';
+  }
+  if(D&&!(PLN&&PLN.t>1.2))spaceBlast(pt,ER,kmPx,fz,ux,uy,lat);
+}
+function drawPlanetBoom(EX,EY,ER,pt){
+  const t=PLN.t;
+  if(t<4.2){
+    let ox=0,oy=0;if(t>1.2){const a=min(6,(t-1.2)*2.2);ox=(rnd()-0.5)*a;oy=(rnd()-0.5)*a}
+    g.drawImage(GCV,EX-ER+ox,EY-ER+oy,2*ER,2*ER);
+    if(t>1.0&&pt.z>-0.2){
+      const L=sstep((t-1.0)/2.8)*ER*1.9;
+      g.save();g.beginPath();g.arc(EX+ox,EY+oy,ER,0,TAU);g.clip();g.globalCompositeOperation='lighter';
+      for(const c of PLN.cr){
+        g.beginPath();g.moveTo(pt.x,pt.y);
+        const n=c.j.length;
+        for(let i=1;i<=n;i++){const seg=min(L,ER*2)*i/n;g.lineTo(pt.x+cos(c.a+c.j[i-1])*seg,pt.y+sin(c.a+c.j[i-1])*seg)}
+        g.strokeStyle='rgba(255,120,40,0.9)';g.lineWidth=max(2,ER*0.02);g.stroke();
+        g.strokeStyle='rgba(255,240,200,0.95)';g.lineWidth=max(1,ER*0.007);g.stroke();
+      }
+      g.restore();
+    }
+    g.globalCompositeOperation='lighter';
+    sGlow(pt.x,pt.y,ER*(0.1+0.7*sstep((t-0.2)/3)),'255,235,190',0.9*(1-sstep((t-3.4)/0.8)));
+    g.globalCompositeOperation='source-over';
+  }else{
+    const tt=t-4.2;
+    for(const s of PLN.sh){
+      const mid=(s.a0+s.a1)/2,dist=ER*(0.05+0.95*pow(tt/5.5,1.35))*s.v,al=clamp(1-(tt-4)/5,0,1);
+      if(al<=0)continue;
+      g.save();g.globalAlpha=al;
+      g.translate(EX+cos(mid)*dist,EY+sin(mid)*dist);g.rotate(s.r*tt*0.3);g.translate(-EX,-EY);
+      g.beginPath();g.moveTo(EX,EY);g.arc(EX,EY,ER*1.02,s.a0,s.a1);g.closePath();g.clip();
+      g.drawImage(GCV,EX-ER,EY-ER,2*ER,2*ER);
+      g.globalCompositeOperation='lighter';g.strokeStyle='rgba(255,140,50,'+(0.6*al)+')';g.lineWidth=max(2,ER*0.025);
+      g.beginPath();g.moveTo(EX,EY);g.lineTo(EX+cos(s.a0)*ER,EY+sin(s.a0)*ER);g.moveTo(EX,EY);g.lineTo(EX+cos(s.a1)*ER,EY+sin(s.a1)*ER);g.stroke();
+      g.restore();
+    }
+    g.globalCompositeOperation='lighter';
+    sGlow(EX,EY,ER*0.55*(1-sstep(tt/6))+4,'255,200,120',0.9*(1-sstep(tt/6)));
+    g.strokeStyle='rgba(255,255,255,'+(0.8*clamp(1-tt/6,0,1))+')';g.lineWidth=6;g.beginPath();g.arc(EX,EY,ER*(0.5+tt*0.9),0,TAU);g.stroke();
+    g.globalCompositeOperation='source-over';
+  }
+}
+function planetFlash(){
+  if(!PLN)return;
+  const t=PLN.t;
+  if(t>3.6&&t<6.2){const a=t<4.4?(t-3.6)/0.8:1-(t-4.4)/1.8;g.fillStyle='rgba(255,252,240,'+(clamp(a,0,1)*0.95)+')';g.fillRect(0,0,W,H)}
+}
+function drawBalloon(pt){
+  const t=BAL.t,e=sstep(min(1,t/9)),sz=lerp(8,min(W,H)*0.16,e),bx=lerp(pt.x,CX+W*0.1,e)+sin(t*1.7)*e*12,by=lerp(pt.y,H*0.34,e)-e*10+sin(t*1.3)*e*8,al=t>13?clamp(1-(t-13)/3,0,1):1;
+  if(al<=0)return;
+  g.save();g.globalAlpha=al;
+  g.strokeStyle='rgba(235,235,235,0.8)';g.lineWidth=max(1,sz*0.03);g.beginPath();g.moveTo(bx,by+sz);g.quadraticCurveTo(bx-sz*0.4,by+sz*1.8,bx+sin(t*2)*sz*0.2,by+sz*2.6);g.stroke();
+  const gr=g.createRadialGradient(bx-sz*0.35,by-sz*0.35,sz*0.1,bx,by,sz*1.05);gr.addColorStop(0,'#ffd0d6');gr.addColorStop(0.35,'#ff4a63');gr.addColorStop(1,'#a3102a');
+  g.fillStyle=gr;g.beginPath();g.ellipse(bx,by,sz*0.86,sz,0,0,TAU);g.fill();
+  g.fillStyle='rgba(255,255,255,0.7)';g.beginPath();g.ellipse(bx-sz*0.32,by-sz*0.42,sz*0.14,sz*0.22,-0.5,0,TAU);g.fill();
+  g.fillStyle='#a3102a';g.beginPath();g.moveTo(bx,by+sz);g.lineTo(bx-sz*0.09,by+sz*1.12);g.lineTo(bx+sz*0.09,by+sz*1.12);g.closePath();g.fill();
+  if(sz>34){g.font='bold 14px ui-monospace,monospace';g.textAlign='center';g.fillStyle='#fff';g.fillText('ЦАРЬ-ШАРИК · 50 Мт → 50 г гелия',bx,by-sz-10)}
+  g.restore();
+}
+function drawEat(pt){
+  const c=cosmoXY(),mx=c.x,my=c.y-120*c.u;
+  let alive=0;
+  for(const p of EAT.list){
+    if(p.done)continue;
+    const tt=EAT.t-p.d;
+    if(tt<0){alive++;continue}
+    const u=tt/2.2;
+    if(u>=1){p.done=true;EAT.n++;EAT.pulse=0.55;continue}
+    alive++;
+    const e=sstep(u),x=lerp(pt.x,mx,e)+sin(p.a+u*5)*18*(1-u),y=lerp(pt.y,my,e)-sin(u*PI)*H*0.2,sz=5+16*e;
+    g.fillStyle='#f6edd8';g.beginPath();g.ellipse(x,y,sz,sz*0.62,0.5*sin(u*8+p.a),0,TAU);g.fill();
+    g.strokeStyle='#cdb98d';g.lineWidth=1.2;g.stroke();
+  }
+  if(!alive&&!EAT.fin){
+    EAT.fin=true;cosSay('Ням! Съел все '+EAT.n+' пельменей. С Земли, ещё тёплые. Спасибо!');
+    feedAdd('КОСМОНАВТ','Ням-ням: '+EAT.n+' пельменей с Земли — быстрее любой доставки!','#fde68a');
+  }
+}
+function drawStationFrame(){
+  const vg=g.createRadialGradient(CX,CY,min(W,H)*0.42,CX,CY,max(W,H)*0.8);vg.addColorStop(0,'rgba(0,0,0,0)');vg.addColorStop(1,'rgba(0,0,0,0.8)');
+  g.fillStyle=vg;g.fillRect(0,0,W,H);
+  g.lineWidth=16;g.strokeStyle='#262b35';g.strokeRect(8,8,W-16,H-16);
+  g.lineWidth=3;g.strokeStyle='#5b6578';g.strokeRect(17,17,W-34,H-34);
+  g.fillStyle='#8b94a6';
+  for(const q of [[14,14],[W-14,14],[14,H-14],[W-14,H-14],[CX,12],[CX,H-12],[12,CY],[W-12,CY]]){g.beginPath();g.arc(q[0],q[1],4,0,TAU);g.fill()}
+  const u=max(0.55,min(W,H)/700),pw=150*u,ph=120*u;
+  g.save();g.translate(22,H-250*u);g.transform(1,-0.35,0,1,0,0);
+  g.fillStyle='#10244f';g.fillRect(0,0,pw,ph);g.strokeStyle='#4f6fb5';g.lineWidth=1.2;
+  for(let i=1;i<6;i++){g.beginPath();g.moveTo(i*pw/6,0);g.lineTo(i*pw/6,ph);g.stroke()}
+  for(let j=1;j<4;j++){g.beginPath();g.moveTo(0,j*ph/4);g.lineTo(pw,j*ph/4);g.stroke()}
+  g.restore();
+}
+function drawCosmo(){
+  const o=citizens[SPI],c=cosmoXY(),u=c.u,t=performance.now()*0.001;
+  const chew=EAT&&EAT.pulse>0?0.07*sin(t*34):0;
+  g.save();g.translate(c.x,c.y+sin(t*0.9)*5*u);g.rotate(sin(t*0.55)*0.07);g.scale(1+chew,1-chew);
+  g.lineCap='round';
+  g.fillStyle='#aab3c2';g.fillRect(-44*u,-150*u,88*u,84*u);
+  g.strokeStyle='#eef2f8';g.lineWidth=70*u;g.beginPath();g.moveTo(0,0);g.lineTo(0,-96*u);g.stroke();
+  g.strokeStyle='rgba(0,0,0,0.12)';g.lineWidth=14*u;g.beginPath();g.moveTo(-22*u,-4*u);g.lineTo(-22*u,-92*u);g.stroke();
+  g.fillStyle='#cfd5df';g.fillRect(-20*u,-74*u,40*u,24*u);
+  g.fillStyle='#ef4444';g.fillRect(-14*u,-70*u,9*u,7*u);g.fillStyle='#22c55e';g.fillRect(2*u,-70*u,9*u,7*u);g.fillStyle='#3b82f6';g.fillRect(-14*u,-60*u,9*u,5*u);
+  g.fillStyle='#fff';g.fillRect(-34*u,-60*u,12*u,8*u);g.fillStyle='#2563eb';g.fillRect(-34*u,-56*u,12*u,3*u);g.fillStyle='#dc2626';g.fillRect(-34*u,-53*u,12*u,3*u);
+  const vg=g.createLinearGradient(0,-140*u,0,-108*u);vg.addColorStop(0,'#f2c35b');vg.addColorStop(1,'#a8741a');
+  g.fillStyle=vg;g.beginPath();g.ellipse(0,-124*u,29*u,19*u,0,0,TAU);g.fill();
+  g.fillStyle='rgba(90,150,255,0.65)';g.beginPath();g.ellipse(-7*u,-121*u,15*u,10*u,0,0,TAU);g.fill();
+  g.fillStyle='rgba(255,255,255,0.7)';g.beginPath();g.ellipse(-14*u,-129*u,6*u,3*u,-0.4,0,TAU);g.fill();
+  const aw=sin(t*2.6)*12*u;
+  g.strokeStyle='#e4e9f1';g.lineWidth=18*u;g.beginPath();g.moveTo(30*u,-70*u);g.lineTo(52*u,-88*u+aw);g.stroke();
+  g.fillStyle='#d4d9e2';g.beginPath();g.arc(52*u,-90*u+aw,11*u,0,TAU);g.fill();
+  g.restore();
+  g.textAlign='center';g.font='bold 11px ui-monospace,monospace';
+  const nm='Космонавт Звёздный · друг Зоркого',tw=g.measureText(nm).width+12;
+  g.fillStyle='rgba(0,0,0,0.6)';g.fillRect(c.x-tw/2,c.y+10*u,tw,16);g.fillStyle='#bfdbfe';g.fillText(nm,c.x,c.y+22*u);
+  if(o&&o.qd>0&&o.q){
+    g.font='12px ui-sans-serif,system-ui,sans-serif';
+    const mw=min(300,W*0.4),ls=wrapLines(o.q,mw).slice(0,4);
+    let bw=0;for(const s of ls)bw=max(bw,g.measureText(s).width);
+    bw+=16;const bh=ls.length*15+8,bx=clamp(c.x-bw*0.7,6,W-bw-6),by=c.y-190*u-bh;
+    g.fillStyle='rgba(255,255,255,0.95)';g.beginPath();g.roundRect(bx,by,bw,bh,7);g.fill();
+    g.fillStyle='#111';g.textAlign='left';ls.forEach((s,i)=>g.fillText(s,bx+8,by+16+i*15));
+  }
+}
+function drawMapPiP(x,y,w,h){
+  const sW=W,sH=H,sCX=CX,sCY=CY,sM=mapV;
+  g.save();g.beginPath();g.rect(x,y,w,h);g.clip();g.translate(x,y);
+  W=w;H=h;CX=w/2;CY=h/2;
+  const act=D||(R.alive&&R.launched),fx=D?D.x:R.alive&&R.launched?R.x:0,fz=D?D.z:R.alive&&R.launched?R.z:0;
+  mapV={x:fx,z:fz,s:w/(D?min(16000,max(3200,D.rs*2.6+1200)):(act?3200:2600))};
+  MAPMINI=true;
+  try{drawMap()}finally{MAPMINI=false;W=sW;H=sH;CX=sCX;CY=sCY;mapV=sM;g.restore()}
+  g.strokeStyle='#86efac';g.lineWidth=2;g.strokeRect(x,y,w,h);
+  g.fillStyle='rgba(0,0,0,0.65)';g.fillRect(x,y,w,16);g.font='bold 10px ui-monospace,monospace';g.textAlign='left';g.fillStyle='#86efac';g.fillText('ТЕЛЕСКОП СТАНЦИИ · район пуска',x+6,y+12);
+}
+function renderSpace(rdt){
+  if(!ETEX)genEarth();
+  updateSpace(rdt);
+  const now=performance.now()*0.001;
+  g.fillStyle='#02030a';g.fillRect(0,0,W,H);
+  g.save();
+  if(PLN&&PLN.t>1&&PLN.t<7){const a=min(12,(PLN.t-1)*5)*(PLN.t<4.5?1:max(0,1-(PLN.t-4.5)/2.5));g.translate((rnd()-0.5)*a,(rnd()-0.5)*a)}
+  const ox=SPC.lon*140,oy=SPC.lat*100;
+  g.fillStyle='#fff';
+  for(let i=0;i<SSTARS.length;i+=4){
+    const k=SSTARS[i+2],sx=(((SSTARS[i]*W-ox*k*0.4)%W)+W)%W,sy=(((SSTARS[i+1]*H+oy*k*0.4)%H)+H)%H;
+    g.globalAlpha=0.3+0.7*SSTARS[i+3];g.fillRect(sx,sy,k,k);
+  }
+  g.globalAlpha=1;
+  const ER=min(W,H)*0.36*SPC.z,EX=CX,EY=CY-6,pt=sitePos(ER,EX,EY,SPC.lon,SPC.lat),boom=PLN&&PLN.t>0;
+  const ag=g.createRadialGradient(EX,EY,ER*0.97,EX,EY,ER*1.13);
+  ag.addColorStop(0,'rgba(110,170,255,'+(boom&&PLN.t>4.2?0:0.5)+')');ag.addColorStop(1,'rgba(110,170,255,0)');
+  g.fillStyle=ag;g.beginPath();g.arc(EX,EY,ER*1.13,0,TAU);g.fill();
+  if(abs(SPC.lon-gLast.a)>0.0008||abs(SPC.lat-gLast.b)>0.0008||now-gLast.t>0.35){renderGlobe(SPC.lon,SPC.lat);gLast.a=SPC.lon;gLast.b=SPC.lat;gLast.t=now}
+  if(boom)drawPlanetBoom(EX,EY,ER,pt);else g.drawImage(GCV,EX-ER,EY-ER,2*ER,2*ER);
+  if(!boom||PLN.t<1.6)drawSpaceFx(pt,ER,EX,EY);
+  if(BAL)drawBalloon(pt);
+  if(EAT)drawEat(pt);
+  g.restore();
+  planetFlash();
+  drawStationFrame();
+  if(!TOUCHY&&W>720&&H>420&&!(PLN&&PLN.t>4.2)){const pw=min(250,W*0.26);drawMapPiP(W-pw-10,HH+104,pw,pw*0.74)}
+  drawCosmo();
+  g.textAlign='center';g.font='bold 12px ui-monospace,monospace';g.fillStyle='#93c5fd';
+  g.fillText(W>900?'МКС «ЗАРЯ-9» · орбита 408 км · масштаб эффектов ×'+EXAG+' · [IJKL] вращать · колесо зум · [V] слежение · [Y] вниз':'ОРБИТА 408 км · [Y] вниз',CX,H-22);
+  if(PLN&&PLN.t>6){
+    g.font='bold 30px ui-monospace,monospace';g.fillStyle='#fecaca';g.fillText('ЗЕМЛЯ УНИЧТОЖЕНА',CX,CY-10);
+    g.font='15px ui-sans-serif,system-ui,sans-serif';g.fillStyle='#fca5a5';g.fillText('Остался один космонавт. R — перезапуск мира.',CX,CY+20);
+  }
+}
+
+/* ===== v8: шахты, новая ракета, автопилот ===== */
+const OPQ=new Float64Array(12);
+const AP={on:false,gx:0,gz:0,ph:0,pt:0,burst:1,bh:400,dlt:0,err:0,msg:0,pr:{x:0,z:0,t:0}};
+const RCOL=[[58,62,70],[238,240,244],[30,32,36],[200,44,38],[92,98,108],[214,218,224],[196,38,34],[96,74,62],[206,210,218]];
+const RSEC=[[-0.060,1.25],[-0.010,0.72],[0.000,1.35],[0.035,1.70],[0.055,1.80],[0.200,1.80],[0.215,1.80],[0.360,1.80],[0.375,1.80],[0.410,1.66],[0.430,1.46],[0.690,1.46],[0.705,1.46],[0.740,1.50],[0.800,1.42],[0.880,1.12],[0.950,0.62],[0.985,0.24],[1.000,0.04]];
+const RSC=[7,0,0,0,1,2,1,3,0,0,4,3,0,5,5,6,6,8];
+function resetAP(){AP.on=false;AP.ph=0;AP.pt=0;AP.msg=0;AP.dlt=0;AP.err=0}
+function siloAt(x,z){for(let i=0;i<4;i++){const s=SIL[i];if(abs(x-s.x)<SH+1&&abs(z-s.z)<SH+1)return s}return null}
+function floorAt(x,y,z){
+  for(let i=0;i<4;i++){const s=SIL[i];if(abs(x-s.x)<SH-0.8&&abs(z-s.z)<SH-0.8)return(y<-0.5||s.door>0.9)?-(SD-2):0}
+  return 0;
+}
+function openClip(s){
+  OPQ[0]=s.x-SH;OPQ[1]=0.27;OPQ[2]=s.z-SH;OPQ[3]=s.x+SH;OPQ[4]=0.27;OPQ[5]=s.z-SH;
+  OPQ[6]=s.x+SH;OPQ[7]=0.27;OPQ[8]=s.z+SH;OPQ[9]=s.x-SH;OPQ[10]=0.27;OPQ[11]=s.z+SH;
+  return polyPath(OPQ);
+}
+function silLeaves(s){
+  const o=s.door*(SH+1.2),w=SH+0.5;
+  s.la.x=s.x-w/2-o;s.lb.x=s.x+w/2+o;s.la.z=s.z;s.lb.z=s.z;
+  s.la.w=w;s.lb.w=w;s.la.d=2*SH+1;s.lb.d=2*SH+1;
+}
+function stepSilos(dt){
+  for(let i=0;i<4;i++){
+    const s=SIL[i];let want=0;
+    if(i===silSel&&R.alive&&(R.th>0.06||R.latch||AP.on||keyThrust())&&(R.y<420||R.grounded))want=1;
+    const d0=s.door;
+    s.door=clamp(s.door+(want?1:-1)*dt/3.4,0,1);
+    if(d0<0.02&&s.door>=0.02&&AU.c)sweep(95,38,3.4,'sawtooth',0.07);
+  }
+}
+function drawSiloPit(s){
+  if(!openClip(s))return;
+  g.fillStyle='#04050a';g.fill();
+  g.save();g.clip();
+  const x0=s.x-SH,x1=s.x+SH,z0=s.z-SH,z1=s.z+SH,yt=0.27,L=lightK;
+  const hot=(R.alive&&R.th>0.05&&abs(R.x-s.x)<4&&abs(R.z-s.z)<4&&R.y<10)?R.th:0;
+  const bd=[[yt,-9,1],[-9,-22,0.62],[-22,-SD,0.4]];
+  for(let b=0;b<3;b++){
+    const ya=bd[b][0],yb=bd[b][1],kk=bd[b][2]*L,c=[72+hot*60*(b/2),76+hot*28*(b/2),84];
+    if(cam.x<x1)fillQuad(x1,ya,z0,x1,ya,z1,x1,yb,z1,x1,yb,z0,col(c,kk*0.8,0));
+    if(cam.x>x0)fillQuad(x0,ya,z1,x0,ya,z0,x0,yb,z0,x0,yb,z1,col(c,kk*0.6,0));
+    if(cam.z<z1)fillQuad(x1,ya,z1,x0,ya,z1,x0,yb,z1,x1,yb,z1,col(c,kk*0.7,0));
+    if(cam.z>z0)fillQuad(x0,ya,z0,x1,ya,z0,x1,yb,z0,x0,yb,z0,col(c,kk*0.66,0));
+  }
+  const cl=col([255,226,150],L*(0.65+0.3*hot),0);
+  for(const y of[-5,-12,-19,-26]){
+    const yb=y-0.45;
+    if(cam.x<x1)fillQuad(x1-0.03,y,z0,x1-0.03,y,z1,x1-0.03,yb,z1,x1-0.03,yb,z0,cl);
+    if(cam.x>x0)fillQuad(x0+0.03,y,z1,x0+0.03,y,z0,x0+0.03,yb,z0,x0+0.03,yb,z1,cl);
+    if(cam.z<z1)fillQuad(x1,y,z1-0.03,x0,y,z1-0.03,x0,yb,z1-0.03,x1,yb,z1-0.03,cl);
+    if(cam.z>z0)fillQuad(x0,y,z0+0.03,x1,y,z0+0.03,x1,yb,z0+0.03,x0,yb,z0+0.03,cl);
+  }
+  fillQuad(x0,-SD,z0,x1,-SD,z0,x1,-SD,z1,x0,-SD,z1,col([36+hot*160,32+hot*70,34],L,0));
+  g.restore();
+}
+function clipY(v,up){
+  const out=[],n=v.length/3;
+  for(let i=0;i<n;i++){
+    const j=(i+1)%n,ay=v[i*3+1],by=v[j*3+1],ain=up?ay>=0:ay<0,bin=up?by>=0:by<0;
+    if(ain)out.push(v[i*3],ay,v[i*3+2]);
+    if(ain!==bin){const t=-ay/(by-ay);out.push(v[i*3]+(v[j*3]-v[i*3])*t,0,v[i*3+2]+(v[j*3+2]-v[i*3+2])*t)}
+  }
+  return out;
+}
+function fillPolyY0(v,style,sc){
+  let mn=1e9;for(let i=1;i<v.length;i+=3)if(v[i]<mn)mn=v[i];
+  if(mn>=0||!sc){fillPoly(v,style);return}
+  const up=clipY(v,true),dn=clipY(v,false);
+  if(up.length>=9)fillPoly(up,style);
+  if(dn.length>=9&&openClip(sc)){g.save();g.clip();fillPoly(dn,style);g.restore()}
+}
+function drawRocket(){
+  const sc=R.y<16?siloAt(R.x,R.z):null,u0=R.ax,u1=R.ay,u2=R.az;
+  let hx=0,hy=1,hz=0;if(abs(u1)>0.98){hx=1;hy=0}
+  let ax=u1*hz-u2*hy,ay=u2*hx-u0*hz,az=u0*hy-u1*hx;const l=hypot(ax,ay,az);ax/=l;ay/=l;az/=l;
+  const bx=u1*az-u2*ay,by=u2*ax-u0*az,bz=u0*ay-u1*ax;
+  const NS=14,ns=RSEC.length,P=[];
+  for(let s=0;s<ns;s++){
+    const t=RSEC[s][0]*RL,r=RSEC[s][1],ring=new Array(NS*3);
+    for(let j=0;j<NS;j++){const th=j/NS*TAU,c=cos(th),sn=sin(th);ring[j*3]=R.x+u0*t+(ax*c+bx*sn)*r;ring[j*3+1]=R.y+u1*t+(ay*c+by*sn)*r;ring[j*3+2]=R.z+u2*t+(az*c+bz*sn)*r}
+    P.push(ring);
+  }
+  const faces=[];
+  for(let s=0;s<ns-1;s++){
+    const dl=(RSEC[s+1][0]-RSEC[s][0])*RL,sl=-(RSEC[s+1][1]-RSEC[s][1])/dl,nn=sqrt(1+sl*sl),colr=RCOL[RSC[s]],A=P[s],B2=P[s+1];
+    for(let j=0;j<NS;j++){
+      const j2=(j+1)%NS,thm=(j+0.5)/NS*TAU,c=cos(thm),sn=sin(thm);
+      const nx=((ax*c+bx*sn)+u0*sl)/nn,ny=((ay*c+by*sn)+u1*sl)/nn,nz=((az*c+bz*sn)+u2*sl)/nn;
+      const mx=(A[j*3]+B2[j2*3])*0.5,my=(A[j*3+1]+B2[j2*3+1])*0.5,mz=(A[j*3+2]+B2[j2*3+2])*0.5;
+      if(nx*(cam.x-mx)+ny*(cam.y-my)+nz*(cam.z-mz)<=0)continue;
+      const dif=max(0,nx*SUN[0]+ny*SUN[1]+nz*SUN[2]);
+      faces.push({d:zdep(mx,my,mz),v:[A[j*3],A[j*3+1],A[j*3+2],A[j2*3],A[j2*3+1],A[j2*3+2],B2[j2*3],B2[j2*3+1],B2[j2*3+2],B2[j*3],B2[j*3+1],B2[j*3+2]],c:col(colr,lightK*(0.4+0.62*dif)*((j&1)?0.965:1),0)});
+    }
+  }
+  for(let k=0;k<4;k++){
+    const th=k/4*TAU,c=cos(th),sn=sin(th),dx=ax*c+bx*sn,dy=ay*c+by*sn,dz=az*c+bz*sn;
+    const pt=(t,r)=>[R.x+u0*t*RL+dx*r,R.y+u1*t*RL+dy*r,R.z+u2*t*RL+dz*r];
+    const p1=pt(0.34,1.8),p2=pt(0.12,5.0),p3=pt(0.035,5.0),p4=pt(0.0,1.8);
+    faces.push({d:zdep((p1[0]+p3[0])/2,(p1[1]+p3[1])/2,(p1[2]+p3[2])/2),v:[...p1,...p2,...p3,...p4],c:col([46,50,58],lightK*0.92,0)});
+    const q1=pt(0.12,5.0),q2=pt(0.035,5.0),q3=pt(0.035,4.3),q4=pt(0.095,4.3);
+    faces.push({d:zdep((q1[0]+q3[0])/2,(q1[1]+q3[1])/2,(q1[2]+q3[2])/2)-0.2,v:[...q1,...q2,...q3,...q4],c:col([200,44,38],lightK,0)});
+  }
+  faces.sort((a,b)=>b.d-a.d);
+  for(const f of faces)fillPolyY0(f.v,f.c,sc);
+}
+function setSilo(i){
+  i=(i+4)%4;
+  if(!(R.alive&&R.grounded&&!R.launched&&!AP.on)){sub('Сменить шахту можно только до запуска и без автопилота',2.5);return}
+  silSel=i;R.x=SIL[i].x;R.z=SIL[i].z;R.y=-(SD-2);
+  sub('Выбрана шахта '+(i+1)+' из 4',2);
+}
+function predImpact(){
+  let x=R.x,y=R.y,z=R.z,vx=R.vx,vy=R.vy,vz=R.vz,t=0;const m=DRY+R.fuel,dtp=0.6;
+  for(let i=0;i<180;i++){
+    windAt(y,wv);
+    const rx=vx-wv.x,rz=vz-wv.z,v=sqrt(rx*rx+vy*vy+rz*rz)+1e-6,rho=1.225*exp(-max(0,y)/8500),k=0.5*rho*1.6/m*v;
+    vx-=rx*k*dtp;vy-=vy*k*dtp;vz-=rz*k*dtp;vy-=9.81*dtp;
+    const nx=x+vx*dtp,ny=y+vy*dtp,nz=z+vz*dtp;t+=dtp;
+    if(ny<=0&&i>0){const f=y/(y-ny+1e-9);AP.pr.x=x+(nx-x)*f;AP.pr.z=z+(nz-z)*f;AP.pr.t=t-dtp*(1-f);return}
+    x=nx;y=ny;z=nz;
+  }
+  AP.pr.x=x;AP.pr.z=z;AP.pr.t=t;
+}
+function stepAP(dt){
+  const A=AP,out={thr:0,tx:0,tz:0,vel:false};
+  if(!R.alive){A.on=false;return out}
+  const dx=A.gx-R.x,dz=A.gz-R.z,az0=atan2(dx,dz),D0=hypot(dx,dz);
+  if(R.grounded&&!R.launched){
+    out.thr=SIL[silSel].door>0.4?1:0;
+    if(A.msg<1){A.msg=1;sub('АВТОПИЛОТ: створки шахты открываются...',3.5)}
+    return out;
+  }
+  if(A.ph<=1){
+    if(A.ph===0){A.ph=1;sub('АВТОПИЛОТ: выход из шахты, вертикальный подъём',3)}
+    out.thr=1;
+    if(R.y>90&&R.vy>45){A.ph=2;A.pt=0;sub('АВТОПИЛОТ: программный разворот на цель',3)}
+    return out;
+  }
+  predImpact();
+  const ex=A.gx-A.pr.x,ez=A.gz-A.pr.z,ux=sin(az0),uz=cos(az0);
+  const ea=ex*ux+ez*uz,ep=ex*uz-ez*ux;
+  A.err=hypot(ex,ez);
+  if(A.ph===2){
+    A.pt+=dt;
+    A.dlt+=(clamp(ep/max(300,D0)*1.8,-0.45,0.45)-A.dlt)*min(1,dt*1.5);
+    const th=min(0.82,A.pt*0.55);
+    out.thr=1;out.tx=th*sin(az0+A.dlt);out.tz=th*cos(az0+A.dlt);
+    if((ea<=0&&A.pt>0.8)||R.fuel<=0){A.ph=3;sub('АВТОПИЛОТ: отсечка двигателя, баллистический полёт',3.5)}
+    return out;
+  }
+  out.vel=true;
+  if(R.vy<0&&A.msg<4){A.msg=4;sub('АВТОПИЛОТ: самонаведение боеголовки',3)}
+  if(R.y>60){
+    const T2=max(1.5,A.pr.t);let aX=2.2*ex/(T2*T2),aZ=2.2*ez/(T2*T2);const am=hypot(aX,aZ);
+    if(am>32){aX*=32/am;aZ*=32/am}
+    R.vx+=aX*dt;R.vz+=aZ*dt;
+  }
+  if(A.burst&&R.vy<0&&R.y<=A.bh){A.on=false;sub('АВТОПИЛОТ: подрыв в воздухе на высоте '+max(0,R.y).toFixed(0)+' м',3);detonate();return out}
+  return out;
+}
+function abortAP(){
+  if(!AP.on)return;
+  AP.on=false;R.latch=false;
+  if(!R.grounded){
+    const m=Math.acos(clamp(max(R.ay,0.07),-1,1)),s=m>1e-4?sin(m)/m:1;
+    R.tx=R.ax/s;R.tz=R.az/s;R.tvx=0;R.tvz=0;
+  }
+  sub('Автопилот отключён: ручное управление (WASD)',3);
+}
+function mapToWorld(px,py){return[mapV.x+(px/UIS-CX)/mapV.s,mapV.z-(py/UIS-CY)/mapV.s]}
+function askTarget(x,z){
+  if(tgtOpen)return;
+  if(!R.alive){sub('Ракета уже израсходована. R — перезапуск',3);return}
+  const s0=SIL[silSel],d=hypot(x-s0.x,z-s0.z);
+  if(d<450){sub('Слишком близко к шахте (минимум 450 м)',3);return}
+  if(d>12000){sub('Дальше 12 км ракета не долетит',3);return}
+  let near='',nd=1e9;
+  for(const t of WORLD.towns){const dd=hypot(x-t.x,z-t.z);if(dd<nd){nd=dd;near=t.name}}
+  for(const b of WORLD.bunkers){const dd=hypot(x-b.x,z-b.z);if(dd<nd){nd=dd;near=b.name}}
+  const w=WEAPONS[wsel],sx=w.s*YIELD[S.yieldIdx],ty0=w.cfg?cfgToWT(w.cfg,sx):WT[w.ty];
+  const rc=(3400*sx*(ty0.bld||0)*0.4/1000).toFixed(1);
+  const warn=hypot(x-OB.x,z-OB.z)<350?'<div class="text-amber-300 mt-1">⚠ Рядом наблюдательный пост Зоркого. Возможна пасхалка.</div>':'';
+  $('tgtInfo').innerHTML='<div>Цель: <b class="text-amber-300">X '+(x|0)+' · Z '+(z|0)+'</b> · дальность <b>'+(d/1000).toFixed(2)+' км</b></div><div>Ближайший объект: <b>'+near+'</b> ('+(nd/1000).toFixed(1)+' км)</div><div>Боеголовка: <b class="text-rose-300">'+w.n+'</b> · полное разрушение зданий до ≈ <b>'+rc+' км</b></div>'+warn;
+  $('tgtSilo').value=silSel;
+  tgtPend={x,z};tgtOpen=true;$('tgtModal').style.display='flex';
+}
+function cancelTarget(){tgtPend=null;tgtOpen=false;$('tgtModal').style.display='none'}
+function confirmTarget(){
+  if(!tgtPend){cancelTarget();return}
+  const t=tgtPend,b=+$('tgtBurst').value,si=+$('tgtSilo').value;
+  cancelTarget();
+  if(!R.alive){sub('Ракета уже израсходована',2.5);return}
+  if(R.grounded&&!R.launched&&si!==silSel)setSilo(si);
+  AP.on=true;AP.gx=t.x;AP.gz=t.z;AP.ph=0;AP.pt=0;AP.msg=0;AP.dlt=0;AP.err=0;AP.burst=b>0?1:0;AP.bh=[0,150,400,1000][b]||0;
+  AP.pr.x=R.x;AP.pr.z=R.z;AP.pr.t=0;
+  if(R.launched){AP.ph=(R.vy>0&&R.fuel>0)?2:3;AP.pt=1.2}
+  mapOpen=false;clearModes();camMode=0;userCam=true;distT[0]=max(distT[0],220);R.latch=false;
+  sub('АВТОПИЛОТ ВКЛЮЧЁН · цель '+(hypot(t.x-R.x,t.z-R.z)/1000).toFixed(2)+' км · Backspace — отмена',4.5);
+  feedAdd('АВТОПИЛОТ','Цель введена. Ракета пойдёт сама.','#fb7185');
+}
+function drawTargetMark(){
+  let tx,tz;
+  if(AP.on){tx=AP.gx;tz=AP.gz}else if(tgtPend){tx=tgtPend.x;tz=tgtPend.z}else return;
+  const pu=0.5+0.5*sin(T*5),r0=60+14*pu,v=[],v2=[];
+  for(let i=0;i<28;i++){const a=i/28*TAU;v.push(tx+cos(a)*r0,0.13,tz+sin(a)*r0)}
+  fillPoly(v,'rgba(255,50,40,0.16)','rgba(255,80,70,0.95)');
+  for(let i=0;i<20;i++){const a=i/20*TAU;v2.push(tx+cos(a)*r0*0.45,0.14,tz+sin(a)*r0*0.45)}
+  fillPoly(v2,'rgba(0,0,0,0)','rgba(255,120,90,0.9)');
+  g.strokeStyle='rgba(255,90,80,0.85)';g.lineWidth=2;g.beginPath();segTo(tx,0,tz,tx,900,tz);g.stroke();
+  if(pr(tx,60,tz)){g.font='bold 12px ui-monospace,monospace';g.textAlign='center';g.fillStyle='#fecaca';g.fillText('ЦЕЛЬ · '+(hypot(tx-R.x,tz-R.z)/1000).toFixed(2)+' км',PS.x,PS.y-8)}
+}
+
+/* ===== v8: полёт камеры, самолёт, бомба, атмосфера ===== */
+const PL={x:-3000,y:1000,z:300,yaw:PI/2,pit:0,roll:0,spd:135,alive:true,crashT:0,chute:false,cam:0,vx:135,vy:0,vz:0};
+const PCAM={d:70,yo:0,po:0,x:0,y:0,z:0,drag:0,init:false};
+const fly={x:0,y:30,z:0,yaw:0,pit:0,spd:600,vx:0,vy:0,vz:0};
+let BM=null;
+function clearModes(){obsOn=false;spaceOn=false;flyOn=false;planeOn=false}
+function toggleFP(){
+  if(spaceOn){exitSpace();return}
+  if(obsOn){exitObs();return}
+  if(planeOn){exitPlane();return}
+  if(flyOn){flyOn=false;camMode=1;userCam=true;sub('Свободная камера выключена',1.6);return}
+  clearModes();flyOn=true;mapOpen=false;dialog=null;
+  fly.x=cam.x;fly.y=max(cam.y,8);fly.z=cam.z;fly.yaw=cam.yaw;fly.pit=cam.pit;fly.vx=fly.vy=fly.vz=0;
+  sub('СВОБОДНЫЙ ПОЛЁТ: WASD — лететь, мышь — взгляд, колесо — скорость ('+fly.spd.toFixed(0)+' м/с), F — выйти',5.5);
+}
+function updateFly(rdt){
+  const f=(keys.KeyW?1:0)-(keys.KeyS?1:0),sd=(keys.KeyD?1:0)-(keys.KeyA?1:0);
+  const cp=cos(fly.pit),sp=sin(fly.pit),cy=cos(fly.yaw),sy=sin(fly.yaw);
+  const tvx=(sy*cp*f+cy*sd)*fly.spd,tvy=sp*f*fly.spd,tvz=(cy*cp*f-sy*sd)*fly.spd,k=1-exp(-rdt*4);
+  fly.vx+=(tvx-fly.vx)*k;fly.vy+=(tvy-fly.vy)*k;fly.vz+=(tvz-fly.vz)*k;
+  fly.x+=fly.vx*rdt;fly.y=clamp(fly.y+fly.vy*rdt,1.5,300000);fly.z+=fly.vz*rdt;
+  setCam(fly.x,fly.y,fly.z,fly.yaw,fly.pit);
+}
+function resetPlane(){
+  Object.assign(PL,{x:-3000,y:1000,z:300,yaw:PI/2,pit:0,roll:0,spd:135,alive:true,crashT:0,chute:false,cam:0,vx:135,vy:0,vz:0});
+  BM=null;PCAM.init=false;PCAM.yo=0;PCAM.po=0;
+}
+function enterPlane(){
+  clearModes();planeOn=true;mapOpen=false;dialog=null;PCAM.init=false;
+  if(!PL.alive)resetPlane();
+  sub('САМОЛЁТ: W/S — тангаж, A/D — крен, Shift/Ctrl — газ/тормоз · Enter — сбросить бомбу · B — парашют · C — камера',6.5);
+}
+function exitPlane(){planeOn=false;camMode=1;userCam=true}
+function planeEnter(){
+  if(!PL.alive)return;
+  if(BM){bombBoom(BM.x,BM.y,BM.z);return}
+  if(D||pend){sub('Взрыв уже идёт. R — перезапуск мира',2.5);return}
+  dropBomb();
+}
+function toggleChute(){
+  PL.chute=!PL.chute;
+  if(BM){if(PL.chute){BM.chute=1;BM.ch=0}else{BM.chute=0;BM.ch=-1}}
+  sub('Парашют бомбы: '+(PL.chute?'ВКЛЮЧЁН':'ОТКЛЮЧЁН'),2);
+}
+function dropBomb(){
+  const p=PL,cp=cos(p.pit),w=WEAPONS[wsel];
+  BM={x:p.x,y:p.y-2.6,z:p.z,vx:p.vx,vy:p.vy-1.5,vz:p.vz,ax:sin(p.yaw)*cp,ay:sin(p.pit),az:cos(p.yaw)*cp,chute:0,ch:p.chute?0.8:-1,open:0,t:0,wi:wsel,cx:0,cy:1,cz:0};
+  PL.cam=1;sirenOn=true;
+  sub('БОМБА СБРОШЕНА: '+w.n+' · B — парашют · Enter — подрыв в воздухе',4.5);
+  feedAdd('САМОЛЁТ','Бомба пошла! Боеприпас: '+w.n,'#fde68a');
+  if(AU.c)sweep(1700,380,6,'sine',0.035);
+}
+function bombBoom(x,y,z){
+  const wi=BM?BM.wi:wsel;BM=null;PL.cam=2;
+  detonate({x,y,z,wi,fb:1});
+}
+function stepBomb(dt){
+  const b=BM;if(!b)return;
+  b.t+=dt;
+  if(b.ch>0){b.ch-=dt;if(b.ch<=0)b.chute=1}
+  b.open=clamp(b.open+(b.chute?dt/1.4:-dt/0.35),0,1);
+  windAt(b.y,wv);
+  const rvx=b.vx-wv.x,rvy=b.vy,rvz=b.vz-wv.z,v=sqrt(rvx*rvx+rvy*rvy+rvz*rvz)+1e-6,rho=exp(-max(0,b.y)/8500);
+  const kf=1.45e-4*rho,kc=0.05*(0.3+0.7*rho),kk=kf+(kc-kf)*b.open,dm=exp(-kk*v*dt);
+  b.vx=wv.x+rvx*dm;b.vz=wv.z+rvz*dm;b.vy=rvy*dm-9.81*dt;
+  b.x+=b.vx*dt;b.y+=b.vy*dt;b.z+=b.vz*dt;
+  const vx=b.vx-wv.x,vy=b.vy,vz=b.vz-wv.z,vl=sqrt(vx*vx+vy*vy+vz*vz)+1e-6;
+  let tx=vx/vl,ty=vy/vl,tz=vz/vl;
+  if(b.open>0.3){const w=b.open*0.9;tx=tx*(1-w);ty=ty*(1-w)-w;tz=tz*(1-w)}
+  const tl=hypot(tx,ty,tz)||1,k2=min(1,dt*2.5);
+  b.ax+=(tx/tl-b.ax)*k2;b.ay+=(ty/tl-b.ay)*k2;b.az+=(tz/tl-b.az)*k2;
+  const k3=min(1,dt*3);
+  b.cx+=(-vx/vl-b.cx)*k3;b.cy+=(-vy/vl-b.cy)*k3;b.cz+=(-vz/vl-b.cz)*k3;
+  const bl=hypot(b.cx,b.cy,b.cz)||1;b.cx/=bl;b.cy/=bl;b.cz/=bl;
+  if(b.y<=0.4){bombBoom(b.x,0.4,b.z);return}
+  const cell=WORLD.bgrid.get(((b.x>>6)<<16)^((b.z>>6)&0xffff));
+  if(cell)for(let i=0;i<cell.length;i++){const q=cell[i];if(q.st!==0&&q.st!==3)continue;if(abs(b.x-q.x)<q.w/2&&abs(b.z-q.z)<q.d/2&&b.y<q.y1){bombBoom(b.x,max(b.y,q.y1),b.z);return}}
+}
+function crashPlane(why){
+  const p=PL;if(!p.alive)return;
+  p.alive=false;p.crashT=0;
+  for(let i=0;i<60;i++){const a=rnd()*TAU,v=rr(5,40);addP(p.x,max(1,p.y),p.z,cos(a)*v+p.vx*0.2,rr(5,35),sin(a)*v+p.vz*0.2,rr(3,9),10,rr(2,5),0.95,0.35,0,0.8,2,0.4)}
+  for(let i=0;i<40;i++){const a=rnd()*TAU,v=rr(3,25);addP(p.x,max(1,p.y),p.z,cos(a)*v,rr(4,22),sin(a)*v,rr(5,12),8,rr(5,10),0.2,0.05,1,0.6,1,0.3)}
+  if(AU.c)boom(0,0.35,900);
+  sub('САМОЛЁТ РАЗБИЛСЯ ('+why+'). Через 4 с будет новый вылет.',4);
+}
+function stepPlane(dt){
+  const p=PL;
+  if(!p.alive){p.crashT+=dt;if(p.crashT>4){const ch=p.chute;resetPlane();p.chute=ch;if(planeOn)sub('Новый вылет: высота 1000 м',2.5)}return}
+  let pc=0,rc=0,th=0;
+  if(planeOn&&!menuOpen&&!edOpen&&!tgtOpen){
+    pc=(keys.KeyS?1:0)-(keys.KeyW?1:0);if(S.pinv)pc=-pc;
+    rc=(keys.KeyD?1:0)-(keys.KeyA?1:0);
+    th=((keys.ShiftLeft||keys.ShiftRight)?1:0)-((keys.ControlLeft||keys.ControlRight||keys.KeyX)?1:0);
+  }
+  p.roll+=(rc*0.95-p.roll)*min(1,dt*2.4);
+  p.pit=clamp(p.pit+pc*0.75*dt,-1.15,1.15);
+  if(!pc)p.pit*=exp(-dt*0.25);
+  p.yaw+=p.roll*0.46*dt;
+  const target=th>0?260:th<0?72:135;
+  p.spd+=(target-p.spd)*min(1,dt*0.45);
+  p.spd=clamp(p.spd-sin(p.pit)*9.81*dt*0.5,50,300);
+  const cp=cos(p.pit);
+  p.vx=sin(p.yaw)*cp*p.spd;p.vy=sin(p.pit)*p.spd;p.vz=cos(p.yaw)*cp*p.spd;
+  p.x+=p.vx*dt;p.y+=p.vy*dt;p.z+=p.vz*dt;
+  if(p.y<5){crashPlane('земля');return}
+  const cell=WORLD.bgrid.get(((p.x>>6)<<16)^((p.z>>6)&0xffff));
+  if(cell)for(let i=0;i<cell.length;i++){const q=cell[i];if(q.st!==0&&q.st!==3)continue;if(abs(p.x-q.x)<q.w/2+4&&abs(p.z-q.z)<q.d/2+4&&p.y<q.y1+3){crashPlane('здание');return}}
+  if(p.y>9000&&p.vy>0)p.pit*=0.9;
+  if(p.y>200&&rnd()<dt*14)addP(p.x-sin(p.yaw)*cp*10,p.y,p.z-cos(p.yaw)*cp*10,0,0,0,2.2,3,rr(3,5),0.8,0.04,1,0.32,0,0.2);
+}
+function updatePlaneCam(rdt){
+  const p=PL;let tx=p.x,ty=p.y,tz=p.z,fx=sin(p.yaw),fz=cos(p.yaw),dist=PCAM.d,low=3;
+  if(PL.cam===1&&BM){tx=BM.x;ty=BM.y;tz=BM.z;const hv=hypot(BM.vx,BM.vz);if(hv>3){fx=BM.vx/hv;fz=BM.vz/hv}dist=48;low=6}
+  else if(PL.cam===2&&(D||pend)){
+    if(D){const c=cloudInfo(D.t);tx=D.x+D.dx;ty=max(30,c.cy*0.5);tz=D.z+D.dz;dist=max(1800,(c.R+c.r)*3.2+1200)}
+    else{tx=pend.x;ty=300;tz=pend.z;dist=2200}
+    const dx=p.x-tx,dz=p.z-tz,l=hypot(dx,dz)||1;fx=-dx/l;fz=-dz/l;low=dist*0.12;
+  }
+  const yo=PCAM.yo,cy=cos(yo),sy=sin(yo),fxr=fx*cy-fz*sy,fzr=fx*sy+fz*cy,el=0.2+PCAM.po,ce=cos(el);
+  const dx2=tx-fxr*dist*ce,dy2=ty+dist*sin(el)+low,dz2=tz-fzr*dist*ce;
+  if(!PCAM.init){PCAM.x=dx2;PCAM.y=dy2;PCAM.z=dz2;PCAM.init=true}
+  const k=1-exp(-rdt*(PL.cam===0?7:4.5));
+  PCAM.x+=(dx2-PCAM.x)*k;PCAM.y+=(dy2-PCAM.y)*k;PCAM.z+=(dz2-PCAM.z)*k;
+  PCAM.y=max(2,PCAM.y);
+  if(!PCAM.drag){const f=exp(-rdt*0.7);PCAM.yo*=f;PCAM.po*=f}
+  PCAM.drag=0;
+  const ddx=tx-PCAM.x,ddz=tz-PCAM.z;
+  setCam(PCAM.x,PCAM.y,PCAM.z,atan2(ddx,ddz),atan2(ty-PCAM.y,hypot(ddx,ddz)||1));
+}
+function faceDbl(list,v,color){
+  const n=v.length/3;
+  const ax=v[3]-v[0],ay=v[4]-v[1],az=v[5]-v[2],bx=v[6]-v[0],by=v[7]-v[1],bz=v[8]-v[2];
+  let nx=ay*bz-az*by,ny=az*bx-ax*bz,nz=ax*by-ay*bx;const nl=hypot(nx,ny,nz)||1;nx/=nl;ny/=nl;nz/=nl;
+  let mx=0,my=0,mz=0;for(let i=0;i<n;i++){mx+=v[i*3];my+=v[i*3+1];mz+=v[i*3+2]}mx/=n;my/=n;mz/=n;
+  if(nx*(cam.x-mx)+ny*(cam.y-my)+nz*(cam.z-mz)<0){nx=-nx;ny=-ny;nz=-nz}
+  const dif=max(0,nx*SUN[0]+ny*SUN[1]+nz*SUN[2]);
+  list.push({d:zdep(mx,my,mz),v,c:col(color,lightK*(0.42+0.6*dif),0)});
+}
+function drawPlane(p,z){
+  const cy=cos(p.yaw),sy=sin(p.yaw),cp=cos(p.pit),sp=sin(p.pit),cr=cos(p.roll),sr=sin(p.roll);
+  const f=[sy*cp,sp,cy*cp],r0=[cy,0,-sy],u0=[-sp*sy,cp,-sp*cy];
+  const r=[r0[0]*cr-u0[0]*sr,r0[1]*cr-u0[1]*sr,r0[2]*cr-u0[2]*sr],u=[u0[0]*cr+r0[0]*sr,u0[1]*cr+r0[1]*sr,u0[2]*cr+r0[2]*sr];
+  const W3=(a,b,c)=>[p.x+f[0]*a+r[0]*b+u[0]*c,p.y+f[1]*a+r[1]*b+u[1]*c,p.z+f[2]*a+r[2]*b+u[2]*c];
+  if(z>6000){if(pr(p.x,p.y,p.z)){g.fillStyle='#e5e7eb';g.fillRect(PS.x-1.5,PS.y-1.5,3,3)}return}
+  const faces=[],quad=(pts,color)=>{const v=[];for(const q of pts){const w=W3(q[0],q[1],q[2]);v.push(w[0],w[1],w[2])}faceDbl(faces,v,color)};
+  const FUS=[[11.2,0.12],[9.6,1.05],[7.2,1.62],[2,1.85],[-4,1.72],[-8.6,1.05],[-11.6,0.3]],NF=8,rings=[];
+  for(const q of FUS){const ring=[];for(let j=0;j<NF;j++){const th=j/NF*TAU;ring.push([q[0],q[1]*cos(th),q[1]*sin(th)*0.95])}rings.push(ring)}
+  for(let s=0;s<FUS.length-1;s++)for(let j=0;j<NF;j++){const j2=(j+1)%NF;quad([rings[s][j],rings[s][j2],rings[s+1][j2],rings[s+1][j]],s<2?[88,96,106]:[148,154,162])}
+  for(const sg of[1,-1]){
+    quad([[2.4,1.7*sg,-0.5],[-2.6,1.7*sg,-0.5],[-5.8,16.5*sg,0.1],[-2.2,16.5*sg,0.1]],[126,132,140]);
+    quad([[-8,0.9*sg,0.4],[-10.8,0.9*sg,0.4],[-11.9,6.2*sg,0.5],[-10,6.2*sg,0.5]],[120,126,134]);
+    for(const eb of[4.8,9]){
+      const e0=[],e1=[];for(let j=0;j<6;j++){const th=j/6*TAU;e0.push([2.0,eb*sg+0.7*cos(th),-1.4+0.7*sin(th)]);e1.push([-3.2,eb*sg+0.7*cos(th),-1.4+0.7*sin(th)])}
+      for(let j=0;j<6;j++){const j2=(j+1)%6;quad([e0[j],e0[j2],e1[j2],e1[j]],[86,92,100])}
+    }
+  }
+  quad([[-6.2,0,1.6],[-10.8,0,1.6],[-11.8,0,7],[-9.4,0,7]],[196,44,40]);
+  quad([[8.4,0,1.05],[6.4,1.0,1.55],[5.2,0,1.8],[6.4,-1.0,1.55]],[64,112,164]);
+  faces.sort((a,b)=>b.d-a.d);
+  for(const fc of faces)fillPoly(fc.v,fc.c);
+  if(z<2500){
+    const bl=floor(T*2)%2===0;
+    for(const sg of[1,-1]){const w=W3(-4.5,16.2*sg,0.2);if(pr(w[0],w[1],w[2])){g.fillStyle=sg>0?'rgb(60,255,90)':'rgb(255,60,60)';g.beginPath();g.arc(PS.x,PS.y,max(1.2,0.35*FOCAL/PS.z),0,TAU);g.fill()}}
+    const wt=W3(-11.8,0,7.2);if(bl&&pr(wt[0],wt[1],wt[2])){g.fillStyle='rgb(255,255,255)';g.beginPath();g.arc(PS.x,PS.y,max(1.2,0.3*FOCAL/PS.z),0,TAU);g.fill()}
+  }
+}
+const BSH={
+  tsar:{pts:[[4,.06],[3.5,.55],[2.6,.95],[1.5,1.1],[-2.6,1.1],[-3.5,.8],[-4,.5]],fin:[-4,-2.5,.7,2.0],col:[[232,234,238],[200,40,40],[96,100,108]],band:2},
+  fat:{pts:[[1.7,.15],[1.3,.5],[.7,.74],[0,.78],[-.7,.72],[-1.3,.52],[-1.7,.46]],fin:[-1.7,-1.25,.5,1.3],col:[[202,176,70],[236,212,96],[110,100,60]],band:3},
+  tall:{pts:[[3.15,.04],[2.6,.3],[1.6,.5],[-2.4,.5],[-3.15,.34]],fin:[-3.15,-2.0,.4,1.15],col:[[104,114,98],[210,210,210],[62,68,60]],band:1},
+  gen:{pts:[[2.5,.05],[2.1,.4],[1.3,.7],[-1.8,.7],[-2.5,.45]],fin:[-2.5,-1.6,.6,1.7],col:[[112,122,98],[232,202,62],[72,78,66]],band:1}
+};
+function bombShapeOf(wi){
+  const w=WEAPONS[wi];
+  if(wi===0)return BSH.tsar;
+  if(w.ty==='nuke')return BSH.fat;
+  if(w.ty==='tall')return BSH.tall;
+  if(w.ty==='thermo'||w.ty==='anti'||w.ty==='nova'||w.ty==='cobalt'||w.ty==='bh')return BSH.tsar;
+  return BSH.gen;
+}
+function drawBomb(b,z){
+  const sh=bombShapeOf(b.wi),n0=hypot(b.ax,b.ay,b.az)||1,nx=b.ax/n0,ny=b.ay/n0,nz=b.az/n0;
+  let hx=0,hy=1,hz=0;if(abs(ny)>0.95){hx=1;hy=0}
+  let rx=ny*hz-nz*hy,ry=nz*hx-nx*hz,rz=nx*hy-ny*hx;const rl=hypot(rx,ry,rz)||1;rx/=rl;ry/=rl;rz/=rl;
+  const ux=ry*nz-rz*ny,uy=rz*nx-rx*nz,uz=rx*ny-ry*nx,spn=b.t*0.7,cs=cos(spn),sn=sin(spn);
+  const ax1=rx*cs+ux*sn,ay1=ry*cs+uy*sn,az1=rz*cs+uz*sn,bx1=ux*cs-rx*sn,by1=uy*cs-ry*sn,bz1=uz*cs-rz*sn;
+  const NS=10,pts=sh.pts,faces=[],P=[];
+  for(let s=0;s<pts.length;s++){
+    const a=pts[s][0],rad=pts[s][1],ring=[];
+    for(let j=0;j<NS;j++){const th=j/NS*TAU,c=cos(th),sv=sin(th);ring.push(b.x+nx*a+(ax1*c+bx1*sv)*rad,b.y+ny*a+(ay1*c+by1*sv)*rad,b.z+nz*a+(az1*c+bz1*sv)*rad)}
+    P.push(ring);
+  }
+  for(let s=0;s<pts.length-1;s++){
+    const colr=s===sh.band?sh.col[1]:s>=pts.length-2?sh.col[2]:sh.col[0],A=P[s],B2=P[s+1];
+    for(let j=0;j<NS;j++){const j2=(j+1)%NS;faceDbl(faces,[A[j*3],A[j*3+1],A[j*3+2],A[j2*3],A[j2*3+1],A[j2*3+2],B2[j2*3],B2[j2*3+1],B2[j2*3+2],B2[j*3],B2[j*3+1],B2[j*3+2]],colr)}
+  }
+  const fn=sh.fin;
+  for(let k=0;k<4;k++){
+    const th=k*PI/2+PI/4,c=cos(th),sv=sin(th),dx=ax1*c+bx1*sv,dy=ay1*c+by1*sv,dz=az1*c+bz1*sv;
+    const q=(a,rad)=>[b.x+nx*a+dx*rad,b.y+ny*a+dy*rad,b.z+nz*a+dz*rad];
+    const p1=q(fn[1],fn[2]),p2=q(fn[0],fn[2]),p3=q(fn[0]-0.2,fn[3]),p4=q(fn[0]+(fn[1]-fn[0])*0.35,fn[3]);
+    faceDbl(faces,[...p1,...p2,...p3,...p4],sh.col[2]);
+  }
+  let cords=null;
+  if(b.open>0.02){
+    const o=b.open,L1=3+11*o,Rc=1.4+6.4*o,cxp=b.x+b.cx*L1,cyp=b.y+b.cy*L1,czp=b.z+b.cz*L1;
+    let h2x=0,h2y=1,h2z=0;if(abs(b.cy)>0.95){h2x=1;h2y=0}
+    let qx=b.cy*h2z-b.cz*h2y,qy=b.cz*h2x-b.cx*h2z,qz=b.cx*h2y-b.cy*h2x;const ql=hypot(qx,qy,qz)||1;qx/=ql;qy/=ql;qz/=ql;
+    const wx=b.cy*qz-b.cz*qy,wy=b.cz*qx-b.cx*qz,wz=b.cx*qy-b.cy*qx,NP=12,r0=[],r1=[];
+    for(let j=0;j<NP;j++){
+      const th=j/NP*TAU,c=cos(th),sv=sin(th),ox=qx*c+wx*sv,oy=qy*c+wy*sv,oz=qz*c+wz*sv;
+      r0.push([cxp+ox*Rc,cyp+oy*Rc,czp+oz*Rc]);
+      r1.push([cxp+b.cx*Rc*0.45+ox*Rc*0.82,cyp+b.cy*Rc*0.45+oy*Rc*0.82,czp+b.cz*Rc*0.45+oz*Rc*0.82]);
+    }
+    const apx=cxp+b.cx*Rc*0.8,apy=cyp+b.cy*Rc*0.8,apz=czp+b.cz*Rc*0.8;
+    for(let j=0;j<NP;j++){
+      const j2=(j+1)%NP,cc=(j&1)?[236,236,240]:[210,40,36];
+      faceDbl(faces,[...r0[j],...r0[j2],...r1[j2],...r1[j]],cc);
+      faceDbl(faces,[...r1[j],...r1[j2],apx,apy,apz],cc);
+    }
+    cords=r0;
+  }
+  faces.sort((p,q)=>q.d-p.d);
+  for(const fc of faces)fillPoly(fc.v,fc.c);
+  if(cords){
+    g.strokeStyle='rgba(235,235,235,0.75)';g.lineWidth=max(1,0.06*FOCAL/max(z,1));g.beginPath();
+    for(let j=0;j<cords.length;j+=2)segTo(cords[j][0],cords[j][1],cords[j][2],b.x,b.y,b.z);
+    g.stroke();
+  }
+}
+
+function atmK(){if(!D||!D.atm)return 0;const t=D.t;return D.atm*sstep(t/2.5)*(1-sstep((t-150)/170))}
+const ATC=[],ATS=[];
+(function(){
+  const r=mulberry(31);
+  for(let i=0;i<22;i++){const a=r()*TAU,p=[];let rad=0.18;for(let k=0;k<7;k++){rad+=0.1+r()*0.16;p.push(rad,(r()-0.5)*0.55)}ATC.push({a,p})}
+  for(let i=0;i<28;i++){const a=r()*TAU,d=sqrt(r())*0.85;ATS.push(cos(a)*d,sin(a)*d,0.8+r()*1.4)}
+})();
+function drawAtmo(){
+  const am=atmK();if(am<0.02)return;
+  const t=D.t,s=D.s,ox=D.x+D.dx,oz=D.z+D.dz,ci=cloudInfo(t);
+  const Rd=(1800+3600*s)*(1-exp(-t/9))+120,fd=am*(1-sstep((t-50)/70));
+  if(S.sky!==2&&am>0.04){
+    g.fillStyle='rgba(255,255,255,'+(0.85*am).toFixed(2)+')';
+    for(let i=0;i<STARS.length;i+=3){toCam(cam.x+STARS[i],cam.y+STARS[i+1],cam.z+STARS[i+2],tc);if(tc[2]>NEAR){const k=FOCAL/tc[2];g.fillRect(CX+tc[0]*k,CY-tc[1]*k,1.8,1.8)}}
+  }
+  if(fd>0.02){
+    g.save();g.globalCompositeOperation='lighter';
+    g.lineWidth=2.2;g.strokeStyle='rgba(255,120,210,'+(0.5*fd).toFixed(3)+')';g.beginPath();
+    for(let j=1;j<=6;j++){const el=j/7*1.5708,ry2=Rd*sin(el),rr2=Rd*cos(el);for(let i=0;i<36;i++){const a0=i/36*TAU,a1=(i+1)/36*TAU;segTo(ox+cos(a0)*rr2,ry2,oz+sin(a0)*rr2,ox+cos(a1)*rr2,ry2,oz+sin(a1)*rr2)}}
+    g.stroke();
+    g.strokeStyle='rgba(120,200,255,'+(0.38*fd).toFixed(3)+')';g.beginPath();
+    for(let m=0;m<14;m++){const a=m/14*TAU;let px=ox+cos(a)*Rd,py=0,pz=oz+sin(a)*Rd;for(let k=1;k<=9;k++){const el=k/9*1.5708,nx=ox+cos(a)*Rd*cos(el),ny=Rd*sin(el),nz=oz+sin(a)*Rd*cos(el);segTo(px,py,pz,nx,ny,nz);px=nx;py=ny;pz=nz}}
+    g.stroke();g.restore();
+  }
+  const ry=max(ci.cy+ci.r*1.15,700+Rd*0.45);
+  if(pr(ox,ry,oz)){
+    const k=FOCAL/PS.z,hr=min(H*0.95,(Rd*0.5+ci.r*1.6)*k*(0.25+0.75*sstep(t/14))),cx0=PS.x,cy0=PS.y;
+    if(hr>6){
+      const rg=g.createRadialGradient(cx0,cy0,hr*0.12,cx0,cy0,hr);
+      rg.addColorStop(0,'rgba(1,0,6,'+(0.95*am).toFixed(3)+')');rg.addColorStop(0.72,'rgba(8,0,18,'+(0.8*am).toFixed(3)+')');rg.addColorStop(1,'rgba(8,0,18,0)');
+      g.fillStyle=rg;g.beginPath();g.arc(cx0,cy0,hr,0,TAU);g.fill();
+      g.fillStyle='rgba(255,255,255,'+(0.9*am).toFixed(2)+')';
+      for(let i=0;i<ATS.length;i+=3)g.fillRect(cx0+ATS[i]*hr*0.8,cy0+ATS[i+1]*hr*0.8,ATS[i+2],ATS[i+2]);
+      g.save();g.globalCompositeOperation='lighter';g.lineJoin='round';
+      for(let pass=0;pass<2;pass++){
+        g.strokeStyle=pass?'rgba(255,240,210,'+(0.5*am).toFixed(3)+')':'rgba(255,110,60,'+(0.75*am).toFixed(3)+')';
+        g.lineWidth=pass?max(1,hr*0.004):max(1.5,hr*0.012);
+        for(const c of ATC){
+          g.beginPath();g.moveTo(cx0+cos(c.a)*hr*0.12,cy0+sin(c.a)*hr*0.12);
+          for(let q=0;q<7;q++){const rad=c.p[q*2]*hr,an=c.a+c.p[q*2+1];g.lineTo(cx0+cos(an)*rad,cy0+sin(an)*rad)}
+          g.stroke();
+        }
+      }
+      g.restore();
+    }
+  }
+}
+function atmOverlay(){
+  const am=atmK();if(am<0.02)return;
+  const t=D.t;
+  g.fillStyle='rgba(120,24,96,'+(0.13*am).toFixed(3)+')';g.fillRect(0,0,W,H);
+  if(t<9){g.fillStyle='rgba(255,60,200,'+(am*(1-t/9)*0.5).toFixed(3)+')';g.fillRect(0,0,W,H)}
+}
+
+function drawModeHUD(){
+  const L=[];
+  if(AP.on){
+    const phs=['ШАХТА: СТВОРКИ','ПОДЪЁМ','РАЗВОРОТ И РАЗГОН','ИНЕРЦИЯ','СНИЖЕНИЕ'],pi=AP.ph===3&&R.vy<0?4:min(4,AP.ph);
+    L.push(['АВТОПИЛОТ · '+phs[pi]+' · до цели '+(hypot(AP.gx-R.x,AP.gz-R.z)/1000).toFixed(2)+' км'+(AP.ph>=2?' · ожидаемый промах ≈ '+AP.err.toFixed(0)+' м':'')+' · подрыв: '+(AP.burst?'воздух '+AP.bh+' м':'по удару'),'#fb7185']);
+    L.push(['Backspace — отключить автопилот','#fda4af']);
+  }
+  if(flyOn)L.push(['СВОБОДНАЯ КАМЕРА · '+fly.spd.toFixed(0)+' м/с · W/A/S/D — лететь · мышь — взгляд · колесо — скорость · F — выйти','#7dd3fc']);
+  if(planeOn){
+    const p=PL,hd=((p.yaw*180/PI)%360+360)%360;
+    L.push(['САМОЛЁТ · '+(p.spd*3.6).toFixed(0)+' км/ч · высота '+p.y.toFixed(0)+' м · курс '+hd.toFixed(0)+'° · боеприпас: '+WEAPONS[wsel].n,'#fde68a']);
+    L.push([(BM?'БОМБА В ПОЛЁТЕ · до земли '+max(0,BM.y).toFixed(0)+' м · '+(BM.open>0.5?'ПАРАШЮТ ОТКРЫТ':'свободное падение')+' · Enter — подрыв в воздухе':'Enter — сбросить бомбу')+' · [B] парашют: '+(p.chute?'ВКЛ':'ВЫКЛ')+' · [C] камера','#fcd34d']);
+  }
+  if(!obsOn&&!spaceOn&&!wlOpen&&R.alive&&!R.launched&&!AP.on){
+    const s0=SIL[silSel];
+    g.font='10px ui-monospace,monospace';g.textAlign='left';g.fillStyle='#fcd34d';
+    g.fillText('ШАХТА '+(silSel+1)+'/4 · створки: '+(s0.door<0.02?'закрыты':s0.door>0.98?'ОТКРЫТЫ':'открываются '+Math.round(s0.door*100)+'%')+' · [ , . ] смена шахты · Tab — карта: клик по цели = автопилот',8,HH+6+46+13);
+  }
+  if(!L.length)return;
+  g.font='bold 12px ui-monospace,monospace';
+  let w=0;for(const l of L)w=max(w,g.measureText(l[0]).width);
+  w=min(W-24,w+24);
+  const hg=L.length*18+10,bx=CX-w/2,by=H-hg-(TOUCHY?10:30);
+  g.fillStyle='rgba(0,0,0,0.62)';g.fillRect(bx,by,w,hg);
+  g.textAlign='center';
+  for(let i=0;i<L.length;i++){g.fillStyle=L[i][1];g.fillText(L[i][0],CX,by+19+i*18)}
+}
+(function(){
+  const bs=$('tgtBurst');
+  ['Контактный (наземный взрыв)','Воздушный · 150 м','Воздушный · 400 м','Воздушный · 1000 м'].forEach((n,i)=>{const o=document.createElement('option');o.value=i;o.textContent=n;bs.appendChild(o)});
+  bs.value=2;
+  const ss=$('tgtSilo');
+  for(let i=0;i<4;i++){const o=document.createElement('option');o.value=i;o.textContent='Шахта '+(i+1);ss.appendChild(o)}
+  $('tgtGo').onclick=confirmTarget;$('tgtNo').onclick=cancelTarget;
+  $('bPlane').onclick=()=>{closeMenu();enterPlane()};
+})();
+
 function frame(now){
   requestAnimationFrame(frame);
   const raw=max(0.0005,(now-lastT)/1000);let rdt=min(0.05,raw);lastT=now;
@@ -3816,14 +5170,18 @@ function frame(now){
   if(navigator.getGamepads)pollPad();
   fpsAcc+=raw;fpsN++;
   if(fpsAcc>=0.5){fps=fpsN/fpsAcc;fpsAcc=0;fpsN=0}
-  if(TOUCHY&&lastObsUI!==obsOn){lastObsUI=obsOn;$('tpObs').style.display=obsOn?'flex':'none'}
-  if(!menuOpen){
-    const ws=14*rdt;
-    const cy=cam.yaw,fxv=sin(cy),fzv=cos(cy),rxv=cos(cy),rzv=-sin(cy);
-    let wf=(keys.KeyI?1:0)-(keys.KeyK?1:0),wr=(keys.KeyL?1:0)-(keys.KeyJ?1:0);
-    if(wf||wr){Wd.x=clamp(Wd.x+(fxv*wf+rxv*wr)*ws,-40,40);Wd.z=clamp(Wd.z+(fzv*wf+rzv*wr)*ws,-40,40)}
+  if(TOUCHY&&lastObsUI!==(obsOn||spaceOn)){lastObsUI=obsOn||spaceOn;$('tpObs').style.display=lastObsUI?'flex':'none'}
+  if(!menuOpen&&!edOpen){
+    let bp=(keys.KeyI?1:0)-(keys.KeyK?1:0),by=(keys.KeyL?1:0)-(keys.KeyJ?1:0);
+    aimInput(bp,by,rdt);
+    let wchg=((keys.Equal||keys.NumpadAdd)?1:0)-((keys.Minus||keys.NumpadSubtract)?1:0);
+    if(wchg){
+      const wsp=hypot(Wd.x,Wd.z),nw=clamp(wsp+wchg*16*rdt,0,40);
+      if(wsp>0.01){Wd.x=Wd.x/wsp*nw;Wd.z=Wd.z/wsp*nw}
+      else if(nw>0){const a=0.65;Wd.x=nw*cos(a);Wd.z=nw*sin(a)}
+    }
     if(!paused){
-      const sdt=rdt*timeScale,n=clamp(Math.ceil(sdt/(1/60)),1,14),na=clamp(Math.ceil(timeScale*0.5),1,3);
+      const sdt=rdt*timeScale,n=clamp(Math.ceil(sdt/(1/45)),1,48),na=clamp(Math.ceil(timeScale*0.5),1,3);
       for(let i=0;i<n;i++)stepPhys(sdt/n);
       for(let i=0;i<na;i++)stepAI(sdt/na);
       const sk=subs[0];if(sk){sk.a+=rdt;if(sk.a>sk.d)subs.length=0}
@@ -3848,10 +5206,16 @@ function frame(now){
   if(INTR)renderInterior(INTR,rdt);
   else if(obsOn){
     g.fillStyle='#000';g.fillRect(0,0,W,H);
-    g.save();binoClip();renderOutdoor(rdt);drawBeam();drawWeather(rdt);drawAsh(rdt);g.restore();
+    g.save();binoClip();renderOutdoor(rdt);drawBeam();drawWeather(rdt);drawAsh(rdt);drawFogLayer();g.restore();
     drawBinoOverlay();
   }
-  else{renderOutdoor(rdt);drawBeam();drawWeather(rdt);drawAsh(rdt)}
+  else if(spaceOn){renderSpace(rdt)}
+  else{
+    g.save();
+    if(shkPx>0.4){g.translate(CX,CY);const sc=1+shkPx*0.0016;g.scale(sc,sc);g.translate(-CX+(rnd()-0.5)*shkPx*2,-CY+(rnd()-0.5)*shkPx*2)}
+    renderOutdoor(rdt);drawBeam();drawWeather(rdt);drawAsh(rdt);drawFogLayer();
+    g.restore();
+  }
   if(mapOpen)drawMap();
   else if(!menuOpen||started)drawHUD();
   audioUpdate();
